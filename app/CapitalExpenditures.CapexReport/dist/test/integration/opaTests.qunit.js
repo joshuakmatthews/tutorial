@@ -1,0 +1,2 @@
+sap.ui.require(["sap/fe/test/JourneyRunner","CapitalExpenditures/CapexReport/test/integration/FirstJourney","CapitalExpenditures/CapexReport/test/integration/pages/CapexList","CapitalExpenditures/CapexReport/test/integration/pages/CapexObjectPage"],function(e,t,a,p){"use strict";var e=new e({launchUrl:sap.ui.require.toUrl("CapitalExpenditures/CapexReport")+"/index.html"});e.run({pages:{onTheCapexList:a,onTheCapexObjectPage:p}},t.run)});
+//# sourceMappingURL=opaTests.qunit.js.map

@@ -1,0 +1,9 @@
+{
+    "requires": {
+        "auth": {
+            "[development]": {
+                "strategy": "dummy"
+            }
+        }
+    }
+}

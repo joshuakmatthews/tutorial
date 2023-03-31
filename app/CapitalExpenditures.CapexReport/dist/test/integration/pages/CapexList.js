@@ -1,0 +1,2 @@
+sap.ui.define(["sap/fe/test/ListReport"],function(e){"use strict";var t={actions:{},assertions:{}};return new e({appId:"CapitalExpenditures.CapexReport",componentId:"CapexList",entitySet:"Capex"},t)});
+//# sourceMappingURL=CapexList.js.map
