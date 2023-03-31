@@ -16,10 +16,8 @@ build-parameters:
     - builder: custom
       commands:
         - npm install --production
-        - >-
-          bash -c "cds -v | grep 'cds-dk' || npm i --production --no-save
-          @sap/cds-dk @sap/mdk-tools"
-        - bash -c "export PATH=$PATH:$(pwd)/node_modules/.bin"
+        - "bash -c \"cds -v | grep 'cds-dk' || npm i --production --no-save @sap/cds-dk @sap/mdk-tools\""
+        - 'bash -c "export PATH=$PATH:$(pwd)/node_modules/.bin"'
         - cds build --production
 modules:
   - name: CapitalExpenditures-CapitalExpenditures.CapexReport
@@ -29,14 +27,9 @@ modules:
       builder: custom
       commands:
         - rm -rf dist-zip dist
-        - >-
-          npx -p @ui5/cli@^3.0.0 ui5 build --dest dist
-          --include-task=generateManifestBundle
-          --include-task=generateCachebusterInfo
+        - npx -p @ui5/cli@^3.0.0 ui5 build --dest dist --include-task=generateManifestBundle --include-task=generateCachebusterInfo
         - mkdir dist-zip
-        - >-
-          bash -c "cd dist && npx bestzip
-          ../dist-zip/CapitalExpendituresCapexReport.zip *"
+        - 'bash -c "cd dist && npx bestzip ../dist-zip/CapitalExpendituresCapexReport.zip *"'
       _artifactName: CapitalExpendituresCapexReport.zip
       supported-platforms: []
       build-result: dist-zip
@@ -61,7 +54,7 @@ modules:
     provides:
       - name: srv-api
         properties:
-          srv-url: ${default-url}
+          srv-url: '${default-url}'
     build-parameters:
       builder: npm
       ignore:
@@ -90,7 +83,7 @@ modules:
               Name: CapitalExpenditures-app-srv
               TokenServiceInstanceName: CapitalExpenditures-uaa
               TokenServiceKeyName: CapitalExpenditures-uaa-key
-              URL: ~{srv-api/srv-url}
+              URL: '~{srv-api/srv-url}'
               sap.cloud.service: lcap.CapitalExpenditures
             - Name: CapitalExpenditures-service-html5-apps-repo-host
               ServiceInstanceName: CapitalExpenditures-html5-apps-repo-host
@@ -118,11 +111,8 @@ modules:
       builder: custom
       commands:
         - npm install
-        - >-
-          npx -p @ui5/cli@^3.0.0 ui5 build --dest dist
-          --include-task=generateManifestBundle
-          --include-task=generateCachebusterInfo
-        - bash -c "cd dist && npx bestzip ../../../build/dist/launchpad.zip *"
+        - npx -p @ui5/cli@^3.0.0 ui5 build --dest dist --include-task=generateManifestBundle --include-task=generateCachebusterInfo
+        - 'bash -c "cd dist && npx bestzip ../../../build/dist/launchpad.zip *"'
         - rm -rf dist
       _artifactName: launchpad.zip
       supported-platforms: []
@@ -154,7 +144,7 @@ resources:
       service-name: CapitalExpenditures-uaa
       path: xs-security.json
       config:
-        xsappname: CapitalExpenditures-${space}
+        xsappname: 'CapitalExpenditures-${space}'
         role-collections: []
   - type: org.cloudfoundry.managed-service
     name: CapitalExpenditures-service-db
@@ -178,7 +168,7 @@ resources:
       service-plan: standard
       service-name: CapitalExpenditures-metadata
       config:
-        default-domain: ${default-domain}
+        default-domain: '${default-domain}'
   - type: org.cloudfoundry.managed-service
     name: CapitalExpenditures-service-connectivity
     parameters:
