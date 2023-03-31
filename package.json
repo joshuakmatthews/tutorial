@@ -57,7 +57,11 @@
     "requires": {
       "[production]": {
         "db": {
-          "kind": "hana-cloud"
+          "kind": "hana-cloud",
+           "pool": {
+              "max": 1400,
+              "min": 100
+          }
         }
       },
       "db": {
