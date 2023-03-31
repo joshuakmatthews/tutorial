@@ -1,0 +1,39 @@
+{
+  "role": {
+    "name": "ops.db::ZR_S1_SD_&KENW_SO",
+    "object_privileges": [
+        { "name": "CV_CHASSIS_FILES", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_CHASSIS_ORDERS", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_OPS_RECON", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_TRUCK_ORDERS", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_BILLING_BLOCK_REASON", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_BILLING_STATUS", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_CANCEL_REPLACE_CODE", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_CLASS", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_CUST_DEALER_CONTRACT_CODE", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_CUST_DEALER_OWNER_GROUP", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_CUST_PAYER", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_CUST_SHIP_TO", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_CUST_SOLD_TO", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_CUSTOMER_GROUP", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_CUSTOMER", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_DATE", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_DIVISION", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_MATERIAL_CLASSIFICATION", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_PRODUCT_TYPE", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_PURCHASE_ORDER_TYPE", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_REJECTION_REASON", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_SALES_DISTRICT", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_SALES_DOC_TYPE", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_SALES_OPTION", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_SHIPPING_POINT", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_YES_NO", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_YN_BLOCKED", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_YN_FLEET", "type": "VIEW", "privileges": [ "SELECT" ] },
+        { "name": "CV_DIM_YN_OPEN_ORDER", "type": "VIEW", "privileges": [ "SELECT" ] }
+      ],
+    "schema_analytic_privileges": [
+      { "privileges": [ "OPS_DB_AP_KW" ] }
+    ]
+  }
+}

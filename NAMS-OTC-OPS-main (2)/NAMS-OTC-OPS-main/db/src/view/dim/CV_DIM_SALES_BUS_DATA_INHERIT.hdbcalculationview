@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_SALES_BUS_DATA_INHERIT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Sales Business Data - Inherited"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::VBKD">
+    <resourceUri>slts4hc::VBKD</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::VBAP">
+    <resourceUri>slts4hc::VBAP</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="VBKD">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="FKDAT"/>
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER"/>
+      <viewAttribute id="OPS_PROCESSING_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="SCHEDULED_INVOICE_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;FKDAT&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="slts4hc::VBKD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="VBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="POSNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREVIOUS_CHASSIS_NUMBER" source="BSTKD_E"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESSING_STATUS" source="IHREZ_E"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="VBKD_H" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER"/>
+      <viewAttribute id="OPS_PROCESSING_STATUS"/>
+      <viewAttribute id="SCHEDULED_INVOICE_DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="VBKD"/>
+    <filter>&quot;SALES_ORDER_ITEM&quot;='000000'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::VBAP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="VBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="POSNR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER_H"/>
+      <viewAttribute id="OPS_PROCESSING_STATUS_H"/>
+      <viewAttribute id="SCHEDULED_INVOICE_DATE_H"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+    </input>
+    <input node="VBKD_H">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREVIOUS_CHASSIS_NUMBER_H" source="PREVIOUS_CHASSIS_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESSING_STATUS_H" source="OPS_PROCESSING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHEDULED_INVOICE_DATE_H" source="SCHEDULED_INVOICE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER_H"/>
+      <viewAttribute id="OPS_PROCESSING_STATUS_H"/>
+      <viewAttribute id="SCHEDULED_INVOICE_DATE_H"/>
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER_I"/>
+      <viewAttribute id="OPS_PROCESSING_STATUS_I"/>
+      <viewAttribute id="SCHEDULED_INVOICE_DATE_I"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="PREVIOUS_CHASSIS_NUMBER" datatype="NVARCHAR" length="35" expressionLanguage="SQL">
+        <formula>IFNULL(&quot;PREVIOUS_CHASSIS_NUMBER_I&quot;, &quot;PREVIOUS_CHASSIS_NUMBER_H&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="OPS_PROCESSING_STATUS" datatype="NVARCHAR" length="12" expressionLanguage="SQL">
+        <formula>IFNULL(&quot;OPS_PROCESSING_STATUS_I&quot;, &quot;OPS_PROCESSING_STATUS_H&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="SCHEDULED_INVOICE_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>IFNULL(&quot;SCHEDULED_INVOICE_DATE_I&quot;, &quot;SCHEDULED_INVOICE_DATE_H&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREVIOUS_CHASSIS_NUMBER_H" source="PREVIOUS_CHASSIS_NUMBER_H"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESSING_STATUS_H" source="OPS_PROCESSING_STATUS_H"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHEDULED_INVOICE_DATE_H" source="SCHEDULED_INVOICE_DATE_H"/>
+    </input>
+    <input node="VBKD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREVIOUS_CHASSIS_NUMBER_I" source="PREVIOUS_CHASSIS_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESSING_STATUS_I" source="OPS_PROCESSING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHEDULED_INVOICE_DATE_I" source="SCHEDULED_INVOICE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+    <joinAttribute name="SALES_ORDER_ITEM"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_2">
+  <attributes>
+    <attribute id="SALES_ORDER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Document"/>
+      <keyMapping columnObjectName="Join_2" columnName="SALES_ORDER"/>
+    </attribute>
+    <attribute id="SALES_ORDER_ITEM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Document Item"/>
+      <keyMapping columnObjectName="Join_2" columnName="SALES_ORDER_ITEM"/>
+    </attribute>
+    <attribute id="PREVIOUS_CHASSIS_NUMBER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Previous Chassis Number"/>
+      <keyMapping columnObjectName="Join_2" columnName="PREVIOUS_CHASSIS_NUMBER"/>
+    </attribute>
+    <attribute id="OPS_PROCESSING_STATUS" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Processing Status"/>
+      <keyMapping columnObjectName="Join_2" columnName="OPS_PROCESSING_STATUS"/>
+    </attribute>
+  
+    <attribute id="SCHEDULED_INVOICE_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Scheduled Invoice Date"/>
+      <keyMapping columnObjectName="Join_2" columnName="SCHEDULED_INVOICE_DATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="329" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="VBKD" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="356" y="641"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="VBKD_H" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="301" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="275" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="199"/>
+    </shape>
+    <shape modelObjectName="VBKD_H" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="251"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="329" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="265"/>
+    </shape>
+    <shape modelObjectName="VBKD" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="251"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

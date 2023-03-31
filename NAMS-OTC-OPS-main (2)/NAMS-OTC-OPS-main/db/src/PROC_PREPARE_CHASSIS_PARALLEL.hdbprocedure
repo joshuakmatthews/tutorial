@@ -1,0 +1,47 @@
+PROCEDURE "PROC_PREPARE_CHASSIS_PARALLEL"(
+    "I_DIVISION_CODE" NVARCHAR(1),
+    "I_NUMBER_OF_THREADS" INTEGER
+ )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA
+   AS
+BEGIN
+    UPDATE chassis_files SET streamno = 0, lineno = 0 WHERE divisioncd = :I_DIVISION_CODE;
+    MERGE INTO chassis_files c
+    USING (
+        SELECT
+            c.ID,
+            CASE MOD(FLOOR((p.seq-1)/:I_NUMBER_OF_THREADS),2)
+                WHEN 0
+                    THEN MOD(p.seq-1,:I_NUMBER_OF_THREADS)+1
+                ELSE
+                :I_NUMBER_OF_THREADS-MOD(p.seq-1,:I_NUMBER_OF_THREADS)
+            END AS streamNo,
+            FLOOR(TO_INT((p.seq-1)/:I_NUMBER_OF_THREADS))+1 as lineNo
+        FROM (
+            SELECT
+                salesorder,
+                DENSE_RANK() OVER (ORDER BY cn DESC, salesorder) AS seq
+            FROM (
+                SELECT
+                    salesorder,
+                    COUNT(*) cn
+                FROM
+                    manageservice_chassisfiles
+                WHERE
+                    divisionCd = :I_DIVISION_CODE AND
+                    salesOrder IS NOT NULL AND
+                    isDelta = true AND
+                    ( materialSaved = false OR salesOrderSaved = false )
+                GROUP BY
+                    salesOrder
+            )
+        ) p
+        JOIN chassis_orders c
+        ON c.salesorder = p.salesorder
+    ) p
+    ON c.ID = p.ID
+    WHEN MATCHED THEN UPDATE SET c.streamNo = p.streamNo, c.lineNo = p.lineNo;
+END

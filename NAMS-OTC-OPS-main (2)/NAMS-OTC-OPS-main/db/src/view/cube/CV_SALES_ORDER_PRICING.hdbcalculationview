@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_SALES_ORDER_PRICING" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Sales Order Pricing"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::PRCD_ELEMENTS">
+    <resourceUri>slts4hc::PRCD_ELEMENTS</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::VBAK">
+    <resourceUri>slts4hc::VBAK</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::VBKD">
+    <resourceUri>slts4hc::VBKD</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_PRCD_ELEMENTS" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="CONDITION_TYPE"/>
+      <viewAttribute id="RATE"/>
+      <viewAttribute id="CURRENCY"/>
+    
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::PRCD_ELEMENTS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="KNUMV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="KPOSN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONDITION_TYPE" source="KSCHL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RATE" source="KBETR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="WAERS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="KWERT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CURRENCY" source="WAERK"/>
+    </input>
+    <filter>&quot;CONDITION_TYPE&quot; IN('JRC1', 'JRC2', 'JRC3', 'JRC4', 'ZA00', 'ZB00', 'ZC00', 'ZCAR', 'ZD00', 'ZE00', 'ZF00', 'ZFET', 'ZN10', 'ZP00', 'ZP01', 'ZR00', 'ZSUR')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_VBAK">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::VBAK">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="VBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="KNUMV"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_VBKD_H">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="EXCHANGE_RATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::VBKD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="VBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="POSNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGE_RATE" source="KURRF"/>
+    </input>
+    <filter>&quot;SALES_ORDER_ITEM&quot;='000000'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_VBAK_VBKD" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="EXCHANGE_RATE" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="P_VBAK">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+    </input>
+    <input node="P_VBKD_H">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGE_RATE" source="EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_USD" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="CONDITION_TYPE"/>
+      <viewAttribute id="RATE" aggregationType="sum"/>
+      <viewAttribute id="CURRENCY"/>
+    
+      <viewAttribute id="VALUE" aggregationType="sum"/>
+    
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="RATE_USD" datatype="DECIMAL" length="24" scale="9" expressionLanguage="SQL">
+        <formula>CASE &quot;CURRENCY&quot; 
+	 WHEN 'USD' then &quot;RATE&quot; 
+	 ELSE 
+	 	 CASE &quot;EXCHANGE_RATE&quot;
+	 	 	 WHEN 0 then 0
+	 	 	 ELSE &quot;RATE&quot; / &quot;EXCHANGE_RATE&quot;
+	 	  END
+ END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="VALUE_USD" datatype="DECIMAL" length="24" scale="9" expressionLanguage="SQL">
+    
+        <formula>CASE &quot;DOCUMENT_CURRENCY&quot; 
+	 WHEN 'USD' then &quot;VALUE&quot; 
+	 ELSE 
+	 	 CASE &quot;EXCHANGE_RATE&quot;
+	 	 	 WHEN 0 then 0
+	 	 	 ELSE &quot;VALUE&quot; / &quot;EXCHANGE_RATE&quot;
+	 	  END
+ END</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="J_VBAK_VBKD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGE_RATE" source="EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+    </input>
+    <input node="P_PRCD_ELEMENTS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONDITION_TYPE" source="CONDITION_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RATE" source="RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CURRENCY" source="DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+    </input>
+    <joinAttribute name="DOCUMENT_CONDITION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZF00">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="CONDITION_TYPE"/>
+      <viewAttribute id="FREIGHT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FREIGHT" source="RATE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZF00'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="JRCX" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="CONDITION_TYPE"/>
+      <viewAttribute id="CANADIAN_TAXES"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANADIAN_TAXES" source="VALUE"/></input>
+    <filter>&quot;CONDITION_TYPE&quot; IN('JRC1', 'JRC2', 'JRC3', 'JRC4')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="U_PRICING">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="FREIGHT" aggregationType="sum"/>
+      <viewAttribute id="CANADIAN_TAXES" aggregationType="sum"/>
+      <viewAttribute id="CAR_PCT" aggregationType="sum"/>
+      <viewAttribute id="CHANGE_ORDER_CHARGE" aggregationType="sum"/>
+      <viewAttribute id="EXTENDED_WARRANTY" aggregationType="sum"/>
+      <viewAttribute id="LIST_DISCOUNT" aggregationType="sum"/>
+      <viewAttribute id="LIST_PRICE" aggregationType="sum"/>
+      <viewAttribute id="MARKETING_FEE" aggregationType="sum"/>
+      <viewAttribute id="PRICE_PROTECTION" aggregationType="sum"/>
+      <viewAttribute id="SALES_ALLOWANCE_PCT" aggregationType="sum"/>
+      <viewAttribute id="SALES_PRICE" aggregationType="sum"/>
+      <viewAttribute id="STD_DEALER_DISCOUNT" aggregationType="sum"/>
+      <viewAttribute id="SURCHARGES" aggregationType="sum"/>
+    
+      <viewAttribute id="FET" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="ZF00" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FREIGHT" source="FREIGHT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="JRCX" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANADIAN_TAXES" source="CANADIAN_TAXES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZCAR" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAR_PCT" source="CAR_PCT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZE00" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGE_ORDER_CHARGE" source="CHANGE_ORDER_CHARGE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZD00" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXTENDED_WARRANTY" source="EXTENDED_WARRANTY"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZP01" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIST_DISCOUNT" source="LIST_DISCOUNT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZR00" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIST_PRICE" source="LIST_PRICE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZC00" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_FEE" source="MARKETING_FEE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZB00" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_PROTECTION" source="PRICE_PROTECTION"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZP00" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ALLOWANCE_PCT" source="SALES_ALLOWANCE_PCT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZN10" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_PRICE" source="SALES_PRICE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZA00" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_DEALER_DISCOUNT" source="STD_DEALER_DISCOUNT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+    <input node="ZSUR" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SURCHARGES" source="SURCHARGES"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FET" null="false" value="0"/>
+    </input>
+  
+    <input node="ZFET" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FREIGHT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANADIAN_TAXES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CHANGE_ORDER_CHARGE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="EXTENDED_WARRANTY" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LIST_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_FEE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRICE_PROTECTION" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_ALLOWANCE_PCT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_PRICE" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="STD_DEALER_DISCOUNT" null="false" value="0"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SURCHARGES" null="false" value="0"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FET" source="FET"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZCAR">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="CAR_PCT"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAR_PCT" source="RATE"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZCAR'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZE00">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="CHANGE_ORDER_CHARGE"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGE_ORDER_CHARGE" source="RATE_USD"/>
+    </input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZE00'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZD00">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="EXTENDED_WARRANTY"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXTENDED_WARRANTY" source="RATE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZD00'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZP01">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="LIST_DISCOUNT"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIST_DISCOUNT" source="RATE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZP01'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZR00">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="LIST_PRICE"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIST_PRICE" source="RATE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZR00'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZC00">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="MARKETING_FEE"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_FEE" source="RATE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZC00'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZB00">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="PRICE_PROTECTION"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_PROTECTION" source="RATE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZB00'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZP00">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="SALES_ALLOWANCE_PCT"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ALLOWANCE_PCT" source="RATE"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZP00'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZN10">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="SALES_PRICE"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_PRICE" source="RATE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZN10'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZA00">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="STD_DEALER_DISCOUNT"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_DEALER_DISCOUNT" source="RATE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZA00'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZSUR">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="SURCHARGES"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SURCHARGES" source="RATE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZSUR'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ZFET">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="FET"/>
+    
+      <viewAttribute id="CONDITION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="J_USD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FET" source="VALUE_USD"/></input>
+    <filter>&quot;CONDITION_TYPE&quot;='ZFET'</filter>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="U_PRICING">
+  <attributes>
+    <attribute id="SALES_ORDER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Document"/>
+      <keyMapping columnObjectName="U_PRICING" columnName="SALES_ORDER"/>
+    </attribute>
+    <attribute id="DOCUMENT_CONDITION" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Number of the Document Condition"/>
+      <keyMapping columnObjectName="U_PRICING" columnName="DOCUMENT_CONDITION"/>
+    </attribute>
+    <attribute id="SALES_ORDER_ITEM" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Condition item number"/>
+      <keyMapping columnObjectName="U_PRICING" columnName="SALES_ORDER_ITEM"/>
+    </attribute>
+  
+    <attribute id="CAR_PCT" order="6" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAR"/>
+  
+      <keyMapping columnObjectName="U_PRICING" columnName="CAR_PCT"/>
+  
+    </attribute>
+    <attribute id="SALES_ALLOWANCE_PCT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Allowance"/>
+      <keyMapping columnObjectName="U_PRICING" columnName="SALES_ALLOWANCE_PCT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="FREIGHT" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Freight"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="FREIGHT"/>
+    </measure>
+    <measure id="CANADIAN_TAXES" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Canadian Taxes"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="CANADIAN_TAXES"/>
+    </measure>
+    <measure id="CHANGE_ORDER_CHARGE" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Change Order Charges"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="CHANGE_ORDER_CHARGE"/>
+    </measure>
+    <measure id="EXTENDED_WARRANTY" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Extended Warranty"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="EXTENDED_WARRANTY"/>
+    </measure>
+    <measure id="LIST_DISCOUNT" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="List Discount"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="LIST_DISCOUNT"/>
+    </measure>
+    <measure id="LIST_PRICE" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="List Price"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="LIST_PRICE"/>
+    </measure>
+    <measure id="MARKETING_FEE" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Marketing Fee"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="MARKETING_FEE"/>
+    </measure>
+    <measure id="PRICE_PROTECTION" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Price Protection"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="PRICE_PROTECTION"/>
+    </measure>
+    <measure id="SALES_PRICE" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Sales Price"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="SALES_PRICE"/>
+    </measure>
+    <measure id="STD_DEALER_DISCOUNT" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Standard Dealer Discount"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="STD_DEALER_DISCOUNT"/>
+    </measure>
+    <measure id="SURCHARGES" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Surcharges"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="SURCHARGES"/>
+    </measure>
+  
+    <measure id="FET" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FET"/>
+      <measureMapping columnObjectName="U_PRICING" columnName="FET"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="1495" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="P_PRCD_ELEMENTS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1532" y="1081"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_VBAK" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1226" y="1241"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_VBKD_H" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1436" y="1241"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_VBAK_VBKD" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1252" y="1081"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="P_VBAK" modelObjectNameSpace="J_VBAK_VBKD" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="P_VBKD_H" modelObjectNameSpace="J_VBAK_VBKD" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_USD" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1505" y="921"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_VBAK_VBKD" modelObjectNameSpace="J_USD" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="P_PRCD_ELEMENTS" modelObjectNameSpace="J_USD" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZF00" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1351" y="656"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="JRCX" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2821" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="U_PRICING" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1495" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZCAR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2611" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZE00" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZD00" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2401" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZP01" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="511" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZR00" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1561" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZC00" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="301" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZB00" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1141" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZP00" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="721" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZN10" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1771" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZA00" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1981" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ZSUR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="931" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="ZFET" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2191" y="656"/>
+      <rectangleSize width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

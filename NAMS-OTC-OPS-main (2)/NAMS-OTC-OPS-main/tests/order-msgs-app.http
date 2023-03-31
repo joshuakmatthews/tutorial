@@ -1,0 +1,16 @@
+### Adding Fleet Qty to Fiori causes a 502
+GET http://localhost:4004/manage/MsgOrders?$count=true&$filter=current%20eq%20true&$select=DTPONumber,ID,chassisNo,dealerCd,divisionCd,fleetOrder,fleetQty,messageType,modelCd,orderReceivedDt&$skip=0&$top=30
+Content-Type: application/json;IEEE754Compatible=true
+
+### Long download time 
+GET http://localhost:4004/manage/MsgOrders?$count=true&$filter=current%20eq%20true%20and%20divisionCd%20eq%20%27P%27&$select=DTPONumber,ID,chassisNo,dealerCd,divisionCd,messageType,modelCd,orderReceivedDt,soldToCountry&$skip=0&$top=1000
+Content-Type: application/json;IEEE754Compatible=true
+
+### I614 doesn't exist, country will remain null and sales org default 1010 
+GET http://localhost:4004/manage/MsgOrders(00617f51-383b-4474-8273-524149721f9f)?$select=DTPONumber,ID,chassisNo,dealerCd,divisionCd,messageType,modelCd,orderReceivedDt,soldToCountry,salesOrg
+Content-Type: application/json;IEEE754Compatible=true
+
+### First: update order_msg_orders set soldtocountry = null, salesorg = '1010' where id = 'f1a836c5-49ad-4c97-8a23-19c176d424d4'; 
+GET http://localhost:4004/manage/MsgOrders(f1a836c5-49ad-4c97-8a23-19c176d424d4)?$select=DTPONumber,ID,chassisNo,dealerCd,divisionCd,messageType,modelCd,orderReceivedDt,soldToCountry,salesOrg
+Content-Type: application/json;IEEE754Compatible=true
+

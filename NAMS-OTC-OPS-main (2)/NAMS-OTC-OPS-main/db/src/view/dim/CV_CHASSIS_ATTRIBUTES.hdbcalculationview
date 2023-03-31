@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_CHASSIS_ATTRIBUTES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Chassis Attributes"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="CV_DIM_MATERIAL_CLASSIFICATION">
+    <resourceUri>CV_DIM_MATERIAL_CLASSIFICATION</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+
+<logicalModel id="CV_DIM_MATERIAL_CLASSIFICATION">
+  <attributes>
+    <attribute id="Chassis" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Chassis"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="MATERIAL"/>
+    </attribute>
+    <attribute id="CabType" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cab Type"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="CAB_TYPE"/>
+    </attribute>
+    <attribute id="CabWidth" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cab Width"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="CAB_WIDTH"/>
+    </attribute>
+    <attribute id="CancellationReplacementCode" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cancellation/Replacement Code"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="CANCEL_REPLACE_CODE"/>
+    </attribute>
+    <attribute id="CARNumber" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAR Number"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="CAR_NUMBER"/>
+    </attribute>
+    <attribute id="CCModel" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CC Model"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="CC_MODEL"/>
+    </attribute>
+    <attribute id="EngineSerial" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Engine Serial"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="ENGINE_SERIAL_NUMBER"/>
+    </attribute>
+    <attribute id="Class" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Class"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="CLASS"/>
+    </attribute>
+    <attribute id="EngineType" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Engine Type"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="ENGINE_TYPE"/>
+    </attribute>
+    <attribute id="MarketingNumber" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Marketing Number"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="MARKETING_NUMBER"/>
+    </attribute>
+    <attribute id="SalesModelFamily" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Model Family"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="SALES_MODEL_FAMILY"/>
+    </attribute>
+  
+    <attribute id="FirmScheduleDate" order="12" semanticType="date" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Firm Schedule Date"/>
+  
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="FIRM_SCHEDULE_DATE"/>
+  
+    </attribute>
+    <attribute id="TentativeScheduleDate" order="13" semanticType="date" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Tentative Schedule Date"/>
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="TENTATIVE_SCHEDULE_DATE"/>
+    </attribute>
+  
+    <attribute id="MarketingClass" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Marketing Class"/>
+  
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="MARKETING_CLASS"/>
+  
+    </attribute>
+  
+    <attribute id="ProductType" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Product Type"/>
+  
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="PRODUCT_TYPE"/>
+  
+    </attribute>
+  
+    <attribute id="Promotions" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Promotions"/>
+  
+      <keyMapping columnObjectName="CV_DIM_MATERIAL_CLASSIFICATION" columnName="PROMOTIONS"/>
+  
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="794" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>

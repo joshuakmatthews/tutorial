@@ -1,0 +1,39 @@
+### Split 189406 - 189424
+### - 189406 - 189419 (generated)
+### - 189420 - 189424
+POST http://localhost:4004/manage/MsgOrders
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "action": "Split",
+    "changeOrderNo": 1,
+    "chassisNo": "189420",
+    "createTimestamp": "2023-02-04T14:20:00.000000Z",
+    "divisionCd": "K",
+    "DTPONumber": "10077847",
+    "endingChassis": "189424",
+    "messageType": "UpdateNAMSOrder",
+    "orderAddDt": "2022-08-12",
+    "orderType": "O",
+    "startingChassis": "189420"
+}
+
+### Now mark the original as saved
+### Trigger the logic to follow newerMessage_ID forward and apply salesOrder there, too
+### This has to be a non-existent salesOrder in order to simulate S4 BAPI has responded to
+### CPI but not yet committed the order to the database yet, so subsequent GET to the S4
+### API will fail to retrieve any line items
+POST http://localhost:4004/manage/MsgOrders(30b8869c-2acb-4248-ade2-18ba6093392c)/markSaved
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "K",
+    "orderSaved": true,
+    "salesOrder": "0000053616",
+    "timesProcessed": 1
+}
+
+### Now get the order like CPI would
+### Trigger filling deleteItems before S4 
+GET http://localhost:4004/manage/MsgOrders?$expand=splitOrder,Chassis&$top=10&$filter=chassisNo eq '189406' and divisionCd eq 'K' and orderType eq 'O' and current eq true and orderSaved eq false&$orderby=createTimestamp
+Content-Type: application/json;IEEE754Compatible=true

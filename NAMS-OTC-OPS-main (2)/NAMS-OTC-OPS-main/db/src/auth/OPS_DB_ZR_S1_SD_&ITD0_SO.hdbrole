@@ -1,0 +1,22 @@
+{
+  "role": {
+    "name": "ops.db::ZR_S1_SD_&ITD0_SO",
+    "schema_privileges": [
+      {
+        "privileges": [
+          "SELECT",
+          "SELECT CDS METADATA",
+          "SELECT METADATA",
+          "EXECUTE"
+        ]
+      }
+    ],
+    "schema_analytic_privileges": [
+      {
+        "privileges": [
+          "OPS_DB_AP_ALL"
+        ]
+      }
+    ]
+  }
+}

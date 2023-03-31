@@ -1,0 +1,9 @@
+{
+    "ops-db": {
+      "application_user": {
+        "container_roles": [
+          "ops.db::ZR_S1_ALL_ITD0_RT"
+        ]
+      }
+    }
+  }

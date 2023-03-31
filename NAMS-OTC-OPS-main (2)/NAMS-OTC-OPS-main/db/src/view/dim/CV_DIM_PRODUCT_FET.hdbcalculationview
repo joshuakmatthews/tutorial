@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_PRODUCT_FET" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Tire FET"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="sltsrmhc::/1CN/CBPSAP068">
+    <resourceUri>sltsrmhc::/1CN/CBPSAP068</resourceUri>
+  </DataSource>
+  <DataSource id="sltsrmhc::BUT000">
+    <resourceUri>sltsrmhc::BUT000</resourceUri>
+  </DataSource>
+  <DataSource id="sltsrmhc::BBP_LOCMAP">
+    <resourceUri>sltsrmhc::BBP_LOCMAP</resourceUri>
+  </DataSource>
+  <DataSource id="CV_SRM_CONTRACT_HEAD">
+    <resourceUri>CV_SRM_CONTRACT_HEAD</resourceUri>
+  </DataSource>
+  <DataSource id="CV_SRM_DOCUMENT_ITEM">
+    <resourceUri>CV_SRM_DOCUMENT_ITEM</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Pricing">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_ITEM_GUID"/>
+      <viewAttribute id="LOCATION_GUID"/>
+      <viewAttribute id="CONDITION_TYPE"/>
+      <viewAttribute id="TIMESTAMP_TO"/>
+      <viewAttribute id="RELEASE_STATUS"/>
+      <viewAttribute id="TIMESTAMP_FROM"/>
+      <viewAttribute id="RATE"/>
+      <viewAttribute id="PRICE_UNIT"/>
+      <viewAttribute id="CURRENCY"/></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="AMOUNT" datatype="DECIMAL" length="15" scale="3" expressionLanguage="SQL">
+        <formula>&quot;RATE&quot;/&quot;PRICE_UNIT&quot;</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CONDITION_VALID_FROM" datatype="DATE" expressionLanguage="SQL">
+    
+        <formula>TO_DATE(LEFT(&quot;TIMESTAMP_FROM&quot;, 8))</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CONDITION_VALID_TO" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(LEFT(&quot;TIMESTAMP_TO&quot;, 8))</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="sltsrmhc::/1CN/CBPSAP068">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RATE" source="KBETR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_UNIT" source="KPEIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="KONWA"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_ITEM_GUID" source="BBP_ITEM_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_GUID" source="INVENT_LOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONDITION_TYPE" source="KSCHL"/>
+    </input>
+    <filter>&quot;CONDITION_TYPE&quot; = 'Z1FT' and
+&quot;RELEASE_STATUS&quot; = ''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Item_Pricing" cardinality="C1_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_ITEM_GUID"/>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="ORDERED_PROD"/>
+      <viewAttribute id="NUMBER_INT"/>
+      <viewAttribute id="RATE"/>
+      <viewAttribute id="PRICE_UNIT"/>
+      <viewAttribute id="CURRENCY"/>
+    
+      <viewAttribute id="AMOUNT"/>
+    
+      <viewAttribute id="CONDITION_VALID_FROM"/>
+      <viewAttribute id="CONDITION_VALID_TO"/>
+    
+      <viewAttribute id="PLANT"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Item">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="HEAD_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDERED_PROD" source="ORDERED_PROD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER_INT" source="NUMBER_INT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_ITEM_GUID" source="ITEM_GUID"/>
+    </input>
+    <input node="Plant_Pricing">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RATE" source="RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_UNIT" source="PRICE_UNIT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONDITION_VALID_FROM" source="CONDITION_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONDITION_VALID_TO" source="CONDITION_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_ITEM_GUID" source="CONTRACT_ITEM_GUID"/>
+    </input>
+    <joinAttribute name="CONTRACT_ITEM_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Plant_Pricing" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="RATE"/>
+      <viewAttribute id="PRICE_UNIT"/>
+      <viewAttribute id="CURRENCY"/>
+      <viewAttribute id="PLANT"/>
+      <viewAttribute id="AMOUNT"/>
+      <viewAttribute id="CONDITION_VALID_FROM"/>
+      <viewAttribute id="CONDITION_VALID_TO"/>
+      <viewAttribute id="CONTRACT_ITEM_GUID"/>
+      <viewAttribute hidden="true" id="JOIN$LOCATION_GUID$LOCATION_GUID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Pricing">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_ITEM_GUID" source="CONTRACT_ITEM_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RATE" source="RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_UNIT" source="PRICE_UNIT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONDITION_VALID_FROM" source="CONDITION_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONDITION_VALID_TO" source="CONDITION_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCATION_GUID$LOCATION_GUID" source="LOCATION_GUID"/>
+    </input>
+    <input node="Plant_Loc">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCATION_GUID$LOCATION_GUID" source="LOCATION_GUID"/>
+    </input>
+    <joinAttribute name="JOIN$LOCATION_GUID$LOCATION_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Plant_Loc" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PLANT"/>
+      <viewAttribute id="LOCATION_GUID"/>
+      <viewAttribute hidden="true" id="JOIN$LOCATION$LOCATION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Loc_BP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_GUID" source="LOCATION_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCATION$LOCATION" source="LOCATION"/>
+    </input>
+    <input node="Location">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCATION$LOCATION" source="LOCATION"/>
+    </input>
+    <joinAttribute name="JOIN$LOCATION$LOCATION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Loc_BP">
+    <viewAttributes>
+      <viewAttribute id="LOCATION_GUID"/>
+    
+      <viewAttribute id="LOCATION"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sltsrmhc::BUT000">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_GUID" source="PARTNER_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION" source="PARTNER"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Location">
+    <viewAttributes>
+      <viewAttribute id="PLANT"/>
+    
+      <viewAttribute id="LOCATION"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sltsrmhc::BBP_LOCMAP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="EXT_LOCNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION" source="PARTNER_NO"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Head_Items" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="CONTRACT"/>
+      <viewAttribute id="CONTRACT_VALID_FROM"/>
+      <viewAttribute id="CONTRACT_VALID_TO"/>
+      <viewAttribute id="PROC_ORG"/>
+      <viewAttribute id="SUPPLIER"/>
+      <viewAttribute id="CONTRACT_ITEM_GUID"/>
+    
+      <viewAttribute id="ORDERED_PROD"/>
+      <viewAttribute id="NUMBER_INT"/>
+      <viewAttribute id="RATE"/>
+      <viewAttribute id="PRICE_UNIT"/>
+      <viewAttribute id="CURRENCY"/>
+    
+      <viewAttribute id="AMOUNT"/>
+    
+      <viewAttribute id="CONDITION_VALID_FROM"/>
+      <viewAttribute id="CONDITION_VALID_TO"/>
+    
+      <viewAttribute id="PLANT"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Head">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT" source="CONTRACT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROC_ORG" source="PROC_ORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPPLIER" source="SUPPLIER"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_VALID_FROM" source="CONTRACT_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_VALID_TO" source="CONTRACT_VALID_TO"/>
+    </input>
+    <input node="Item_Pricing">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_ITEM_GUID" source="CONTRACT_ITEM_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER_INT" source="NUMBER_INT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDERED_PROD" source="ORDERED_PROD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RATE" source="RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_UNIT" source="PRICE_UNIT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONDITION_VALID_FROM" source="CONDITION_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONDITION_VALID_TO" source="CONDITION_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+    </input>
+    <joinAttribute name="CONTRACT_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Head">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="CONTRACT"/>
+      <viewAttribute id="DESCRIPTION"/>
+      <viewAttribute id="CONTRACT_VALID_FROM"/>
+      <viewAttribute id="CONTRACT_VALID_TO"/>
+      <viewAttribute id="PROC_ORG"/>
+      <viewAttribute id="SUPPLIER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CV_SRM_CONTRACT_HEAD"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Item">
+    <viewAttributes>
+      <viewAttribute id="ITEM_GUID"/>
+      <viewAttribute id="HEAD_GUID"/>
+      <viewAttribute id="ORDERED_PROD"/>
+      <viewAttribute id="NUMBER_INT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CV_SRM_DOCUMENT_ITEM"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Head_Items">
+  <attributes>
+    <attribute id="CONTRACT_GUID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract GUID"/>
+      <keyMapping columnObjectName="Head_Items" columnName="CONTRACT_GUID"/>
+    </attribute>
+    <attribute id="CONTRACT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract"/>
+      <keyMapping columnObjectName="Head_Items" columnName="CONTRACT"/>
+    </attribute>
+    <attribute id="CONTRACT_VALID_FROM" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract Valid From"/>
+      <keyMapping columnObjectName="Head_Items" columnName="CONTRACT_VALID_FROM"/>
+    </attribute>
+    <attribute id="CONTRACT_VALID_TO" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract Valid To"/>
+      <keyMapping columnObjectName="Head_Items" columnName="CONTRACT_VALID_TO"/>
+    </attribute>
+    <attribute id="PROC_ORG" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Responsible Purchasing Organization"/>
+      <keyMapping columnObjectName="Head_Items" columnName="PROC_ORG"/>
+    </attribute>
+    <attribute id="SUPPLIER" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Partner Number"/>
+      <keyMapping columnObjectName="Head_Items" columnName="SUPPLIER"/>
+    </attribute>
+    <attribute id="CONTRACT_ITEM_GUID" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract Item GUID"/>
+      <keyMapping columnObjectName="Head_Items" columnName="CONTRACT_ITEM_GUID"/>
+    </attribute>
+    <attribute id="ORDERED_PROD" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Ordered Product"/>
+      <keyMapping columnObjectName="Head_Items" columnName="ORDERED_PROD"/>
+    </attribute>
+    <attribute id="NUMBER_INT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Item Number"/>
+      <keyMapping columnObjectName="Head_Items" columnName="NUMBER_INT"/>
+    </attribute>
+    <attribute id="RATE" order="10" semanticType="amount" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Rate"/>
+      <unitCurrencyAttribute attributeName="CURRENCY"/>
+      <keyMapping columnObjectName="Head_Items" columnName="RATE"/>
+    </attribute>
+    <attribute id="PRICE_UNIT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Price Unit"/>
+      <keyMapping columnObjectName="Head_Items" columnName="PRICE_UNIT"/>
+    </attribute>
+    <attribute id="CURRENCY" order="12" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Currency"/>
+      <keyMapping columnObjectName="Head_Items" columnName="CURRENCY"/>
+    </attribute>
+  
+    <attribute id="AMOUNT" order="13" semanticType="amount" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FET Amount"/>
+      <unitCurrencyAttribute attributeName="CURRENCY"/>
+  
+      <keyMapping columnObjectName="Head_Items" columnName="AMOUNT"/>
+  
+    </attribute>
+  
+    <attribute id="CONDITION_VALID_FROM" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Condition Valid From"/>
+  
+      <keyMapping columnObjectName="Head_Items" columnName="CONDITION_VALID_FROM"/>
+  
+    </attribute>
+    <attribute id="CONDITION_VALID_TO" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Condition Valid To"/>
+      <keyMapping columnObjectName="Head_Items" columnName="CONDITION_VALID_TO"/>
+    </attribute>
+  
+    <attribute id="PLANT" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Location"/>
+  
+      <keyMapping columnObjectName="Head_Items" columnName="PLANT"/>
+  
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="534.5823433691181" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Pricing" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="380.70227186916236" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Item_Pricing" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="172" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Item" modelObjectNameSpace="Item_Pricing" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="207"/>
+    </shape>
+    <shape modelObjectName="Plant_Pricing" modelObjectNameSpace="Item_Pricing" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Plant_Pricing" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="145.33333333333348" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Pricing" modelObjectNameSpace="Plant_Pricing" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Plant_Loc" modelObjectNameSpace="Plant_Pricing" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="171"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Plant_Loc" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118.66666666666674" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Loc_BP" modelObjectNameSpace="Plant_Loc" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="171"/>
+    </shape>
+    <shape modelObjectName="Location" modelObjectNameSpace="Plant_Loc" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Loc_BP" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="856.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Location" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="856.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Head_Items" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="534.5823433691181" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Head" modelObjectNameSpace="Head_Items" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Item_Pricing" modelObjectNameSpace="Head_Items" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Head" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="592.7406712788052" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Item" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="477.76671071096587" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

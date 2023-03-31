@@ -1,0 +1,15 @@
+### SELECT with EXPAND
+GET http://localhost:4004/manage/MsgOrders?$filter=divisionCd eq 'K' and DTPONumber eq '10049727' and current eq true and Chassis/any(a:a/chassisNo eq '991258')&$select=bodyHgt,bodyLadenCpcty,bodyLgth,bodyType,cabAxleDimeension,cabEOFDimeension,CARNumber,CARPct,chasHwyPct,chassisPrevNo,chasOpsClassBPct,chasOpsClassCPct,chasOpsClassDPct,chngOrdChrg,cornerRadius,ctrlnAxle,cuPoNo,current,custNo,customerNm,dealerCd,dlrPoPresentId,endingChassis,FETExemptAmt,fleetOrder,frontAxleBOCDimeension,frontAxleLoad,gawrFirstRear,gawrFront,gawrRear,gawrSecRear,gcw,gvwr,kingPinSet,listPrice,marketingFee,maxGradePct,noTrlrAxle,operAreaHgt,operAreaLgth,operAreaWidth,orderSaved,plantCd,promoAmt,promoProgCd,promoProgPct,rearAxleLoad,spclRqmntCd1,spclRqmntCd2,spclRqmntCd3,spclRqmntCd4,startingChassis,surchargesNSTD,surchargesZH00,surchargesZISF,surchargesZMAD,tireFET,trlrHgt,trlrLgth,unitTypeCd,warrOptAmt,weight,wheelbase&$expand=Options($select=text,rangeNameText,rangeNameDesc,list_price_amt,wgt_diff_qty,publicationStatus,FETExempt,tireFET,TPN,TQ,OPSLine1Description,OPSLine2Description;$expand=Notes($select=noteLineNumber,noteLineText;$filter=OPSPrintIndicator eq true)),Narratives($select=cd,text)
+Content-Type: application/json;IEEE754Compatible=true
+
+### SELECT without EXPAND
+GET http://localhost:4004/manage/MsgOrders?$filter=divisionCd eq 'K' and DTPONumber eq '10049727' and current eq true and Chassis/any(a:a/chassisNo eq '991258')&$select=bodyHgt,bodyLadenCpcty,bodyLgth,bodyType,cabAxleDimeension,cabEOFDimeension,CARNumber,CARPct,chasHwyPct,chassisPrevNo,chasOpsClassBPct,chasOpsClassCPct,chasOpsClassDPct,chngOrdChrg,cornerRadius,ctrlnAxle,cuPoNo,current,custNo,customerNm,dealerCd,dlrPoPresentId,endingChassis,FETExemptAmt,fleetOrder,frontAxleBOCDimeension,frontAxleLoad,gawrFirstRear,gawrFront,gawrRear,gawrSecRear,gcw,gvwr,kingPinSet,listPrice,marketingFee,maxGradePct,noTrlrAxle,operAreaHgt,operAreaLgth,operAreaWidth,orderSaved,plantCd,promoAmt,promoProgCd,promoProgPct,rearAxleLoad,spclRqmntCd1,spclRqmntCd2,spclRqmntCd3,spclRqmntCd4,startingChassis,surchargesNSTD,surchargesZH00,surchargesZISF,surchargesZMAD,tireFET,trlrHgt,trlrLgth,unitTypeCd,warrOptAmt,weight,wheelbase
+Content-Type: application/json;IEEE754Compatible=true
+
+### EXPAND without SELECT
+GET http://localhost:4004/manage/MsgOrders?$filter=divisionCd eq 'K' and DTPONumber eq '10049727' and current eq true and Chassis/any(a:a/chassisNo eq '991258')&$expand=Options($expand=Notes($filter=OPSPrintIndicator eq true)),Narratives
+Content-Type: application/json;IEEE754Compatible=true
+
+### No EXPAND or SELECT
+GET http://localhost:4004/manage/MsgOrders?$filter=divisionCd eq 'K' and DTPONumber eq '10049727' and current eq true and Chassis/any(a:a/chassisNo eq '991258')
+Content-Type: application/json;IEEE754Compatible=true

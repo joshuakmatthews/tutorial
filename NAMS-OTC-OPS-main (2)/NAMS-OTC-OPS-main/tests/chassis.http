@@ -1,0 +1,447 @@
+### Get chassis file record for update
+GET  http://localhost:4004/manage/ChassisFiles?$top=10
+
+### Get 00001763-2aa7-45e2-9866-2945e3933b22
+GET http://localhost:4004/manage/ChassisFiles(00001763-2aa7-45e2-9866-2945e3933b22)
+
+### updateChassisFiles
+POST http://localhost:4004/manage/updateChassisFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "chassisFiles": [{
+        "ID": "0000b046-d92c-45d2-ae8e-a7d25028411a",
+        "createdAt": "2022-11-04T18:21:50.910Z",
+        "createdBy": "sb-ops!t496",
+        "modifiedAt": "2022-11-04T18:21:50.910Z",
+        "modifiedBy": "sb-ops!t496",
+        "materialSaved": true,
+        "timesProcessed": 1,
+        "divisionCd": "K",
+        "chassisNo": "289808",
+        "vinMfgCd": null,
+        "vinModelCd": null,
+        "vinAxleCd": null,
+        "vinEngineCd": null,
+        "vinGVWRCd": null,
+        "vinUnuseCd": null,
+        "vinCheckDigitCd": null,
+        "vinYrCd": null,
+        "pltCd": null,
+        "engineSerNo": null,
+        "vehActlWgt": 0,
+        "DTPONumber": "10077338",
+        "orderAddDt": "2022-08-12",
+        "tentSchedDt": "2023-05-01",
+        "firmSchedDt": null,
+        "frameSchedDt": null,
+        "cabSchedDt": null,
+        "actlDlvryDt": null,
+        "reqDelDt": "2023-04-03",
+        "frameLnSeqNo": null,
+        "cabLnSeqNo": null,
+        "opsStatus": "TEST",
+        "chsStatus": null,
+        "destBusName": "C250",
+        "destCntctName": "Chase Anderson",
+        "destAddrLn1": "200 W. NORTHTOWN ROAD",
+        "destAddrLn2": null,
+        "destCity": "NORMAL",
+        "destSt": "IL",
+        "destZipCd": "61761",
+        "destCntctPhoneNo": "309-452-8392",
+        "destCntry": "US",
+        "streamNo": null,
+        "lineNo": null,
+        "salesOrderSaved": true,
+        "archiveVersion": 0,
+        "isDelta": true,
+        "businessError": false,
+        "materialReturn_TYPE": "S",
+        "materialReturn_ID": "TEST",
+        "materialReturn_NUMBER": "001",
+        "materialReturn_MESSAGE": "Material saved test message",
+        "materialReturn_LOG_NO": "000001",
+        "materialReturn_LOG_MSG_NO": "000001",
+        "materialReturn_MESSAGE_V1": "Message v1",
+        "materialReturn_MESSAGE_V2": "Message v2",
+        "materialReturn_MESSAGE_V3": "Message v3",
+        "materialReturn_MESSAGE_V4": "Message v4",
+        "materialReturn_PARAMETER": "Param",
+        "materialReturn_ROW": 1,
+        "materialReturn_FIELD": "Field",
+        "materialReturn_SYSTEM": "System",
+        "salesOrderReturns": [
+            {
+            "TYPE": "S",
+            "ID": "TEST",
+            "NUMBER": "002",
+            "MESSAGE": "Sales order save test message",
+            "LOG_NO": "000002",
+            "LOG_MSG_NO": "000002",
+            "MESSAGE_V1": "Message v1",
+            "MESSAGE_V2": "Message v2",
+            "MESSAGE_V3": "Message v3",
+            "MESSAGE_V4": "Message v4",
+            "PARAMETER": "Param",
+            "ROW": 1,
+            "FIELD": "Field",
+            "SYSTEM": "System"
+            }
+        ],
+        "salesOrder": null,
+        "salesOrderItem": null,
+        "salesOrg": null,
+        "startingChassis": null,
+        "endingChassis": null
+    }]
+}
+
+### Delete single record test
+DELETE http://localhost:4004/manage/ChassisFiles(8196800d-8334-49b8-ae3f-2dfb6df4307b)
+
+### Check single record insert still works
+POST http://localhost:4004/manage/ChassisFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+        {
+            "ID": "8196800d-8334-49b8-ae3f-2dfb6df4307b",
+            "divisionCd": "K",
+            "chassisNo": "156162",
+            "vinMfgCd": null,
+            "vinModelCd": null,
+            "vinAxleCd": null,
+            "vinEngineCd": null,
+            "vinGVWRCd": null,
+            "vinUnuseCd": null,
+            "vinCheckDigitCd": null,
+            "vinYrCd": null,
+            "pltCd": null,
+            "engineSerNo": null,
+            "vehActlWgt": 0,
+            "DTPONumber": "10049364",
+            "orderAddDt": "2021-08-12",
+            "tentSchedDt": "2023-01-03",
+            "firmSchedDt": null,
+            "frameSchedDt": null,
+            "cabSchedDt": null,
+            "actlDlvryDt": null,
+            "reqDelDt": "2023-01-03",
+            "frameLnSeqNo": null,
+            "cabLnSeqNo": null,
+            "opsStatus": "APPH",
+            "chsStatus": null,
+            "destBusName": "R815",
+            "destCntctName": "Mykell Murphy",
+            "destAddrLn1": "172 GLENCOE DRIVE",
+            "destAddrLn2": null,
+            "destCity": "MOUNT PEARL",
+            "destSt": "",
+            "destZipCd": "A1N 4S5",
+            "destCntctPhoneNo": "709-364-8251",
+            "destCntry": "CA"
+        }
+
+### isDelta calculation with S4
+POST http://localhost:4004/manage/ChassisFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+        {
+            "ID": "051c7e49-567c-4b37-b692-72e7b50a9f11",
+            "divisionCd": "K",
+            "chassisNo": "125223",
+            "vinMfgCd": "1XK",
+            "vinModelCd": "Y",
+            "vinAxleCd": "D",
+            "vinEngineCd": "P",
+            "vinGVWRCd": "9",
+            "vinUnuseCd": "X",
+            "vinCheckDigitCd": "8",
+            "vinYrCd": "N",
+            "pltCd": "R",
+            "engineSerNo": "0000",
+            "vehActlWgt": 0,
+            "DTPONumber": "10041829",
+            "orderAddDt": "2021-02-26",
+            "tentSchedDt": "2021-05-17",
+            "firmSchedDt": "2021-05-17",
+            "frameSchedDt": "2021-05-17",
+            "cabSchedDt": "2021-05-14",
+            "actlDlvryDt": null,
+            "reqDelDt": "2021-05-17",
+            "frameLnSeqNo": null,
+            "cabLnSeqNo": null,
+            "opsStatus": "RELS",
+            "chsStatus": "DA",
+            "destBusName": "PTC",
+            "destCntctName": "Mike Gleaves",
+            "destAddrLn1": "12479 Farm To Market Road",
+            "destAddrLn2": null,
+            "destCity": "Mt Vernon",
+            "destSt": "WA",
+            "destZipCd": "98273-9671",
+            "destCntctPhoneNo": "360-757-5397",
+            "destCntry": null,
+            "startingChassis": null,
+            "endingChassis": null
+        }
+
+### 
+POST http://localhost:4004/manage/getNextChassisPacket
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "P",
+    "threadNo": 1
+}
+
+### 
+POST http://localhost:4004/manage/getOldestChassisError
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "P"
+}
+
+### Get chassis enriched with destSt from sold-to region
+GET  http://localhost:4004/manage/ChassisFiles(fced52f2-266f-b49f-8baa-2727b7cf94f9)
+
+### Get chassis enriched with destSt from sold-to region
+GET  http://localhost:4004/manage/ChassisFiles?$select=ID,chassisNo,DTPONumber,divisionCd,destBusName,destSt&$filter=destSt%20eq%20null%20and%20destBusName%20ne%20null%20and%20destBusName%20ne%20''
+
+### Get chassis
+GET  http://localhost:4004/manage/ChassisFilesArchive?$filter=chassisNo eq '172013'
+
+### Delete step 2
+DELETE http://localhost:4004/manage/ChassisFiles(68e93b43-0a80-430a-952c-f9511498b1c2)
+
+### Insert delta test - step 2
+POST http://localhost:4004/manage/ChassisFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "ID": "ffbc321d-3235-44c0-9067-6c9ad0d594d0",
+    "divisionCd": "K",
+    "chassisNo": "172013",
+    "vinMfgCd": null,
+    "vinModelCd": null,
+    "vinAxleCd": null,
+    "vinEngineCd": null,
+    "vinGVWRCd": null,
+    "vinUnuseCd": null,
+    "vinCheckDigitCd": null,
+    "vinYrCd": null,
+    "pltCd": "M",
+    "engineSerNo": null,
+    "vehActlWgt": 0,
+    "DTPONumber": "10053003",
+    "orderAddDt": "2021-07-21",
+    "tentSchedDt": "2026-12-25",
+    "firmSchedDt": null,
+    "frameSchedDt": "2022-01-20",
+    "cabSchedDt": "2022-01-19",
+    "actlDlvryDt": null,
+    "reqDelDt": "2021-10-29",
+    "frameLnSeqNo": null,
+    "cabLnSeqNo": null,
+    "opsStatus": "APPH",
+    "chsStatus": null,
+    "destBusName": "CVS - Custom Vehicle Solutions",
+    "destCntctName": "Greg Paci",
+    "destAddrLn1": "L140 - 12345 MAIN STREET",
+    "destAddrLn2": null,
+    "destCity": "SWEDESBORO",
+    "destSt": "PA",
+    "destZipCd": "08085",
+    "destCntctPhoneNo": "610-608-1765",
+    "destCntry": null
+}
+
+### Insert delta test - step 2 - should result in isDelta = false
+POST http://localhost:4004/manage/ChassisFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "ID": "ffbc321d-3235-44c0-9067-6c9ad0d594d0",
+    "divisionCd": "K",
+    "chassisNo": "172013",
+    "vinMfgCd": null,
+    "vinModelCd": null,
+    "vinAxleCd": null,
+    "vinEngineCd": null,
+    "vinGVWRCd": null,
+    "vinUnuseCd": null,
+    "vinCheckDigitCd": null,
+    "vinYrCd": null,
+    "pltCd": "M",
+    "engineSerNo": null,
+    "vehActlWgt": 0,
+    "DTPONumber": "10053003",
+    "orderAddDt": "2021-07-21",
+    "tentSchedDt": "2026-12-25",
+    "firmSchedDt": null,
+    "frameSchedDt": "2022-01-20",
+    "cabSchedDt": "2022-01-19",
+    "actlDlvryDt": null,
+    "reqDelDt": "2021-10-29",
+    "frameLnSeqNo": null,
+    "cabLnSeqNo": null,
+    "opsStatus": "APPH",
+    "chsStatus": null,
+    "destBusName": "CVS - Custom Vehicle Solutions",
+    "destCntctName": "Greg Paci",
+    "destAddrLn1": "15409 Molley Pitcher Hwy",
+    "destAddrLn2": null,
+    "destCity": "Greencastle",
+    "destSt": "PA",
+    "destZipCd": "17225",
+    "destCntctPhoneNo": "610-608-1765",
+    "destCntry": null
+}
+
+### Delete delta test - step 1
+DELETE http://localhost:4004/manage/ChassisFilesArchive(8d7e7feb-2110-46a6-9c3f-d5bc0d16f077)
+
+### Insert delta test - step 1
+POST http://localhost:4004/manage/ChassisFilesArchive
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "ID": "8d7e7feb-2110-46a6-9c3f-d5bc0d16f077",
+    "createdAt": "2022-06-15T02:13:25.778Z",
+    "createdBy": "sb-ops!t596",
+    "modifiedAt": "2022-06-16T15:26:59.398Z",
+    "modifiedBy": "sb-ops!t596",
+    "materialSaved": true,
+    "timesProcessed": 1,
+    "divisionCd": "K",
+    "chassisNo": "172013",
+    "vinMfgCd": null,
+    "vinModelCd": null,
+    "vinAxleCd": null,
+    "vinEngineCd": null,
+    "vinGVWRCd": null,
+    "vinUnuseCd": null,
+    "vinCheckDigitCd": null,
+    "vinYrCd": null,
+    "pltCd": "M",
+    "engineSerNo": null,
+    "vehActlWgt": 0,
+    "DTPONumber": "10053003",
+    "orderAddDt": "2021-07-21",
+    "tentSchedDt": "2026-12-25",
+    "firmSchedDt": null,
+    "frameSchedDt": "2022-01-20",
+    "cabSchedDt": "2022-01-19",
+    "actlDlvryDt": null,
+    "reqDelDt": "2021-10-29",
+    "frameLnSeqNo": null,
+    "cabLnSeqNo": null,
+    "opsStatus": "APPH",
+    "chsStatus": null,
+    "destBusName": "CVS - Custom Vehicle Solutions",
+    "destCntctName": "Greg Paci",
+    "destAddrLn1": "15409 Molley Pitcher Hwy",
+    "destAddrLn2": null,
+    "destCity": "Greencastle",
+    "destSt": "PA",
+    "destZipCd": "17225",
+    "destCntctPhoneNo": "610-608-1765",
+    "destCntry": null,
+    "streamNo": 1,
+    "lineNo": 1,
+    "salesOrderSaved": true,
+    "archiveVersion": 1,
+    "isDelta": true
+}
+
+### Prepare for parallel processing
+POST http://localhost:4004/manage/prepareChassisParallel
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "P",
+    "numberOfThreads": 3
+}
+
+### Get next chassis packet
+POST http://localhost:4004/manage/getNextChassisPacket
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "P",
+    "threadNo": 1
+}
+
+### Get oldest error
+POST http://localhost:4004/manage/getOldestChassisError
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "P"
+}
+
+### Archive
+POST http://localhost:4004/manage/archiveChassisFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "P",
+    "versionsToKeep": 15
+}
+
+### Truncate
+POST http://localhost:4004/manage/truncateChassisFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "P"
+}
+
+### Get chassis
+GET http://localhost:4004/manage/ChassisFiles(4f3d72da-58ab-49bd-ad3e-6a7fdb54103b)
+
+### Insert noDelta = false
+POST http://localhost:4004/manage/ChassisFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+	"materialSaved": false,
+	"timesProcessed": 0,
+	"divisionCd": "P",
+	"chassisNo": "820300",
+	"vinMfgCd": "2NP",
+	"vinModelCd": "K",
+	"vinAxleCd": "H",
+	"vinEngineCd": "M",
+	"vinGVWRCd": "6",
+	"vinUnuseCd": "X",
+	"vinCheckDigitCd": "8",
+	"vinYrCd": "P",
+	"pltCd": "M",
+	"engineSerNo": "74919627",
+	"vehActlWgt": 4493.8,
+	"DTPONumber": "10035802",
+	"orderAddDt": "2021-04-28",
+	"tentSchedDt": "2022-03-21",
+	"firmSchedDt": "2022-03-25",
+	"frameSchedDt": "2022-03-25",
+	"cabSchedDt": "2022-03-22",
+	"actlDlvryDt": null,
+	"reqDelDt": "2021-08-26",
+	"frameLnSeqNo": "C25006M",
+	"cabLnSeqNo": "C22044C",
+	"opsStatus": "RELS",
+	"chsStatus": "FC",
+	"destBusName": "P636",
+	"destCntctName": "Thomas Legband",
+	"destAddrLn1": "4204 Global Street",
+	"destAddrLn2": null,
+	"destCity": "Raleigh",
+	"destSt": "NC",
+	"destZipCd": "27610",
+	"destCntctPhoneNo": "910-892-7105",
+	"destCntry": null,
+	"salesOrderSaved": false,
+	"archiveVersion": 0
+}

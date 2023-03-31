@@ -1,0 +1,31 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    {
+        "source": "^/map/(.*)$",
+        "csrfProtection": false,
+        "authenticationType": "xsuaa",
+        "scope": ["$XSAPPNAME.MapPlants_READ", "$XSAPPNAME.MapPlants_WRITE", "$XSAPPNAME.Admin"],
+        "destination": "ops-srv-api"
+      },
+      {
+      "source": "^/resources/(.*)$",
+      "target": "/resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
+    },
+    {
+      "source": "^/test-resources/(.*)$",
+      "target": "/test-resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
+    },
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

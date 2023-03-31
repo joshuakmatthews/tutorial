@@ -1,0 +1,54 @@
+### Insert single record (force ID so later tests work easily)
+POST http://localhost:4004/chassis-msg/Messages
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "ID": "67107932-9179-4915-a16c-a9da7fb6c428",
+    "action": "DELS",
+    "divisionCd": "K",
+    "chassisNo": "149367",
+    "orderType": "O",
+    "plantCd": "F",
+    "startingChassis": "149366",
+    "endingChassis": "149369",
+    "fleetQty": 4,
+    "statusCode": "DA",
+    "DTPOControlNumber": "10047174",
+    "chassisAddDt": "2021-05-11",
+    "changeOrderNo": 24,
+    "engineSerialNo": "X023451",
+    "vehicleActualWeight": 2570.6,
+    "createTimestamp": "2022-08-16T15:48:59.711229Z",
+    "invoiceQueueDt": "2022-08-16"
+}
+
+### updateStatus
+POST http://localhost:4004/chassis-msg/Messages(67107932-9179-4915-a16c-a9da7fb6c428)/updateStatus
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "orderSaved": true,
+    "timesProcessed": 1,
+    "returns": [{
+        "TYPE": "S",
+        "ID": "Testing",
+        "NUMBER": "001",
+        "MESSAGE": "This is a test message",
+        "LOG_NO": "000001",
+        "LOG_MSG_NO": "000001",
+        "MESSAGE_V1": "Message variable 1",
+        "MESSAGE_V2": "Message variable 2",
+        "MESSAGE_V3": "Message variable 3",
+        "MESSAGE_V4": "Message variable 4",
+        "PARAMETER": "Param",
+        "ROW": 1,
+        "FIELD": "Field",
+        "SYSTEM": "System"
+    }]
+}
+
+### GET
+GET http://localhost:4004/chassis-msg/Messages?$top=10
+
+### DELETE
+DELETE http://localhost:4004/chassis-msg/Messages(67107932-9179-4915-a16c-a9da7fb6c428)

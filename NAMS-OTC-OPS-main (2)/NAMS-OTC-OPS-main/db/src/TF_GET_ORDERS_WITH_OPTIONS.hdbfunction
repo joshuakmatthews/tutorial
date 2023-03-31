@@ -1,0 +1,41 @@
+FUNCTION "TF_GET_ORDERS_WITH_OPTIONS"("I_OPTIONS_CSV" NVARCHAR(5000)) 
+  RETURNS TABLE (
+    "SALES_ORDER" NVARCHAR(10)
+  ) 
+  LANGUAGE SQLSCRIPT 
+  SQL SECURITY INVOKER AS 
+BEGIN 
+    --Calculation View table function node can only map to scalar input parameter,
+    --so we use the standard library SQLSCRIPT_STRING to split the multiple input
+    --parameter values into a table
+    USING SQLSCRIPT_STRING AS STRINGLIB;	
+    DECLARE T_OPTIONS TABLE(RESULT NVARCHAR(7));	
+    DECLARE I_QUOTED_CSV NVARCHAR(5000);
+
+    SELECT TOP 1 SUBSTR_AFTER(:I_OPTIONS_CSV,'''') INTO I_QUOTED_CSV FROM OPS_DB_DUMMY;
+    IF :I_QUOTED_CSV = '' THEN
+        T_OPTIONS = STRINGLIB:SPLIT_TO_TABLE(:I_OPTIONS_CSV,',');
+    else
+        T_OPTIONS = STRINGLIB:SPLIT_TO_TABLE(:I_QUOTED_CSV,''',''');
+    end if;
+    
+    T_OPTIONS2 = SELECT LEFT(RESULT,7) RESULT FROM :T_OPTIONS WHERE RESULT IS NOT NULL AND TRIM(RESULT) != ''  AND RESULT != '''''';
+
+    --No option codes supplied, return all sales orders
+    IF IS_EMPTY(:T_OPTIONS2) THEN 
+        RETURN
+            SELECT DISTINCT "SALESORDER" AS "SALES_ORDER"
+            FROM "ORDER_MSG_ORDERS"
+            WHERE "CURRENT" = TRUE;
+    --Option codes supplied, return only sales orders that contain those options
+    ELSE 
+        RETURN
+            SELECT DISTINCT o."SALESORDER" AS "SALES_ORDER"
+            FROM "ORDER_MSG_ORDERS" o
+            JOIN "ORDER_MSG_OPTIONS" op
+                ON op."ORDER_ID" = o."ID"
+            JOIN :T_OPTIONS2 so
+                ON so."RESULT" = op."TEXT"
+            WHERE o."CURRENT" = TRUE;
+    END IF;
+END;

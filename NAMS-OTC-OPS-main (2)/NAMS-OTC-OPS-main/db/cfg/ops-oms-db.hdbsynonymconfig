@@ -1,0 +1,14 @@
+{
+  "OMS_CV_DIM_SALES_OPTION": {
+    "target": {
+      "object": "CV_DIM_SALES_OPTION",
+      "schema.configure": "logical-oms-grantor/schema"
+    }
+  },
+  "OMS_CV_PRICE_PROTECTION": {
+    "target": {
+      "object": "CV_PRICE_PROTECTION",
+      "schema.configure": "logical-oms-grantor/schema"
+    }
+  }
+}

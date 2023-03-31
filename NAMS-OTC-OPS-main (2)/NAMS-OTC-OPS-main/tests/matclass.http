@@ -1,0 +1,17 @@
+###
+GET http://localhost:4004/manage/MsgOrders(bdba044c-0429-4584-9c4c-ccd4dc182c09)?$expand=Options($expand=Notes($filter=OPSPrintIndicator%20eq%20true)),Narratives
+Content-Type: application/json;IEEE754Compatible=true
+
+### Normal CPI request for KW - 1,000 records at a time
+### Results in HTTP 545 "some paramters are missing"
+### Maybe due to 26,000+ entries in the "materials" array of object keys
+GET http://localhost:4004/manage/MsgOrders?$expand=splitOrder&$top=10&$filter=orderType%20eq%20'O'%20and%20orderSaved%20eq%20true%20and%20current%20eq%20true%20and%20divisionCd%20eq%20'K'&$orderby=createTimestamp
+Content-Type: application/json;IEEE754Compatible=true
+
+###
+GET http://localhost:4004/manage/MsgOrders?$filter=chassisNo eq '225991' and DTPONumber eq '10059071' and current eq true&$expand=Options($expand=Notes($filter=OPSPrintIndicator%20eq%20true)),Narratives&$select=ID,divisionCd,chassisNo,DTPONumber
+Content-Type: application/json;IEEE754Compatible=true
+
+###
+GET http://localhost:4004/manage/MsgOrders?$filter=chassisNo eq '888123' and current eq true&$expand=Options($expand=Notes($filter=OPSPrintIndicator%20eq%20true)),Narratives
+Content-Type: application/json;IEEE754Compatible=true

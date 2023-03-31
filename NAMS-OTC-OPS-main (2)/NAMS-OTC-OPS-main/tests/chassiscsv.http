@@ -1,0 +1,30 @@
+### Step 1: Create the entry
+POST http://localhost:4004/manage/ChassisFilesCSV
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "filename": "ZIP_CODE_TEST.csv",
+    "contentType": "text/csv"
+}
+
+### Step 2: Post the csv contents
+PUT http://localhost:4004/manage/ChassisFilesCSV('ZIP_CODE_TEST.csv')/csv
+Content-Type: text/csv
+
+K,169899  ,1XKWD40X2P,R,         ,0000000.000,10052305,07/13/2021,07/11/2022,07/13/2022,07/13/2022,07/05/2022,          ,07/01/2022,S13014R,S05005C,RELS,DA,M851                                         ,Rusty Stanley                                ,2239 ODLIN ROAD                              ,                                             ,HERMON              ,ME ,4401      ,207 942-6753         ,                                                  ,06/27/2022 
+K,172199  ,3BKDX4TX9P,F,80418677 ,0000000.000,10053208,07/23/2021,05/02/2022,05/02/2022,05/02/2022,04/28/2022,          ,03/07/2022,       ,       ,RELS,DA,G900                                         ,Michelle Russell                             ,2306 ROUTE 130 NORTH                         ,                                             ,DAYTON              ,NJ ,8810      ,718-977-7348         ,                                                  ,04/18/2022 
+K,254659  ,3BKZX4TX3P,F,80425804 ,0000000.000,10067267,02/21/2022,05/23/2022,05/23/2022,05/23/2022,05/19/2022,          ,05/09/2022,E23017F,E19017C,RELS,DA,Simard Suspensions Inc                       ,Hugo                                         ,1064  BOUL  MGR-DE LAVAL                     ,                                             ,BAIE-SAINT-PAUL     ,QC ,G3Z2W9    ,418-435-5347         ,                                                  ,06/15/2022 
+K,258124  ,1NKZXPTX2P,J,         ,0000000.000,10069319,03/28/2022,08/08/2022,08/12/2022,08/12/2022,08/11/2022,          ,06/20/2022,H12127J,H11054C,RELS,DA,Dealer Pick Up                               ,Dealer Pick Up                               ,Dealer Pick Up                               ,                                             ,Dealer Pick Up      ,OH ,45601     ,Dealer Pick Up       ,US                                                ,07/25/2022 
+K,258127  ,1NKZXPTX8P,J,         ,0000000.000,10069319,03/28/2022,08/08/2022,08/12/2022,08/12/2022,08/11/2022,          ,06/20/2022,H12158J,H11085C,RELS,DA,Dealer Pick Up                               ,Dealer Pick Up                               ,Dealer Pick Up                               ,                                             ,Dealer Pick Up      ,OH ,45601     ,Dealer Pick Up       ,US                                                ,07/25/2022 
+K,258132  ,1NKZXPTX1P,J,Y290269  ,0009147.800,10069319,03/28/2022,08/08/2022,08/09/2022,08/09/2022,08/05/2022,08/22/2022,06/20/2022,H09019J,H05116C,RELS,IN,Dealer Pick Up                               ,Dealer Pick Up                               ,Dealer Pick Up                               ,                                             ,Dealer Pick Up      ,   ,45601     ,Dealer Pick Up       ,                                                  ,07/25/2022 
+K,258133  ,1NKZXPTX3P,J,Y290331  ,0009139.100,10069319,03/28/2022,08/08/2022,08/09/2022,08/09/2022,08/08/2022,08/18/2022,06/20/2022,H09077J,H08012C,RELS,IN,Dealer Pick Up                               ,Dealer Pick Up                               ,Dealer Pick Up                               ,                                             ,Dealer Pick Up      ,   ,45601     ,Dealer Pick Up       ,                                                  ,07/25/2022 
+P,114935  ,          ,F,         ,0000000.000,10043517,12/14/2021,12/19/2022,          ,          ,          ,          ,09/01/2022,       ,       ,RELS,IO,Simard Suspensions  Inc.                     ,Hugo Lafontaine                              ,1064 Monseigneur-de-Laval boulevard          ,                                             ,Baie-Saint-Paul     ,QC ,G3z2W9    ,418-435-5437 Ext 254 ,                                                  ,12/14/2021 
+
+### Step 3: Process the CSV
+POST http://localhost:4004/manage/ChassisFilesCSV('CERTOPSOTCK1_2023-01-25 185334.747-60262.csv')/process
+Content-Type: application/json;IEEE754Compatible=true
+
+{}
+
+### Step 4: Delete the entry
+DELETE http://localhost:4004/manage/ChassisFilesCSV('ZIP_CODE_TEST.csv')

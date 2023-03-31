@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="CV_DIM_DATE" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" endUserView="true">
+<descriptions defaultDescription="Dates"/>
+<localVariables>
+  <variable id="IP_LOWER_DATE_OFFSET" parameter="true">
+    <descriptions defaultDescription="Lower Date Offset"/>
+    <variableProperties datatype="INTEGER" mandatory="true" defaultValue="-36">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_UPPER_DATE_OFFSET" parameter="true">
+    <descriptions defaultDescription="Upper Date Offset"/>
+    <variableProperties datatype="INTEGER" mandatory="true" defaultValue="84">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:TableFunctionView" id="TableFunction_1" tableFunctionName="TF_GENERATE_DATES">
+    <viewAttributes/>
+    <calculatedViewAttributes/>
+    <variableMapping xsi:type="Variable:VariableMapping">
+      <targetVariable name="I_LOWER_DATE_OFFSET"/>
+      <localVariable>IP_LOWER_DATE_OFFSET</localVariable>
+    </variableMapping>
+    <variableMapping xsi:type="Variable:VariableMapping">
+      <targetVariable name="I_UPPER_DATE_OFFSET"/>
+      <localVariable>IP_UPPER_DATE_OFFSET</localVariable>
+    </variableMapping>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="TableFunction_1">
+  <attributes>
+    <attribute id="DATE" order="1" semanticType="date" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Date"/>
+      <keyMapping columnObjectName="TableFunction_1" columnName="GENERATED_DATE"/>
+    </attribute>
+  
+    <attribute id="TIMESTAMP" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Timestamp"/>
+  
+      <keyMapping columnObjectName="TableFunction_1" columnName="GENERATED_TIMESTAMP"/>
+  
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="TableFunction_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

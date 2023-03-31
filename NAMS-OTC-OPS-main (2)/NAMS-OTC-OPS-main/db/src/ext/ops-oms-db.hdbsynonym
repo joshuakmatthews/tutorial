@@ -1,0 +1,38 @@
+{
+  "OMS_CV_DIM_SALES_OPTION": {
+    "target": {
+      "object": "CV_DIM_SALES_OPTION",
+      "schema": "OMS"
+    }
+  },
+  "OMS_CV_DIM_SALES_OPTION_ATTR": {
+    "target": {
+      "object": "CV_DIM_SALES_OPTION_ATTR",
+      "schema": "OMS"
+    }
+  },
+  "OMS_CV_DIM_SALES_OPTION_NOTE": {
+    "target": {
+      "object": "CV_DIM_SALES_OPTION_NOTE",
+      "schema": "OMS"
+    }
+  },
+  "OMS_CV_DIM_TIME_PERIOD": {
+    "target": {
+      "object": "CV_DIM_TIME_PERIOD",
+      "schema": "OMS"
+    }
+  },
+  "OMS_CV_OPTION_MODEL_PRICE_PERIOD": {
+    "target": {
+      "object": "CV_OPTION_MODEL_PRICE_PERIOD",
+      "schema": "OMS"
+    }
+  },
+  "OMS_CV_PRICE_PROTECTION": {
+    "target": {
+      "object": "CV_PRICE_PROTECTION",
+      "schema": "OMS"
+    }
+  }
+}

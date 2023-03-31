@@ -1,0 +1,50 @@
+# CAP ops
+_out
+*.db
+connection.properties
+default-*.json
+.env*
+.yo-rc.json
+.vscode/
+coverage/
+gen/
+node_modules/
+app/*/node_modules/
+target/
+*.zip
+
+# Web IDE, App Studio
+.che/
+.gen/
+
+# MTA
+*_mta_build_tmp
+*.mta
+*.mtar
+mta_archives/
+
+# Other
+.DS_Store
+*.orig
+*.log
+
+*.iml
+*.flattened-pom.xml
+
+# IDEs
+.vscode/
+# .idea
+
+*-content.zip/
+manifest-bundle.zip/
+
+dist/
+resources/
+app/*/package-lock.json
+
+# auto generated wildcard
+gen/db/.env
+
+
+# added by cds bind
+.cdsrc-private.json

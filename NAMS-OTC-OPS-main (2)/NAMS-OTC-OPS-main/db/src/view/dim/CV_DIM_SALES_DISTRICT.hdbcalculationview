@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_SALES_DISTRICT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="true">
+<descriptions defaultDescription="Sales District"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::T171T">
+    <resourceUri>slts4hc::T171T</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="SPRAS"/>
+      <viewAttribute id="SALES_DISTRICT"/>
+      <viewAttribute id="SALES_DISTRICT_TEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::T171T">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT" source="BZIRK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT_TEXT" source="BZTXT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="SALES_DISTRICT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+    <viewAttributes>
+      <viewAttribute id="SALES_DISTRICT"/>
+      <viewAttribute id="SALES_DISTRICT_TEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT" source="SALES_DISTRICT"/>
+    </input>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT_TEXT" source="SALES_DISTRICT_TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT" source="SALES_DISTRICT"/>
+    </input>
+    <joinAttribute name="SALES_DISTRICT"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="SALES_DISTRICT" order="1" descriptionColumnName="SALES_DISTRICT_TEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales District"/>
+      <keyMapping columnObjectName="Join_1" columnName="SALES_DISTRICT"/>
+    </attribute>
+    <attribute id="SALES_DISTRICT_TEXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales District Name"/>
+      <keyMapping columnObjectName="Join_1" columnName="SALES_DISTRICT_TEXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="146" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="150" y="481"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="146" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

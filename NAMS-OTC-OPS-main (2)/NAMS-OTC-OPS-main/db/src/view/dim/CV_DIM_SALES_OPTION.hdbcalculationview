@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_SALES_OPTION" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" endUserView="true">
+<descriptions defaultDescription="Sales Options"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="OMS_CV_DIM_SALES_OPTION">
+    <resourceUri>OMS_CV_DIM_SALES_OPTION</resourceUri>
+  </DataSource>
+  <DataSource id="OPS_PROMOCODES">
+    <resourceUri>OPS_PROMOCODES</resourceUri>
+  </DataSource>
+  <DataSource id="ORDER_MSG_OPTIONS">
+    <resourceUri>ORDER_MSG_OPTIONS</resourceUri>
+  </DataSource>
+  <DataSource id="ORDER_MSG_ORDERS">
+    <resourceUri>ORDER_MSG_ORDERS</resourceUri>
+  </DataSource>
+  <DataSource id="MAP_DIVISIONS">
+    <resourceUri>MAP_DIVISIONS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="DIVISION_CODE"/>
+      <viewAttribute id="SALES_OPTION_CODE"/>
+      <viewAttribute id="PROSPECTOR_DESCRIPTION_TEXT"/>
+      <viewAttribute id="OBSOLETE_INDICATOR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="OMS_CV_DIM_SALES_OPTION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="SALESOPTNNO"/>
+      <viewAttribute id="SOPTDESC1"/>
+      <viewAttribute id="SOPTDESC2"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="DESC_1_2" datatype="NVARCHAR" length="90" expressionLanguage="SQL">
+        <formula>&quot;SOPTDESC1&quot; || &quot;SOPTDESC2&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="OPS_PROMOCODES"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="ORDER_ID"/>
+      <viewAttribute id="TEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="ORDER_MSG_OPTIONS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+    <viewAttributes>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="DIVISIONCD"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="ORDER_MSG_ORDERS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="TEXT"/>
+      <viewAttribute hidden="true" id="JOIN$ORDER_ID$ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEXT" source="TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ORDER_ID$ID" source="ORDER_ID"/>
+    </input>
+    <input node="Projection_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISIONCD" source="DIVISIONCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ORDER_ID$ID" source="ID"/>
+    </input>
+    <joinAttribute name="JOIN$ORDER_ID$ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="SALES_OPTION"/>
+      <viewAttribute id="SALES_OPTION_TEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISIONCD" source="DIVISIONCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_OPTION" source="TEXT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_OPTION_TEXT" null="true"/>
+    </input>
+    <input node="Projection_2" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISIONCD" source="DIVISIONCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_OPTION" source="SALESOPTNNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_OPTION_TEXT" source="DESC_1_2"/>
+    </input>
+    <input node="Projection_1" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISIONCD" source="DIVISION_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_OPTION" source="SALES_OPTION_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_OPTION_TEXT" source="PROSPECTOR_DESCRIPTION_TEXT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="SALES_OPTION"/>
+      <viewAttribute id="SALES_OPTION_TEXT" aggregationType="max"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_1"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="SALES_OPTION"/>
+      <viewAttribute id="SALES_OPTION_TEXT"/>
+      <viewAttribute id="DIVISION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISIONCD" source="DIVISIONCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_OPTION" source="SALES_OPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_OPTION_TEXT" source="SALES_OPTION_TEXT"/>
+    </input>
+    <input node="Projection_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISIONCD" source="DIVISIONCD"/>
+    </input>
+    <joinAttribute name="DIVISIONCD"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
+    <viewAttributes>
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="DIVISION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="MAP_DIVISIONS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="SPART"/>
+    </input>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_2">
+  <attributes>
+    <attribute id="DIVISIONCD" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Division"/>
+      <keyMapping columnObjectName="Join_2" columnName="DIVISIONCD"/>
+    </attribute>
+    <attribute id="SALES_OPTION" order="2" descriptionColumnName="SALES_OPTION_TEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Option"/>
+      <keyMapping columnObjectName="Join_2" columnName="SALES_OPTION"/>
+    </attribute>
+    <attribute id="SALES_OPTION_TEXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Option Text"/>
+      <keyMapping columnObjectName="Join_2" columnName="SALES_OPTION_TEXT"/>
+    </attribute>
+  
+    <attribute id="DIVISION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Division (S4)"/>
+      <keyMapping columnObjectName="Join_2" columnName="DIVISION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="440.1611228966914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="547.5950007385015" y="636.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000003" y="636.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="227.16442051596886" y="796.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="437.1644205159688" y="796.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="335.8782503698767" y="636.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="142"/>
+    </shape>
+    <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="335.8782503698767" y="481.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="311.0243655572076" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="440.1611228966914" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="150.173828125"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="521.0243655572075" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

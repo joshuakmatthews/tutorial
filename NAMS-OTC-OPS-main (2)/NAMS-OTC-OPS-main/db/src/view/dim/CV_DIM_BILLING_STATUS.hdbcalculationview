@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="CV_DIM_BILLING_STATUS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="true">
+<descriptions defaultDescription="Billing Status"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="CV_DIM_FIXED_VALUES" value="STATV">
+    <targetVariable name="IP_DOMAIN" resourceUri="CV_DIM_FIXED_VALUES"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="CV_DIM_FIXED_VALUES">
+    <resourceUri>CV_DIM_FIXED_VALUES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+
+<logicalModel id="CV_DIM_FIXED_VALUES">
+  <attributes>
+    <attribute id="BILLING_STATUS" order="1" descriptionColumnName="BILLING_STATUS_TEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Billing Status"/>
+      <keyMapping columnObjectName="CV_DIM_FIXED_VALUES" columnName="VALUE"/>
+    </attribute>
+    <attribute id="BILLING_STATUS_TEXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Billing Status Text"/>
+      <keyMapping columnObjectName="CV_DIM_FIXED_VALUES" columnName="TEXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>

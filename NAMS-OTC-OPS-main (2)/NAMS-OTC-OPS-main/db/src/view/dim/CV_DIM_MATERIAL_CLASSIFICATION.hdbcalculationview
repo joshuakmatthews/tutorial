@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="CV_DIM_MATERIAL_CLASSIFICATION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="true">
+<descriptions defaultDescription="Material Classification"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="CV_DIM_CLASSIFICATION" value="001">
+    <targetVariable name="IP_CLASS_TYPE" resourceUri="CV_DIM_CLASSIFICATION"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="CV_DIM_CLASSIFICATION">
+    <resourceUri>CV_DIM_CLASSIFICATION</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="DATE_VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;DATE_VALUE&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="CV_DIM_CLASSIFICATION">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="OBJECT_KEY"/>
+    </input>
+    <filter>&quot;CHARACTERISTIC_NAME&quot; IN('CAB_TYPE','CAB_WIDTH','CANCEL_REPLACE_CODE','CAR_NUMBER','CC-MODEL','CHASS-ENGINE-SER-NO','CHASS-FIRM-SCHED-DT','CHASS-TENT-SCHED-DT','CLASS','ENGINE_TYPE','MARKETING_NUMBER','SALESMODELFAMILY','MARKETING_CLASS','PRODUCT_TYPE','PROMOTIONS')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CabType" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CAB_TYPE" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='CAB_TYPE'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CabWidth" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CAB_WIDTH" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='CAB_WIDTH'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CancelReplaceCode" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CANCEL_REPLACE_CODE" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='CANCEL_REPLACE_CODE'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CARNumber" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CAR_NUMBER" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='CAR_NUMBER'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CCModel" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_MODEL" datatype="NVARCHAR" length="20" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='CC-MODEL'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="EngineSerialNumber" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ENGINE_SERIAL_NUMBER" datatype="NVARCHAR" length="12" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='CHASS-ENGINE-SER-NO'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="FirmScheduleDate" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRM_SCHEDULE_DATE" source="DATE"/>
+    </input>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='CHASS-FIRM-SCHED-DT'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="TentativeScheduleDate" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="TENTATIVE_SCHEDULE_DATE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENTATIVE_SCHEDULE_DATE" source="DATE"/>
+    </input>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='CHASS-TENT-SCHED-DT'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Class" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CLASS" datatype="NVARCHAR" length="20" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='CLASS'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="EngineType" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ENGINE_TYPE" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='ENGINE_TYPE'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="MarketingNumber" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="MARKETING_NUMBER" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='MARKETING_NUMBER'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="SalesModelFamily" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="SALES_MODEL_FAMILY" datatype="NVARCHAR" length="20" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='SALESMODELFAMILY'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="MarketingClass" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="MARKETING_CLASS" datatype="NVARCHAR" length="2" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='MARKETING_CLASS'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ProductType" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="PRODUCT_TYPE" datatype="NVARCHAR" length="20" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='PRODUCT_TYPE'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Promotions" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="PROMOTIONS" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>&quot;VALUE&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1"/>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='PROMOTIONS'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="CAB_TYPE"/>
+      <viewAttribute id="CAB_WIDTH"/>
+      <viewAttribute id="CANCEL_REPLACE_CODE"/>
+      <viewAttribute id="CAR_NUMBER"/>
+      <viewAttribute id="CC_MODEL"/>
+      <viewAttribute id="CLASS"/>
+      <viewAttribute id="ENGINE_SERIAL_NUMBER"/>
+      <viewAttribute id="ENGINE_TYPE"/>
+      <viewAttribute id="FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="MARKETING_CLASS"/>
+      <viewAttribute id="MARKETING_NUMBER"/>
+      <viewAttribute id="PRODUCT_TYPE"/>
+      <viewAttribute id="PROMOTIONS"/>
+      <viewAttribute id="SALES_MODEL_FAMILY"/>
+      <viewAttribute id="TENTATIVE_SCHEDULE_DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CabType" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAB_TYPE" source="CAB_TYPE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="CabWidth" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAB_WIDTH" source="CAB_WIDTH"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="CCModel" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_MODEL" source="CC_MODEL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="Class" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLASS" source="CLASS"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="CancelReplaceCode" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE" source="CANCEL_REPLACE_CODE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="EngineType" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_TYPE" source="ENGINE_TYPE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="EngineSerialNumber" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_SERIAL_NUMBER" source="ENGINE_SERIAL_NUMBER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="MarketingNumber" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_NUMBER" source="MARKETING_NUMBER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="TentativeScheduleDate" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENTATIVE_SCHEDULE_DATE" source="TENTATIVE_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="ProductType" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_TYPE" source="PRODUCT_TYPE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="SalesModelFamily" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_MODEL_FAMILY" source="SALES_MODEL_FAMILY"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="MarketingClass" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_CLASS" source="MARKETING_CLASS"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="Promotions" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROMOTIONS" source="PROMOTIONS"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="FirmScheduleDate" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRM_SCHEDULE_DATE" source="FIRM_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAR_NUMBER" null="true" value=""/>
+    </input>
+    <input node="CARNumber" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CAB_WIDTH" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CC_MODEL" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CANCEL_REPLACE_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENGINE_SERIAL_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_NUMBER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENTATIVE_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_TYPE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MODEL_FAMILY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_CLASS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROMOTIONS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIRM_SCHEDULE_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAR_NUMBER" source="CAR_NUMBER"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="MATERIAL"/>
+      <viewAttribute id="CAB_TYPE" aggregationType="max"/>
+      <viewAttribute id="CAB_WIDTH" aggregationType="max"/>
+      <viewAttribute id="CANCEL_REPLACE_CODE" aggregationType="max"/>
+      <viewAttribute id="CAR_NUMBER" aggregationType="max"/>
+      <viewAttribute id="CC_MODEL" aggregationType="max"/>
+      <viewAttribute id="CLASS" aggregationType="max"/>
+      <viewAttribute id="ENGINE_SERIAL_NUMBER" aggregationType="max"/>
+      <viewAttribute id="ENGINE_TYPE" aggregationType="max"/>
+      <viewAttribute id="FIRM_SCHEDULE_DATE" aggregationType="max"/>
+      <viewAttribute id="MARKETING_CLASS" aggregationType="max"/>
+      <viewAttribute id="MARKETING_NUMBER" aggregationType="max"/>
+      <viewAttribute id="PRODUCT_TYPE" aggregationType="max"/>
+      <viewAttribute id="PROMOTIONS" aggregationType="max"/>
+      <viewAttribute id="SALES_MODEL_FAMILY" aggregationType="max"/>
+      <viewAttribute id="TENTATIVE_SCHEDULE_DATE" aggregationType="max"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_1"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Aggregation_1">
+  <attributes>
+    <attribute id="MATERIAL" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="MATERIAL"/>
+    </attribute>
+    <attribute id="CAB_TYPE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cab Type"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="CAB_TYPE"/>
+    </attribute>
+    <attribute id="CAB_WIDTH" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cab Width"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="CAB_WIDTH"/>
+    </attribute>
+    <attribute id="CANCEL_REPLACE_CODE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cancellation/Replacement Code"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="CANCEL_REPLACE_CODE"/>
+    </attribute>
+    <attribute id="CAR_NUMBER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAR Number"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="CAR_NUMBER"/>
+    </attribute>
+    <attribute id="CC_MODEL" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CC Model"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="CC_MODEL"/>
+    </attribute>
+    <attribute id="CLASS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Class"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="CLASS"/>
+    </attribute>
+    <attribute id="ENGINE_SERIAL_NUMBER" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Engine Serial Number"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="ENGINE_SERIAL_NUMBER"/>
+    </attribute>
+    <attribute id="ENGINE_TYPE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Engine Type"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="ENGINE_TYPE"/>
+    </attribute>
+    <attribute id="FIRM_SCHEDULE_DATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Firm Schedule Date"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="FIRM_SCHEDULE_DATE"/>
+    </attribute>
+    <attribute id="MARKETING_CLASS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Marketing Class"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="MARKETING_CLASS"/>
+    </attribute>
+    <attribute id="MARKETING_NUMBER" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Marketing Number"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="MARKETING_NUMBER"/>
+    </attribute>
+    <attribute id="PRODUCT_TYPE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Product Type"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="PRODUCT_TYPE"/>
+    </attribute>
+    <attribute id="PROMOTIONS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Promotions"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="PROMOTIONS"/>
+    </attribute>
+    <attribute id="SALES_MODEL_FAMILY" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Model Family"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="SALES_MODEL_FAMILY"/>
+    </attribute>
+    <attribute id="TENTATIVE_SCHEDULE_DATE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Tentative Schedule Date"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="TENTATIVE_SCHEDULE_DATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="1883" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1562" y="1061"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CabType" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2192" y="796"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CabWidth" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2822" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CancelReplaceCode" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CARNumber" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="932" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CCModel" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1982" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="EngineSerialNumber" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="3032" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="FirmScheduleDate" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1142" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="TentativeScheduleDate" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Class" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1562" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="EngineType" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1352" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="MarketingNumber" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2612" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="SalesModelFamily" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="722" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="MarketingClass" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1772" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ProductType" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2402" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Promotions" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="796"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1562" y="341"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1883" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

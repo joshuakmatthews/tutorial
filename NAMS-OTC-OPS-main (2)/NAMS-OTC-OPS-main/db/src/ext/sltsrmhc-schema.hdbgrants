@@ -1,0 +1,14 @@
+{
+  "sltsrmhc-schema": {
+    "object_owner": {
+      "roles": [
+        "sltsrmhc::ZR_S1_ALL_ITD0_OO#"
+      ]
+    },
+    "application_user": {
+      "roles": [
+        "sltsrmhc::ZR_S1_ALL_ITD0_RT"
+      ]
+    }
+  }
+}

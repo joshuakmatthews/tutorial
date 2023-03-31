@@ -1,0 +1,14 @@
+{
+    "sltsrmhc::/1CN/CBPSAP068": { "target": { "object": "/1CN/CBPSAP068", "schema": "SLTSRMHC" } },
+    "sltsrmhc::BBP_LOCMAP": { "target": { "object": "BBP_LOCMAP", "schema": "SLTSRMHC" } },
+    "sltsrmhc::BBP_PDHGP": { "target": { "object": "BBP_PDHGP", "schema": "SLTSRMHC" } },
+    "sltsrmhc::BBP_PDIGP": { "target": { "object": "BBP_PDIGP", "schema": "SLTSRMHC" } },
+    "sltsrmhc::BBP_PDORG": { "target": { "object": "BBP_PDORG", "schema": "SLTSRMHC" } },
+    "sltsrmhc::BUT000": { "target": { "object": "BUT000", "schema": "SLTSRMHC" } },
+    "sltsrmhc::CRM_JEST": { "target": { "object": "CRM_JEST", "schema": "SLTSRMHC" } },
+    "sltsrmhc::CRMD_LINK": { "target": { "object": "CRMD_LINK", "schema": "SLTSRMHC" } },
+    "sltsrmhc::CRMD_ORDERADM_H": { "target": { "object": "CRMD_ORDERADM_H", "schema": "SLTSRMHC" } },
+    "sltsrmhc::CRMD_ORDERADM_I": { "target": { "object": "CRMD_ORDERADM_I", "schema": "SLTSRMHC" } },
+    "sltsrmhc::CRMD_PARTNER": { "target": { "object": "CRMD_PARTNER", "schema": "SLTSRMHC" } }
+  }
+  

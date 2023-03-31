@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="CV_DIM_CANCEL_REPLACE_CODE" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="true">
+<descriptions defaultDescription="Cancel/Replace Code"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::ZTSD_CANC_REPL">
+    <resourceUri>slts4hc::ZTSD_CANC_REPL</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::ZTSD_CANC_REPLT">
+    <resourceUri>slts4hc::ZTSD_CANC_REPLT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="CANCEL_REPLACE_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::ZTSD_CANC_REPL">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE" source="CODE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="LANGUAGE"/>
+      <viewAttribute id="CANCEL_REPLACE_CODE"/>
+      <viewAttribute id="CANCEL_REPLACE_CODE_TEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::ZTSD_CANC_REPLT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE" source="CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE_TEXT" source="DESCRIPTION"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="textTable" languageColumn="LANGUAGE">
+    <viewAttributes>
+      <viewAttribute id="CANCEL_REPLACE_CODE"/>
+      <viewAttribute id="CANCEL_REPLACE_CODE_TEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE" source="CANCEL_REPLACE_CODE"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE_TEXT" source="CANCEL_REPLACE_CODE_TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE" source="CANCEL_REPLACE_CODE"/>
+    </input>
+    <joinAttribute name="CANCEL_REPLACE_CODE"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="CANCEL_REPLACE_CODE" order="1" descriptionColumnName="CANCEL_REPLACE_CODE_TEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cancel/Replace Code"/>
+      <keyMapping columnObjectName="Join_1" columnName="CANCEL_REPLACE_CODE"/>
+    </attribute>
+    <attribute id="CANCEL_REPLACE_CODE_TEXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cancel/Replace Description"/>
+      <keyMapping columnObjectName="Join_1" columnName="CANCEL_REPLACE_CODE_TEXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="225"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="260"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

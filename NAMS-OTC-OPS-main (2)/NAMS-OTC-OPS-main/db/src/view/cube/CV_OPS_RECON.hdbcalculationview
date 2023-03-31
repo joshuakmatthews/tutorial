@@ -1,0 +1,1708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_OPS_RECON" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="OPS Reconciliation"/>
+<localVariables>
+  <variable id="V_DIVISION">
+    <descriptions defaultDescription="Division"/>
+    <variableProperties datatype="NVARCHAR" length="2" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_DIVISION</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>DIVISION</externalLikeElementName>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_CHASSIS">
+    <descriptions defaultDescription="Chassis"/>
+    <variableProperties datatype="NVARCHAR" length="40" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="CHASSIS"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_DTPO_NUMBER">
+    <descriptions defaultDescription="DTPO Number"/>
+    <variableProperties datatype="NVARCHAR" length="35" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="DTPO_NUMBER"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+
+  <variable id="V_ALL_MATCH">
+    <descriptions defaultDescription="All Match"/>
+    <variableProperties datatype="NVARCHAR" length="10" scale="NaN" mandatory="false" defaultValue="N">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_YES_NO</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>YES_NO</externalLikeElementName>
+      </valueDomain>
+      <selection type="SingleValue"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_WEEKS_UNTIL_SCHEDULED">
+    <descriptions defaultDescription="Weeks Until Scheduled"/>
+    <variableProperties datatype="DECIMAL" length="13" scale="2">
+      <valueDomain type="AttributeValue">
+        <attribute name="WEEKS_UNTIL_SCHEDULED"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="RECON_S4SNAPSHOT">
+    <resourceUri>RECON_S4SNAPSHOT</resourceUri>
+  </DataSource>
+  <DataSource id="RECON_FILES">
+    <resourceUri>RECON_FILES</resourceUri>
+  </DataSource>
+  <DataSource id="MAP_DIVISIONS">
+    <resourceUri>MAP_DIVISIONS</resourceUri>
+  </DataSource>
+  <DataSource id="CHASSIS_FILES">
+    <resourceUri>CHASSIS_FILES</resourceUri>
+  </DataSource>
+  <DataSource id="ORDER_MSG_ORDERS">
+    <resourceUri>ORDER_MSG_ORDERS</resourceUri>
+  </DataSource>
+  <DataSource id="ORDER_MSG_CHASSIS">
+    <resourceUri>ORDER_MSG_CHASSIS</resourceUri>
+  </DataSource>
+  <DataSource id="CV_DIM_DIVISION">
+    <resourceUri>CV_DIM_DIVISION</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_S4_SNAPSHOT" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="SALES_ORGANIZATION"/>
+      <viewAttribute id="ORDER_ADD_DATE"/>
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+      <viewAttribute id="CHASSIS_NET_PRICE"/>
+      <viewAttribute id="EXCHANGE_RATE"/>
+      <viewAttribute id="STARTING_CHASSIS"/>
+      <viewAttribute id="ENDING_CHASSIS"/>
+      <viewAttribute id="CHANGE_ORDER_NUMBER"/>
+    
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="OPS_PROCESSING_STATUS"/>
+      <viewAttribute id="PLANT"/>
+      <viewAttribute id="TAX_AMOUNT"/>
+    
+      <viewAttribute id="FREIGHT"/>
+    
+      <viewAttribute id="SOLD_TO"/>
+      <viewAttribute id="FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="TENTATIVE_SCHEDULE_DATE"/>
+    
+      <viewAttribute id="CREDIT_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+    
+      <calculatedViewAttribute id="SCHED_SRC" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+    
+        <formula>'S4'</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="RECON_S4SNAPSHOT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="OPS_CHASSIS_NO"/></input>
+    <filter>&quot;SOLD_TO&quot; != 'F100' and
+&quot;SOLD_TO&quot; != 'F110'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_OPS_SNAPSHOT" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="CHASSISNO"/>
+      <viewAttribute id="DTPONUMBER"/>
+      <viewAttribute id="ORDERADDDT"/>
+      <viewAttribute id="STARTINGCHASSIS"/>
+      <viewAttribute id="ENDINGCHASSIS"/>
+      <viewAttribute id="CHANGEORDERNO"/>
+      <viewAttribute id="PROCESINGSTATUSCD"/>
+    
+      <viewAttribute id="PLANTCD"/>
+      <viewAttribute id="CURRENCY"/>
+      <viewAttribute id="CHASSISNETPRICE"/>
+      <viewAttribute id="EXCHANGERATE"/>
+    
+      <viewAttribute id="TAXAMOUNT"/>
+    
+      <viewAttribute id="DIVISIONCD"/>
+    
+      <viewAttribute id="CREDITSTATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="OPS_COMPARISON_AMOUNT" datatype="DECIMAL" length="15" scale="2" expressionLanguage="SQL">
+        <formula>CASE &quot;PROCESINGSTATUSCD&quot; 
+     WHEN '16CH' then 0
+     WHEN '16RH' then 0
+     WHEN 'CNCL' then 0
+     WHEN 'ICOH' then 0
+     ELSE 
+		CASE COALESCE(&quot;PLANTCD&quot;,'')
+	 		 WHEN '' then &quot;CHASSISNETPRICE&quot; 
+             ELSE &quot;CHASSISNETPRICE&quot;+&quot;TAXAMOUNT&quot;
+         END 
+ END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="OPS_TAX_COMPARISON_AMOUNT" datatype="DECIMAL" length="13" scale="2" expressionLanguage="SQL">
+    
+        <formula>CASE &quot;PROCESINGSTATUSCD&quot; 
+     WHEN '16CH' then 0
+     WHEN '16RH' then 0
+     WHEN 'CNCL' then 0
+     WHEN 'ICOH' then 0
+     ELSE 
+		CASE COALESCE(&quot;PLANTCD&quot;,'')
+	 		 WHEN '' then 0 
+             ELSE &quot;TAXAMOUNT&quot;
+         END 
+ END</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="RECON_FILES"/>
+    <filter>&quot;PROCESINGSTATUSCD&quot; != 'INVS'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_MAP_DIVISIONS">
+    <viewAttributes>
+      <viewAttribute id="SPART"/>
+    
+      <viewAttribute id="DIVISIONCD"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="MAP_DIVISIONS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_CHASSIS_FILES">
+    <viewAttributes>
+      <viewAttribute id="TENTSCHEDDT"/>
+      <viewAttribute id="FIRMSCHEDDT"/>
+      <viewAttribute id="CHSSTATUS"/>
+    
+      <viewAttribute id="DESTBUSNAME"/>
+    
+    
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="CHASSISNO"/>
+      <viewAttribute id="DTPONUMBER"/>
+      <viewAttribute id="ORDERADDDT"/>
+      <viewAttribute id="OPSSTATUS"/>
+    
+      <viewAttribute id="SALESORDERSAVED"/></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="SCHED_SRC" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+        <formula>'OPS'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="CHASSIS_FILES"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_MSG_ORDERS" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="DTPONUMBER"/>
+      <viewAttribute id="DEALERCD"/>
+    
+      <viewAttribute id="ID"/>
+      <viewAttribute id="CURRENT"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="ORDER_MSG_ORDERS"/>
+    <filter>&quot;CURRENT&quot; = TRUE</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_MSG_CHASSIS">
+    <viewAttributes>
+      <viewAttribute id="CHASSISNO"/>
+    
+      <viewAttribute id="ORDER_ID"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="ORDER_MSG_CHASSIS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="DIVISION_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CV_DIM_DIVISION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_CHASSIS_FILES" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="ORDERADDDT"/>
+      <viewAttribute id="STARTINGCHASSIS"/>
+      <viewAttribute id="ENDINGCHASSIS"/>
+      <viewAttribute id="CHANGEORDERNO" aggregationType="sum"/>
+      <viewAttribute id="PROCESINGSTATUSCD"/>
+      <viewAttribute id="PLANTCD"/>
+      <viewAttribute id="CURRENCY"/>
+      <viewAttribute id="CHASSISNETPRICE" aggregationType="sum"/>
+      <viewAttribute id="EXCHANGERATE" aggregationType="sum"/>
+      <viewAttribute id="TAXAMOUNT" aggregationType="sum"/>
+      <viewAttribute id="OPS_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="CHASSISNO"/>
+      <viewAttribute id="DTPONUMBER"/>
+      <viewAttribute id="OPS_TAX_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="TENTSCHEDDT"/>
+      <viewAttribute id="FIRMSCHEDDT"/>
+      <viewAttribute id="SCHED_SRC"/>
+      <viewAttribute id="DIVISION"/>
+    
+      <viewAttribute id="CHSSTATUS"/>
+    
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="DESTBUSNAME"/>
+    
+      <viewAttribute id="CREDITSTATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="P_OPS_SNAPSHOT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNO" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPONUMBER" source="DTPONUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDERADDDT" source="ORDERADDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STARTINGCHASSIS" source="STARTINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDINGCHASSIS" source="ENDINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEORDERNO" source="CHANGEORDERNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESINGSTATUSCD" source="PROCESINGSTATUSCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANTCD" source="PLANTCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNETPRICE" source="CHASSISNETPRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGERATE" source="EXCHANGERATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXAMOUNT" source="TAXAMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_COMPARISON_AMOUNT" source="OPS_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_TAX_COMPARISON_AMOUNT" source="OPS_TAX_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISIONCD" source="DIVISIONCD"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREDITSTATUS" source="CREDITSTATUS"/>
+    </input>
+    <input node="P_CHASSIS_FILES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENTSCHEDDT" source="TENTSCHEDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRMSCHEDDT" source="FIRMSCHEDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHED_SRC" source="SCHED_SRC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHSSTATUS" source="CHSSTATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESTBUSNAME" source="DESTBUSNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISIONCD" source="DIVISIONCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNO" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPONUMBER" source="DTPONUMBER"/>
+    </input>
+    <joinAttribute name="DIVISIONCD"/>
+    <joinAttribute name="CHASSISNO"/>
+    <joinAttribute name="DTPONUMBER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_SAVED_CHASSIS" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CHASSISNO"/>
+    
+      <viewAttribute id="ORDERADDDT"/>
+      <viewAttribute id="OPSSTATUS"/>
+      <viewAttribute id="DTPONUMBER"/>
+    
+    
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="SALESORDERSAVED"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="P_CHASSIS_FILES"/>
+    <filter>&quot;SALESORDERSAVED&quot; = TRUE</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_MSG_CHASSIS" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="DEALERCD"/>
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="CHASSISNO"/>
+      <viewAttribute id="DTPONUMBER"/>
+      <viewAttribute hidden="true" id="JOIN$ID$ORDER_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="P_MSG_ORDERS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISIONCD" source="DIVISIONCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPONUMBER" source="DTPONUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALERCD" source="DEALERCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$ORDER_ID" source="ID"/>
+    </input>
+    <input node="P_MSG_CHASSIS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNO" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$ORDER_ID" source="ORDER_ID"/>
+    </input>
+    <joinAttribute name="JOIN$ID$ORDER_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="CN_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="OPSSTATUS"/>
+      <viewAttribute id="SPART"/>
+      <viewAttribute id="CHASSISNO"/>
+      <viewAttribute id="DTPONUMBER"/>
+      <viewAttribute id="ORDERADDDT"/>
+      <viewAttribute hidden="true" id="JOIN$DIVISIONCD$DIVISIONCD"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="MATERIAL" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>&quot;CHASSISNO&quot; || '-' ||SUBSTR(&quot;ORDERADDDT&quot;, 2, 2) || '-' || &quot;SPART&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="P_SAVED_CHASSIS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNO" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDERADDDT" source="ORDERADDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPSSTATUS" source="OPSSTATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPONUMBER" source="DTPONUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DIVISIONCD$DIVISIONCD" source="DIVISIONCD"/>
+    </input>
+    <input node="P_MAP_DIVISIONS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SPART" source="SPART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DIVISIONCD$DIVISIONCD" source="DIVISIONCD"/>
+    </input>
+    <joinAttribute name="JOIN$DIVISIONCD$DIVISIONCD"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_OPS_FILTERED" cardinality="C1_1" joinType="leftOuter" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ORDERADDDT"/>
+      <viewAttribute id="STARTINGCHASSIS"/>
+      <viewAttribute id="ENDINGCHASSIS"/>
+      <viewAttribute id="CHANGEORDERNO" aggregationType="sum"/>
+      <viewAttribute id="PROCESINGSTATUSCD"/>
+      <viewAttribute id="PLANTCD"/>
+      <viewAttribute id="CURRENCY"/>
+      <viewAttribute id="CHASSISNETPRICE" aggregationType="sum"/>
+      <viewAttribute id="EXCHANGERATE" aggregationType="sum"/>
+      <viewAttribute id="TAXAMOUNT" aggregationType="sum"/>
+      <viewAttribute id="OPS_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="CHASSISNO"/>
+      <viewAttribute id="DTPONUMBER"/>
+      <viewAttribute id="OPS_TAX_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="TENTSCHEDDT"/>
+      <viewAttribute id="FIRMSCHEDDT"/>
+      <viewAttribute id="SCHED_SRC"/>
+      <viewAttribute id="DEALERCD"/>
+      <viewAttribute id="CHSSTATUS"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="CREDITSTATUS"/>
+      <viewAttribute hidden="true" id="JOIN$DIVISIONCD$DIVISIONCD"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="J_CHASSIS_FILES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDERADDDT" source="ORDERADDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STARTINGCHASSIS" source="STARTINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDINGCHASSIS" source="ENDINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEORDERNO" source="CHANGEORDERNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESINGSTATUSCD" source="PROCESINGSTATUSCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANTCD" source="PLANTCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNETPRICE" source="CHASSISNETPRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGERATE" source="EXCHANGERATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXAMOUNT" source="TAXAMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_COMPARISON_AMOUNT" source="OPS_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNO" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPONUMBER" source="DTPONUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_TAX_COMPARISON_AMOUNT" source="OPS_TAX_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENTSCHEDDT" source="TENTSCHEDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRMSCHEDDT" source="FIRMSCHEDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHED_SRC" source="SCHED_SRC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHSSTATUS" source="CHSSTATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREDITSTATUS" source="CREDITSTATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DIVISIONCD$DIVISIONCD" source="DIVISIONCD"/>
+    </input>
+    <input node="J_MSG_CHASSIS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALERCD" source="DEALERCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DIVISIONCD$DIVISIONCD" source="DIVISIONCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNO" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPONUMBER" source="DTPONUMBER"/>
+    </input>
+    <filter>&quot;DEALERCD&quot; is null or
+(   &quot;DEALERCD&quot; != 'F100' and
+    &quot;DEALERCD&quot; != 'F110' )</filter>
+    <joinAttribute name="JOIN$DIVISIONCD$DIVISIONCD"/>
+    <joinAttribute name="CHASSISNO"/>
+    <joinAttribute name="DTPONUMBER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_S4_FILTERED" cardinality="CN_N" joinType="leftOuter" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+      <viewAttribute id="CHASSIS_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="STARTING_CHASSIS"/>
+      <viewAttribute id="ENDING_CHASSIS"/>
+      <viewAttribute id="CHANGE_ORDER_NUMBER" aggregationType="sum"/>
+      <viewAttribute id="ORDER_ADD_DATE"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="PLANT"/>
+      <viewAttribute id="TAX_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="FREIGHT" aggregationType="sum"/>
+      <viewAttribute id="SALES_ORGANIZATION"/>
+      <viewAttribute id="TENTATIVE_SCHEDULE_DATE"/>
+      <viewAttribute id="FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="SCHED_SRC"/>
+      <viewAttribute id="SOLD_TO"/>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="S4_OPS_PROCESSING_STATUS"/>
+    
+      <viewAttribute id="CHASSIS_OPS_PROCESSING_STATUS"/>
+    
+      <viewAttribute id="CREDIT_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="OPS_PROCESSING_STATUS" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>COALESCE(&quot;CHASSIS_OPS_PROCESSING_STATUS&quot;, &quot;S4_OPS_PROCESSING_STATUS&quot;)</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="S4_COMPARISON_AMOUNT" datatype="DECIMAL" length="15" scale="2" expressionLanguage="SQL">
+    
+        <formula>CASE COALESCE(&quot;CHASSIS_OPS_PROCESSING_STATUS&quot;, &quot;S4_OPS_PROCESSING_STATUS&quot;) 
+    WHEN '16CH' then 0
+    WHEN '16RH' then 0
+    WHEN 'CNCL' then 0
+    WHEN 'ICOH' then 0
+    ELSE 
+		CASE &quot;PLANT&quot; 
+	 		WHEN '' then &quot;CHASSIS_NET_PRICE&quot; 
+            ELSE &quot;CHASSIS_NET_PRICE&quot;+&quot;TAX_AMOUNT&quot; 
+        END 
+ END</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="S4_TAX_COMPARISON_AMOUNT" datatype="DECIMAL" length="13" scale="2" expressionLanguage="SQL">
+        <formula>CASE COALESCE(&quot;CHASSIS_OPS_PROCESSING_STATUS&quot;, &quot;S4_OPS_PROCESSING_STATUS&quot;) 
+    WHEN '16CH' then 0
+    WHEN '16RH' then 0
+    WHEN 'CNCL' then 0
+    WHEN 'ICOH' then 0
+    ELSE 
+	    CASE &quot;PLANT&quot; 
+	 		WHEN '' then 0 
+            ELSE &quot;TAX_AMOUNT&quot; 
+        END 
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="P_S4_SNAPSHOT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORGANIZATION" source="SALES_ORGANIZATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_ADD_DATE" source="ORDER_ADD_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CURRENCY" source="DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS_NET_PRICE" source="CHASSIS_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGE_RATE" source="EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STARTING_CHASSIS" source="STARTING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDING_CHASSIS" source="ENDING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGE_ORDER_NUMBER" source="CHANGE_ORDER_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_OPS_PROCESSING_STATUS" source="OPS_PROCESSING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_AMOUNT" source="TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FREIGHT" source="FREIGHT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOLD_TO" source="SOLD_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRM_SCHEDULE_DATE" source="FIRM_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENTATIVE_SCHEDULE_DATE" source="TENTATIVE_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHED_SRC" source="SCHED_SRC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREDIT_STATUS" source="CREDIT_STATUS"/>
+    </input>
+    <input node="Join_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS_OPS_PROCESSING_STATUS" source="OPSSTATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="SPART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPONUMBER"/>
+    </input>
+    <filter>&quot;OPS_PROCESSING_STATUS&quot; != 'INVS' and
+    (   &quot;SALES_ORDER_ITEM&quot;='000010' or
+        (   &quot;OPS_PROCESSING_STATUS&quot; != 'CNCL' and
+            &quot;OPS_PROCESSING_STATUS&quot; != 'ICOH'
+        )
+    )</filter>
+    <joinAttribute name="DIVISION"/>
+    <joinAttribute name="CHASSIS"/>
+    <joinAttribute name="DTPO_NUMBER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="U_OPS_S4">
+    <viewAttributes>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+    
+      <viewAttribute id="DIVISION"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="J_OPS_FILTERED" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPONUMBER"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    </input>
+    <input node="J_S4_FILTERED" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Key">
+    <viewAttributes>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+    
+      <viewAttribute id="DIVISION"/></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="COUNTER" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>1</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="U_OPS_S4"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_OPS" cardinality="C1_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="ORDERADDDT"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+      <viewAttribute id="STARTINGCHASSIS"/>
+      <viewAttribute id="ENDINGCHASSIS"/>
+      <viewAttribute id="CHANGEORDERNO" aggregationType="sum"/>
+      <viewAttribute id="CHASSISNETPRICE" aggregationType="sum"/>
+      <viewAttribute id="EXCHANGERATE" aggregationType="sum"/>
+      <viewAttribute id="CURRENCY"/>
+      <viewAttribute id="PROCESINGSTATUSCD"/>
+      <viewAttribute id="PLANTCD"/>
+      <viewAttribute id="OPS_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="TAXAMOUNT" aggregationType="sum"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="OPS_TAX_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="TENTSCHEDDT"/>
+      <viewAttribute id="FIRMSCHEDDT"/>
+      <viewAttribute id="SCHED_SRC"/>
+      <viewAttribute id="DEALERCD"/>
+      <viewAttribute id="CHSSTATUS"/>
+    
+    
+    
+      <viewAttribute id="CHASSISNO"/>
+      <viewAttribute id="DTPONUMBER"/>
+      <viewAttribute id="COUNTER" aggregationType="sum"/>
+    
+      <viewAttribute id="CREDITSTATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Key">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="COUNTER" source="COUNTER"/>
+    </input>
+    <input node="J_OPS_FILTERED">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDERADDDT" source="ORDERADDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STARTINGCHASSIS" source="STARTINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDINGCHASSIS" source="ENDINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEORDERNO" source="CHANGEORDERNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESINGSTATUSCD" source="PROCESINGSTATUSCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANTCD" source="PLANTCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNETPRICE" source="CHASSISNETPRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGERATE" source="EXCHANGERATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXAMOUNT" source="TAXAMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_COMPARISON_AMOUNT" source="OPS_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSISNO" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPONUMBER" source="DTPONUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_TAX_COMPARISON_AMOUNT" source="OPS_TAX_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENTSCHEDDT" source="TENTSCHEDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRMSCHEDDT" source="FIRMSCHEDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHED_SRC" source="SCHED_SRC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALERCD" source="DEALERCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHSSTATUS" source="CHSSTATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREDITSTATUS" source="CREDITSTATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSISNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPONUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    </input>
+    <joinAttribute name="CHASSIS"/>
+    <joinAttribute name="DTPO_NUMBER"/>
+    <joinAttribute name="DIVISION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_S4_OPS" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+      <viewAttribute id="S4_SALES_ORDER"/>
+      <viewAttribute id="S4_SALES_ORGANIZATION"/>
+      <viewAttribute id="S4_ORDER_ADD_DATE"/>
+      <viewAttribute id="S4_DOCUMENT_CURRENCY"/>
+      <viewAttribute id="S4_CHASSIS_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="S4_EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="S4_STARTING_CHASSIS"/>
+      <viewAttribute id="S4_ENDING_CHASSIS"/>
+      <viewAttribute id="S4_CHANGE_ORDER_NUMBER" aggregationType="sum"/>
+      <viewAttribute id="S4_SALES_ORDER_ITEM"/>
+      <viewAttribute id="S4_PROCESSING_STATUS"/>
+      <viewAttribute id="S4_PLANT"/>
+      <viewAttribute id="S4_TAX_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="S4_FREIGHT" aggregationType="sum"/>
+      <viewAttribute id="S4_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="OPS_ORDERADDDT"/>
+      <viewAttribute id="OPS_STARTINGCHASSIS"/>
+      <viewAttribute id="OPS_ENDINGCHASSIS"/>
+      <viewAttribute id="OPS_CHANGEORDERNO" aggregationType="sum"/>
+      <viewAttribute id="OPS_CHASSIS_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="OPS_EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="OPS_CURRENCY"/>
+      <viewAttribute id="OPS_PROCESINGSTATUSCD"/>
+      <viewAttribute id="OPS_PLANTCD"/>
+      <viewAttribute id="OPS_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="OPS_TAXAMOUNT" aggregationType="sum"/>
+      <viewAttribute id="S4_TAX_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="OPS_TAX_COMPARISON_AMOUNT" aggregationType="sum"/>
+    
+      <viewAttribute id="OPS_TENTATIVE_SCHEDULE_DATE"/>
+      <viewAttribute id="OPS_FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="OPS_SCHEDULE_DATE_SOURCE"/>
+      <viewAttribute id="S4_TENTATIVE_SCHEDULE_DATE"/>
+      <viewAttribute id="S4_FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="S4_SCHEDULE_DATE_SOURCE"/>
+    
+      <viewAttribute id="S4_DEALER_CODE"/>
+      <viewAttribute id="OPS_DEALER_CODE"/>
+      <viewAttribute id="CHASSIS_STATUS"/>
+    
+      <viewAttribute id="COUNTER" aggregationType="sum"/>
+    
+      <viewAttribute id="OPS_CREDIT_STATUS"/>
+      <viewAttribute id="S4_CREDIT_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="MATCH_ORDER_ADD_DATE" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE &quot;OPS_ORDERADDDT&quot; 
+	 WHEN &quot;S4_ORDER_ADD_DATE&quot; then 1
+	 ELSE 0
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="UNMATCH_ORDER_ADD_DATE" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE &quot;OPS_ORDERADDDT&quot; 
+	 WHEN &quot;S4_ORDER_ADD_DATE&quot; then 0
+	 ELSE 1
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_STARTING_CHASSIS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE COALESCE(&quot;OPS_STARTINGCHASSIS&quot;,'')
+	 WHEN COALESCE(&quot;S4_STARTING_CHASSIS&quot;,'') then 1
+	 ELSE 0
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_ENDING_CHASSIS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE COALESCE(&quot;OPS_ENDINGCHASSIS&quot;,'')
+	 WHEN COALESCE(&quot;S4_ENDING_CHASSIS&quot;,'') then 1
+	 ELSE 0
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_CHASSIS_NET_PRICE" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE
+    WHEN ABS(&quot;COMPARISON_AMOUNT_DIFFERENCE&quot;) &lt;= 2 then 1
+    ELSE 0
+END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="UNMATCH_CHASSIS_NET_PRICE" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE
+    WHEN ABS(&quot;COMPARISON_AMOUNT_DIFFERENCE&quot;) &lt;= 2 then 0
+    ELSE 1
+END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_EXCHANGE_RATE" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE &quot;OPS_EXCHANGE_RATE&quot;
+	 WHEN (&quot;S4_EXCHANGE_RATE&quot;) then 1
+	 ELSE 0
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="UNMATCH_EXCHANGE_RATE" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE &quot;OPS_EXCHANGE_RATE&quot;
+	 WHEN (&quot;S4_EXCHANGE_RATE&quot;) then 0
+	 ELSE 1
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_CHANGE_ORDER_NUMBER" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE &quot;OPS_CHANGEORDERNO&quot; 
+	 WHEN &quot;S4_CHANGE_ORDER_NUMBER&quot; then 1
+	 ELSE 0
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="UNMATCH_CHANGE_ORDER_NUMBER" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE &quot;OPS_CHANGEORDERNO&quot; 
+	 WHEN &quot;S4_CHANGE_ORDER_NUMBER&quot; then 0
+	 ELSE 1
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_DOCUMENT_CURRENCY" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE &quot;OPS_CURRENCY&quot; 
+	 WHEN &quot;S4_DOCUMENT_CURRENCY&quot; then 1
+	 ELSE 0
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="UNMATCH_DOCUMENT_CURRENCY" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE &quot;OPS_CURRENCY&quot; 
+	 WHEN &quot;S4_DOCUMENT_CURRENCY&quot; then 0
+	 ELSE 1
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_PROCESSING_STATUS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE IFNULL(&quot;OPS_PROCESINGSTATUSCD&quot;, '') 
+	 WHEN IFNULL(&quot;S4_PROCESSING_STATUS&quot;, '') then 1 
+	 ELSE 0 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="UNMATCH_PROCESSING_STATUS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE IFNULL(&quot;OPS_PROCESINGSTATUSCD&quot;, '') 
+	 WHEN IFNULL(&quot;S4_PROCESSING_STATUS&quot;, '') then 0
+	 ELSE 1
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_TAX_AMOUNT" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE
+    WHEN ABS(&quot;TAX_COMPARISON_AMOUNT_DIFFERENCE&quot;) &lt;= 2 then 1
+    ELSE 0
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="UNMATCH_TAX_AMOUNT" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE
+    WHEN ABS(&quot;TAX_COMPARISON_AMOUNT_DIFFERENCE&quot;) &lt;= 2 then 0
+    ELSE 1
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_CREDIT_STATUS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE IFNULL(&quot;OPS_CREDIT_STATUS&quot;, '') 
+	 WHEN IFNULL(&quot;S4_CREDIT_STATUS&quot;, '') then 1 
+	 ELSE 0 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="UNMATCH_CREDIT_STATUS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE IFNULL(&quot;OPS_CREDIT_STATUS&quot;, '') 
+	 WHEN IFNULL(&quot;S4_CREDIT_STATUS&quot;, '') then 0
+	 ELSE 1
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MATCH_ALL" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>&quot;MATCH_ORDER_ADD_DATE&quot;*&quot;MATCH_CHASSIS_NET_PRICE&quot;*&quot;MATCH_EXCHANGE_RATE&quot;*&quot;MATCH_CHANGE_ORDER_NUMBER&quot;*&quot;MATCH_DOCUMENT_CURRENCY&quot;*&quot;MATCH_PROCESSING_STATUS&quot;*&quot;MATCH_TAX_AMOUNT&quot;*&quot;MATCH_CREDIT_STATUS&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="UNMATCH_ANY" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_ALL&quot; 
+	 WHEN 1 then 0
+	 ELSE 1
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_ORDER_ADD_DATE" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_ORDER_ADD_DATE&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_STARTING_CHASSIS" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_STARTING_CHASSIS&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_ENDING_CHASSIS" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_ENDING_CHASSIS&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_CHASSIS_NET_PRICE" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_CHASSIS_NET_PRICE&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_EXCHANGE_RATE" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_EXCHANGE_RATE&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_CHANGE_ORDER_NUMBER" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_CHANGE_ORDER_NUMBER&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_DOCUMENT_CURRENCY" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_DOCUMENT_CURRENCY&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_PROCESSING_STATUS" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_PROCESSING_STATUS&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_TAX_AMOUNT" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_TAX_AMOUNT&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_CREDIT_STATUS" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_CREDIT_STATUS&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YN_ALL" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MATCH_ALL&quot; 
+	 WHEN 1 then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="SCHEDULE_DATE" datatype="DATE" expressionLanguage="SQL">
+    
+        <formula>COALESCE(&quot;OPS_FIRM_SCHEDULE_DATE&quot;, &quot;S4_FIRM_SCHEDULE_DATE&quot;, &quot;OPS_TENTATIVE_SCHEDULE_DATE&quot;, &quot;S4_TENTATIVE_SCHEDULE_DATE&quot;)</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="SCHEDULE_DATE_SOURCE" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+        <formula>COALESCE(&quot;OPS_SCHEDULE_DATE_SOURCE&quot;, &quot;S4_SCHEDULE_DATE_SOURCE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="SCHEDULE_DATE_TYPE" datatype="NVARCHAR" length="9" expressionLanguage="SQL">
+        <formula>CASE
+    WHEN &quot;OPS_FIRM_SCHEDULE_DATE&quot; is not null or &quot;S4_FIRM_SCHEDULE_DATE&quot; is not null then 'FIRM'
+    WHEN &quot;OPS_TENTATIVE_SCHEDULE_DATE&quot; is not null or &quot;S4_TENTATIVE_SCHEDULE_DATE&quot; is not null then 'TENTATIVE'
+    ELSE '?'
+END
+</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="DEALER_CODE" datatype="NVARCHAR" length="10" expressionLanguage="SQL">
+    
+        <formula>COALESCE(&quot;OPS_DEALER_CODE&quot;, &quot;S4_DEALER_CODE&quot;)</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="FIRST_ISSUE" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>case
+    when &quot;S4_SALES_ORDER&quot; is null then 'No SAP Data'
+    when &quot;OPS_ORDERADDDT&quot; is null then 'No OPS Data'
+    else case 0
+        when &quot;MATCH_CREDIT_STATUS&quot; then 'Credit Status Mismatch'
+        when &quot;MATCH_CHASSIS_NET_PRICE&quot; then 'Chassis Net Price Mismatch'
+        when &quot;MATCH_TAX_AMOUNT&quot; then 'Tax Mismatch'
+        when &quot;MATCH_DOCUMENT_CURRENCY&quot; then 'Currency Mismatch'
+        when &quot;MATCH_PROCESSING_STATUS&quot; then 'Processing Status Mismatch'
+        when &quot;MATCH_ORDER_ADD_DATE&quot; then 'Order Add Date Mismatch'
+        when &quot;MATCH_EXCHANGE_RATE&quot; then 'Exchange Rate Mismatch'
+        when &quot;MATCH_CHANGE_ORDER_NUMBER&quot; then 'Change Order Mismatch'
+        else 'Other'
+    end
+end</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="SCHEDULE_WEEK" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
+    
+        <formula>ISOWEEK(&quot;SCHEDULE_DATE&quot;)</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="SCHEDULE_MONTH" datatype="NVARCHAR" length="7" expressionLanguage="SQL">
+        <formula>YEAR(&quot;SCHEDULE_DATE&quot;) || '-' || MONTH(&quot;SCHEDULE_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="SCHEDULE_YEAR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>YEAR(&quot;SCHEDULE_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="COMPARISON_AMOUNT_DIFFERENCE" datatype="DECIMAL" length="15" scale="2" expressionLanguage="SQL">
+    
+        <formula>IFNULL(&quot;S4_COMPARISON_AMOUNT&quot;, 0) - IFNULL(&quot;OPS_COMPARISON_AMOUNT&quot;, 0)</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TAX_COMPARISON_AMOUNT_DIFFERENCE" datatype="DECIMAL" length="13" scale="2" expressionLanguage="SQL">
+        <formula>IFNULL(&quot;S4_TAX_COMPARISON_AMOUNT&quot;, 0) - IFNULL(&quot;OPS_TAX_COMPARISON_AMOUNT&quot;, 0)</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="DIFFERENCE" datatype="NVARCHAR" length="13" expressionLanguage="SQL">
+    
+        <formula>TO_NVARCHAR(ROUND(&quot;COMPARISON_AMOUNT_DIFFERENCE&quot;))</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="J_OPS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_ORDERADDDT" source="ORDERADDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_STARTINGCHASSIS" source="STARTINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_ENDINGCHASSIS" source="ENDINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_CHANGEORDERNO" source="CHANGEORDERNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_CHASSIS_NET_PRICE" source="CHASSISNETPRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_EXCHANGE_RATE" source="EXCHANGERATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESINGSTATUSCD" source="PROCESINGSTATUSCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PLANTCD" source="PLANTCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_COMPARISON_AMOUNT" source="OPS_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_TAXAMOUNT" source="TAXAMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_TAX_COMPARISON_AMOUNT" source="OPS_TAX_COMPARISON_AMOUNT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_TENTATIVE_SCHEDULE_DATE" source="TENTSCHEDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_FIRM_SCHEDULE_DATE" source="FIRMSCHEDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_SCHEDULE_DATE_SOURCE" source="SCHED_SRC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_DEALER_CODE" source="DEALERCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS_STATUS" source="CHSSTATUS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="COUNTER" source="COUNTER"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_CREDIT_STATUS" source="CREDITSTATUS"/>
+    </input>
+    <input node="J_S4_FILTERED">
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_DOCUMENT_CURRENCY" source="DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_CHASSIS_NET_PRICE" source="CHASSIS_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_EXCHANGE_RATE" source="EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_STARTING_CHASSIS" source="STARTING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_ENDING_CHASSIS" source="ENDING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_CHANGE_ORDER_NUMBER" source="CHANGE_ORDER_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_ORDER_ADD_DATE" source="ORDER_ADD_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_SALES_ORDER_ITEM" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_PROCESSING_STATUS" source="OPS_PROCESSING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_COMPARISON_AMOUNT" source="S4_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_TAX_AMOUNT" source="TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_FREIGHT" source="FREIGHT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_SALES_ORGANIZATION" source="SALES_ORGANIZATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_TAX_COMPARISON_AMOUNT" source="S4_TAX_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_TENTATIVE_SCHEDULE_DATE" source="TENTATIVE_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_FIRM_SCHEDULE_DATE" source="FIRM_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_SCHEDULE_DATE_SOURCE" source="SCHED_SRC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_DEALER_CODE" source="SOLD_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_CREDIT_STATUS" source="CREDIT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    </input>
+    <joinAttribute name="CHASSIS"/>
+    <joinAttribute name="DTPO_NUMBER"/>
+    <joinAttribute name="DIVISION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true">
+    <viewAttributes>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+      <viewAttribute id="S4_SALES_ORDER"/>
+      <viewAttribute id="S4_SALES_ORGANIZATION"/>
+      <viewAttribute id="S4_ORDER_ADD_DATE"/>
+      <viewAttribute id="S4_DOCUMENT_CURRENCY"/>
+      <viewAttribute id="S4_CHASSIS_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="S4_EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="S4_STARTING_CHASSIS"/>
+      <viewAttribute id="S4_ENDING_CHASSIS"/>
+      <viewAttribute id="S4_CHANGE_ORDER_NUMBER" aggregationType="sum"/>
+      <viewAttribute id="S4_SALES_ORDER_ITEM"/>
+      <viewAttribute id="S4_PROCESSING_STATUS"/>
+      <viewAttribute id="S4_PLANT"/>
+      <viewAttribute id="S4_TAX_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="S4_FREIGHT" aggregationType="sum"/>
+      <viewAttribute id="S4_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="OPS_ORDERADDDT"/>
+      <viewAttribute id="OPS_STARTINGCHASSIS"/>
+      <viewAttribute id="OPS_ENDINGCHASSIS"/>
+      <viewAttribute id="OPS_CHANGEORDERNO" aggregationType="sum"/>
+      <viewAttribute id="OPS_CHASSIS_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="OPS_EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="OPS_CURRENCY"/>
+      <viewAttribute id="OPS_PROCESINGSTATUSCD"/>
+      <viewAttribute id="OPS_PLANTCD"/>
+      <viewAttribute id="OPS_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="OPS_TAXAMOUNT" aggregationType="sum"/>
+      <viewAttribute id="MATCH_ORDER_ADD_DATE" aggregationType="sum"/>
+      <viewAttribute id="MATCH_STARTING_CHASSIS" aggregationType="sum"/>
+      <viewAttribute id="MATCH_ENDING_CHASSIS" aggregationType="sum"/>
+      <viewAttribute id="MATCH_CHASSIS_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="MATCH_EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="MATCH_CHANGE_ORDER_NUMBER" aggregationType="sum"/>
+      <viewAttribute id="MATCH_DOCUMENT_CURRENCY" aggregationType="sum"/>
+      <viewAttribute id="MATCH_PROCESSING_STATUS" aggregationType="sum"/>
+      <viewAttribute id="MATCH_TAX_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="MATCH_ALL" aggregationType="sum"/>
+      <viewAttribute id="YN_ORDER_ADD_DATE"/>
+      <viewAttribute id="YN_STARTING_CHASSIS"/>
+      <viewAttribute id="YN_ENDING_CHASSIS"/>
+      <viewAttribute id="YN_CHASSIS_NET_PRICE"/>
+      <viewAttribute id="YN_EXCHANGE_RATE"/>
+      <viewAttribute id="YN_CHANGE_ORDER_NUMBER"/>
+      <viewAttribute id="YN_DOCUMENT_CURRENCY"/>
+      <viewAttribute id="YN_PROCESSING_STATUS"/>
+      <viewAttribute id="YN_TAX_AMOUNT"/>
+      <viewAttribute id="YN_ALL"/>
+      <viewAttribute id="DIVISION_NAME"/>
+    
+      <viewAttribute id="S4_TAX_COMPARISON_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="OPS_TAX_COMPARISON_AMOUNT" aggregationType="sum"/>
+    
+      <viewAttribute id="SCHEDULE_DATE"/>
+      <viewAttribute id="SCHEDULE_DATE_SOURCE"/>
+      <viewAttribute id="SCHEDULE_DATE_TYPE"/>
+    
+      <viewAttribute id="DEALER_CODE"/>
+      <viewAttribute id="FIRST_ISSUE"/>
+      <viewAttribute id="CHASSIS_STATUS"/>
+    
+      <viewAttribute id="UNMATCH_CHASSIS_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="UNMATCH_EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="UNMATCH_CHANGE_ORDER_NUMBER" aggregationType="sum"/>
+      <viewAttribute id="UNMATCH_DOCUMENT_CURRENCY" aggregationType="sum"/>
+      <viewAttribute id="UNMATCH_PROCESSING_STATUS" aggregationType="sum"/>
+      <viewAttribute id="UNMATCH_TAX_AMOUNT" aggregationType="sum"/>
+    
+      <viewAttribute id="UNMATCH_ANY" aggregationType="sum"/>
+    
+      <viewAttribute id="COUNTER" aggregationType="sum"/>
+    
+      <viewAttribute id="SCHEDULE_WEEK"/>
+      <viewAttribute id="SCHEDULE_MONTH"/>
+      <viewAttribute id="SCHEDULE_YEAR"/>
+    
+      <viewAttribute id="UNMATCH_ORDER_ADD_DATE" aggregationType="sum"/>
+    
+      <viewAttribute id="MATCH_CREDIT_STATUS" aggregationType="sum"/>
+      <viewAttribute id="UNMATCH_CREDIT_STATUS" aggregationType="sum"/>
+      <viewAttribute id="YN_CREDIT_STATUS"/>
+      <viewAttribute id="OPS_CREDIT_STATUS"/>
+      <viewAttribute id="S4_CREDIT_STATUS"/>
+      <viewAttribute id="COMPARISON_AMOUNT_DIFFERENCE" aggregationType="sum"/>
+      <viewAttribute id="TAX_COMPARISON_AMOUNT_DIFFERENCE" aggregationType="sum"/>
+    
+      <viewAttribute id="DIFFERENCE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="DAYS_UNTIL_SCHEDULED" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>DAYS_BETWEEN(UTCTOLOCAL(CURRENT_UTCTIMESTAMP, 'America/Los_Angeles'), &quot;SCHEDULE_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="WEEKS_UNTIL_SCHEDULED" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>FLOOR(DAYS_BETWEEN(UTCTOLOCAL(CURRENT_UTCTIMESTAMP, 'America/Los_Angeles'), &quot;SCHEDULE_DATE&quot;) / 7)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="J_S4_OPS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_SALES_ORDER" source="S4_SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_SALES_ORGANIZATION" source="S4_SALES_ORGANIZATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_ORDER_ADD_DATE" source="S4_ORDER_ADD_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_DOCUMENT_CURRENCY" source="S4_DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_CHASSIS_NET_PRICE" source="S4_CHASSIS_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_EXCHANGE_RATE" source="S4_EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_STARTING_CHASSIS" source="S4_STARTING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_ENDING_CHASSIS" source="S4_ENDING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_CHANGE_ORDER_NUMBER" source="S4_CHANGE_ORDER_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_SALES_ORDER_ITEM" source="S4_SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_PROCESSING_STATUS" source="S4_PROCESSING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_PLANT" source="S4_PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_TAX_AMOUNT" source="S4_TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_FREIGHT" source="S4_FREIGHT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_COMPARISON_AMOUNT" source="S4_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_ORDERADDDT" source="OPS_ORDERADDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_STARTINGCHASSIS" source="OPS_STARTINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_ENDINGCHASSIS" source="OPS_ENDINGCHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_CHANGEORDERNO" source="OPS_CHANGEORDERNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_CHASSIS_NET_PRICE" source="OPS_CHASSIS_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_EXCHANGE_RATE" source="OPS_EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_CURRENCY" source="OPS_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESINGSTATUSCD" source="OPS_PROCESINGSTATUSCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PLANTCD" source="OPS_PLANTCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_COMPARISON_AMOUNT" source="OPS_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_TAXAMOUNT" source="OPS_TAXAMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_ORDER_ADD_DATE" source="MATCH_ORDER_ADD_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_STARTING_CHASSIS" source="MATCH_STARTING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_ENDING_CHASSIS" source="MATCH_ENDING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_CHASSIS_NET_PRICE" source="MATCH_CHASSIS_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_EXCHANGE_RATE" source="MATCH_EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_CHANGE_ORDER_NUMBER" source="MATCH_CHANGE_ORDER_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_DOCUMENT_CURRENCY" source="MATCH_DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PROCESSING_STATUS" source="MATCH_PROCESSING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_TAX_AMOUNT" source="MATCH_TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_ALL" source="MATCH_ALL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_ORDER_ADD_DATE" source="YN_ORDER_ADD_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_STARTING_CHASSIS" source="YN_STARTING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_ENDING_CHASSIS" source="YN_ENDING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_CHASSIS_NET_PRICE" source="YN_CHASSIS_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_EXCHANGE_RATE" source="YN_EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_CHANGE_ORDER_NUMBER" source="YN_CHANGE_ORDER_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_DOCUMENT_CURRENCY" source="YN_DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_PROCESSING_STATUS" source="YN_PROCESSING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_TAX_AMOUNT" source="YN_TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_ALL" source="YN_ALL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_TAX_COMPARISON_AMOUNT" source="S4_TAX_COMPARISON_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_TAX_COMPARISON_AMOUNT" source="OPS_TAX_COMPARISON_AMOUNT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHEDULE_DATE" source="SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHEDULE_DATE_SOURCE" source="SCHEDULE_DATE_SOURCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHEDULE_DATE_TYPE" source="SCHEDULE_DATE_TYPE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_CODE" source="DEALER_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRST_ISSUE" source="FIRST_ISSUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS_STATUS" source="CHASSIS_STATUS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNMATCH_CHASSIS_NET_PRICE" source="UNMATCH_CHASSIS_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNMATCH_EXCHANGE_RATE" source="UNMATCH_EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNMATCH_CHANGE_ORDER_NUMBER" source="UNMATCH_CHANGE_ORDER_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNMATCH_DOCUMENT_CURRENCY" source="UNMATCH_DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNMATCH_PROCESSING_STATUS" source="UNMATCH_PROCESSING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNMATCH_TAX_AMOUNT" source="UNMATCH_TAX_AMOUNT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNMATCH_ANY" source="UNMATCH_ANY"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="COUNTER" source="COUNTER"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHEDULE_WEEK" source="SCHEDULE_WEEK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHEDULE_MONTH" source="SCHEDULE_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCHEDULE_YEAR" source="SCHEDULE_YEAR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNMATCH_ORDER_ADD_DATE" source="UNMATCH_ORDER_ADD_DATE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_CREDIT_STATUS" source="MATCH_CREDIT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UNMATCH_CREDIT_STATUS" source="UNMATCH_CREDIT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YN_CREDIT_STATUS" source="YN_CREDIT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_CREDIT_STATUS" source="OPS_CREDIT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="S4_CREDIT_STATUS" source="S4_CREDIT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPARISON_AMOUNT_DIFFERENCE" source="COMPARISON_AMOUNT_DIFFERENCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_COMPARISON_AMOUNT_DIFFERENCE" source="TAX_COMPARISON_AMOUNT_DIFFERENCE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIFFERENCE" source="DIFFERENCE"/>
+    </input>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION_NAME" source="DIVISION_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    </input>
+    <joinAttribute name="DIVISION"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="DIVISION" order="1" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="DIVISION_NAME">
+      <descriptions defaultDescription="Division"/>
+      <localVariable>V_DIVISION</localVariable>
+      <keyMapping columnObjectName="Join_1" columnName="DIVISION"/>
+    </attribute>
+    <attribute id="DIVISION_NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Division Name"/>
+      <keyMapping columnObjectName="Join_1" columnName="DIVISION_NAME"/>
+    </attribute>
+    <attribute id="CHASSIS" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Chassis"/>
+      <localVariable>V_CHASSIS</localVariable>
+      <keyMapping columnObjectName="Join_1" columnName="CHASSIS"/>
+    </attribute>
+    <attribute id="DTPO_NUMBER" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DTPO Number"/>
+      <localVariable>V_DTPO_NUMBER</localVariable>
+      <keyMapping columnObjectName="Join_1" columnName="DTPO_NUMBER"/>
+    </attribute>
+    <attribute id="S4_SALES_ORDER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Sales Order"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_SALES_ORDER"/>
+    </attribute>
+    <attribute id="S4_ORDER_ADD_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Order Add Date"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_ORDER_ADD_DATE"/>
+    </attribute>
+    <attribute id="S4_DOCUMENT_CURRENCY" order="7" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Currency"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_DOCUMENT_CURRENCY"/>
+    </attribute>
+    <attribute id="S4_EXCHANGE_RATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Exchange Rate"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_EXCHANGE_RATE"/>
+    </attribute>
+    <attribute id="S4_STARTING_CHASSIS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Starting Chassis"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_STARTING_CHASSIS"/>
+    </attribute>
+    <attribute id="S4_ENDING_CHASSIS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Ending Chassis"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_ENDING_CHASSIS"/>
+    </attribute>
+    <attribute id="S4_CHANGE_ORDER_NUMBER" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Change Order"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_CHANGE_ORDER_NUMBER"/>
+    </attribute>
+    <attribute id="S4_SALES_ORDER_ITEM" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Sales Order Item"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_SALES_ORDER_ITEM"/>
+    </attribute>
+    <attribute id="S4_PROCESSING_STATUS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Processing Status"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_PROCESSING_STATUS"/>
+    </attribute>
+    <attribute id="S4_PLANT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Plant"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_PLANT"/>
+    </attribute>
+    <attribute id="OPS_ORDERADDDT" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Order Add Date"/>
+      <keyMapping columnObjectName="Join_1" columnName="OPS_ORDERADDDT"/>
+    </attribute>
+    <attribute id="OPS_STARTINGCHASSIS" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Starting Chassis"/>
+      <keyMapping columnObjectName="Join_1" columnName="OPS_STARTINGCHASSIS"/>
+    </attribute>
+    <attribute id="OPS_ENDINGCHASSIS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Ending Chassis"/>
+      <keyMapping columnObjectName="Join_1" columnName="OPS_ENDINGCHASSIS"/>
+    </attribute>
+    <attribute id="OPS_CHANGEORDERNO" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Change Order"/>
+      <keyMapping columnObjectName="Join_1" columnName="OPS_CHANGEORDERNO"/>
+    </attribute>
+    <attribute id="OPS_EXCHANGE_RATE" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Exchange Rate"/>
+      <keyMapping columnObjectName="Join_1" columnName="OPS_EXCHANGE_RATE"/>
+    </attribute>
+    <attribute id="OPS_CURRENCY" order="25" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Currency"/>
+      <keyMapping columnObjectName="Join_1" columnName="OPS_CURRENCY"/>
+    </attribute>
+    <attribute id="OPS_PROCESINGSTATUSCD" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Processing Status"/>
+      <keyMapping columnObjectName="Join_1" columnName="OPS_PROCESINGSTATUSCD"/>
+    </attribute>
+    <attribute id="OPS_PLANTCD" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Plant"/>
+      <keyMapping columnObjectName="Join_1" columnName="OPS_PLANTCD"/>
+    </attribute>
+    <attribute id="YN_ORDER_ADD_DATE" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Order Add Date Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_ORDER_ADD_DATE"/>
+    </attribute>
+    <attribute id="YN_STARTING_CHASSIS" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Starting Chassis Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_STARTING_CHASSIS"/>
+    </attribute>
+    <attribute id="YN_ENDING_CHASSIS" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Ending Chassis Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_ENDING_CHASSIS"/>
+    </attribute>
+    <attribute id="YN_CHASSIS_NET_PRICE" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Chassis Net Price Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_CHASSIS_NET_PRICE"/>
+    </attribute>
+    <attribute id="YN_EXCHANGE_RATE" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Exchange Rate Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_EXCHANGE_RATE"/>
+    </attribute>
+    <attribute id="YN_CHANGE_ORDER_NUMBER" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Change Order Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_CHANGE_ORDER_NUMBER"/>
+    </attribute>
+    <attribute id="YN_DOCUMENT_CURRENCY" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Currency Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_DOCUMENT_CURRENCY"/>
+    </attribute>
+    <attribute id="YN_PROCESSING_STATUS" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Process Status Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_PROCESSING_STATUS"/>
+    </attribute>
+    <attribute id="YN_TAX_AMOUNT" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Tax Amount Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_TAX_AMOUNT"/>
+    </attribute>
+    <attribute id="YN_ALL" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="All Match"/>
+      <localVariable>V_ALL_MATCH</localVariable>
+      <keyMapping columnObjectName="Join_1" columnName="YN_ALL"/>
+    </attribute>
+  
+    <attribute id="SCHEDULE_DATE" order="42" displayAttribute="false" attributeHierarchyActive="false" semanticType="date">
+      <descriptions defaultDescription="Schedule Date"/>
+  
+      <keyMapping columnObjectName="Join_1" columnName="SCHEDULE_DATE"/>
+  
+    </attribute>
+  
+    <attribute id="SCHEDULE_WEEK" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Schedule Week"/>
+  
+      <keyMapping columnObjectName="Join_1" columnName="SCHEDULE_WEEK"/>
+  
+    </attribute>
+    <attribute id="SCHEDULE_MONTH" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Schedule Month"/>
+      <keyMapping columnObjectName="Join_1" columnName="SCHEDULE_MONTH"/>
+    </attribute>
+    <attribute id="SCHEDULE_YEAR" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Schedule Year"/>
+      <keyMapping columnObjectName="Join_1" columnName="SCHEDULE_YEAR"/>
+    </attribute>
+  
+    <attribute id="SCHEDULE_DATE_SOURCE" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Schedule Date Source"/>
+  
+      <keyMapping columnObjectName="Join_1" columnName="SCHEDULE_DATE_SOURCE"/>
+  
+    </attribute>
+    <attribute id="SCHEDULE_DATE_TYPE" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Schedule Date Type"/>
+      <keyMapping columnObjectName="Join_1" columnName="SCHEDULE_DATE_TYPE"/>
+    </attribute>
+    <attribute id="DAYS_UNTIL_SCHEDULED" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Days Until Scheduled"/>
+      <keyMapping columnObjectName="Join_1" columnName="DAYS_UNTIL_SCHEDULED"/>
+    </attribute>
+    <attribute id="WEEKS_UNTIL_SCHEDULED" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Weeks Until Scheduled"/>
+      <localVariable>V_WEEKS_UNTIL_SCHEDULED</localVariable>
+      <keyMapping columnObjectName="Join_1" columnName="WEEKS_UNTIL_SCHEDULED"/>
+    </attribute>
+  
+    <attribute id="DEALER_CODE" order="60" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dealer Code"/>
+  
+      <keyMapping columnObjectName="Join_1" columnName="DEALER_CODE"/>
+  
+    </attribute>
+    <attribute id="FIRST_ISSUE" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="First Issue"/>
+      <keyMapping columnObjectName="Join_1" columnName="FIRST_ISSUE"/>
+    </attribute>
+    <attribute id="CHASSIS_STATUS" order="62" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Chassis Status"/>
+      <keyMapping columnObjectName="Join_1" columnName="CHASSIS_STATUS"/>
+    </attribute>
+    <attribute id="YN_CREDIT_STATUS" order="74" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Credit Status Match"/>
+      <keyMapping columnObjectName="Join_1" columnName="YN_CREDIT_STATUS"/>
+    </attribute>
+    <attribute id="OPS_CREDIT_STATUS" order="75" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Credit Status"/>
+      <keyMapping columnObjectName="Join_1" columnName="OPS_CREDIT_STATUS"/>
+    </attribute>
+    <attribute id="S4_CREDIT_STATUS" order="76" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Credit Status"/>
+      <keyMapping columnObjectName="Join_1" columnName="S4_CREDIT_STATUS"/>
+    </attribute>
+  
+    <attribute id="DIFFERENCE" order="79" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Difference"/>
+  
+      <keyMapping columnObjectName="Join_1" columnName="DIFFERENCE"/>
+  
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="S4_CHASSIS_NET_PRICE" order="8" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="S4 Chassis Net Price"/>
+      <unitCurrencyAttribute attributeName="S4_DOCUMENT_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="S4_CHASSIS_NET_PRICE"/>
+    </measure>
+    <measure id="S4_TAX_AMOUNT" order="16" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="S4 Tax Amount"/>
+      <unitCurrencyAttribute attributeName="S4_DOCUMENT_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="S4_TAX_AMOUNT"/>
+    </measure>
+    <measure id="S4_FREIGHT" order="17" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="S4 Freight"/>
+      <fixedCurrency>USD</fixedCurrency>
+      <measureMapping columnObjectName="Join_1" columnName="S4_FREIGHT"/>
+    </measure>
+    <measure id="S4_COMPARISON_AMOUNT" order="18" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="S4 Comparison Amount"/>
+      <unitCurrencyAttribute attributeName="S4_DOCUMENT_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="S4_COMPARISON_AMOUNT"/>
+    </measure>
+    <measure id="OPS_CHASSIS_NET_PRICE" order="23" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="OPS Chassis Net Price"/>
+      <unitCurrencyAttribute attributeName="OPS_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="OPS_CHASSIS_NET_PRICE"/>
+    </measure>
+    <measure id="OPS_COMPARISON_AMOUNT" order="28" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="OPS Comparison Amount"/>
+      <unitCurrencyAttribute attributeName="OPS_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="OPS_COMPARISON_AMOUNT"/>
+    </measure>
+  
+    <measure id="OPS_TAXAMOUNT" order="29" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="OPS Tax Amount"/>
+      <unitCurrencyAttribute attributeName="OPS_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="OPS_TAXAMOUNT"/>
+    </measure>
+  
+    <measure id="S4_TAX_COMPARISON_AMOUNT" order="40" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="S4 Tax Comparison Amount"/>
+      <unitCurrencyAttribute attributeName="S4_DOCUMENT_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="S4_TAX_COMPARISON_AMOUNT"/>
+    </measure>
+    <measure id="OPS_TAX_COMPARISON_AMOUNT" order="41" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="OPS Tax Comparison Amount"/>
+      <unitCurrencyAttribute attributeName="OPS_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="OPS_TAX_COMPARISON_AMOUNT"/>
+    </measure>
+  
+    <measure id="MATCH_ORDER_ADD_DATE" order="50" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Order Add Date Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_ORDER_ADD_DATE"/>
+    </measure>
+    <measure id="MATCH_STARTING_CHASSIS" order="51" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Starting Chassis Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_STARTING_CHASSIS"/>
+    </measure>
+    <measure id="MATCH_ENDING_CHASSIS" order="52" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Ending Chassis Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_ENDING_CHASSIS"/>
+    </measure>
+    <measure id="MATCH_CHASSIS_NET_PRICE" order="53" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Chassis Net Price Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_CHASSIS_NET_PRICE"/>
+    </measure>
+    <measure id="MATCH_EXCHANGE_RATE" order="54" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Exchange Rate Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_EXCHANGE_RATE"/>
+    </measure>
+    <measure id="MATCH_CHANGE_ORDER_NUMBER" order="55" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Change Order Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_CHANGE_ORDER_NUMBER"/>
+    </measure>
+    <measure id="MATCH_DOCUMENT_CURRENCY" order="56" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Currency Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_DOCUMENT_CURRENCY"/>
+    </measure>
+    <measure id="MATCH_PROCESSING_STATUS" order="57" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Process Status Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_PROCESSING_STATUS"/>
+    </measure>
+    <measure id="MATCH_TAX_AMOUNT" order="58" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Tax Amount Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_TAX_AMOUNT"/>
+    </measure>
+    <measure id="MATCH_ALL" order="59" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="All Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_ALL"/>
+    </measure>
+  
+    <measure id="UNMATCH_CHASSIS_NET_PRICE" order="63" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unmatched Chassis Net Price Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="UNMATCH_CHASSIS_NET_PRICE"/>
+    </measure>
+    <measure id="UNMATCH_EXCHANGE_RATE" order="64" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unmatched Exchange Rate Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="UNMATCH_EXCHANGE_RATE"/>
+    </measure>
+    <measure id="UNMATCH_CHANGE_ORDER_NUMBER" order="65" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unmatched Change Order Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="UNMATCH_CHANGE_ORDER_NUMBER"/>
+    </measure>
+    <measure id="UNMATCH_DOCUMENT_CURRENCY" order="66" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unmatched Currency Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="UNMATCH_DOCUMENT_CURRENCY"/>
+    </measure>
+    <measure id="UNMATCH_PROCESSING_STATUS" order="67" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unmatched Process Status Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="UNMATCH_PROCESSING_STATUS"/>
+    </measure>
+    <measure id="UNMATCH_TAX_AMOUNT" order="68" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unmatched Tax Amount Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="UNMATCH_TAX_AMOUNT"/>
+    </measure>
+  
+    <measure id="UNMATCH_ANY" order="69" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unmatched Any Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="UNMATCH_ANY"/>
+    </measure>
+  
+    <measure id="COUNTER" order="70" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Counter"/>
+      <measureMapping columnObjectName="Join_1" columnName="COUNTER"/>
+    </measure>
+  
+    <measure id="UNMATCH_ORDER_ADD_DATE" order="71" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unmatched Order Add Date Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="UNMATCH_ORDER_ADD_DATE"/>
+    </measure>
+  
+    <measure id="MATCH_CREDIT_STATUS" order="72" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Credit Status Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="MATCH_CREDIT_STATUS"/>
+    </measure>
+    <measure id="UNMATCH_CREDIT_STATUS" order="73" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Unmatched Credit Status Count"/>
+      <measureMapping columnObjectName="Join_1" columnName="UNMATCH_CREDIT_STATUS"/>
+    </measure>
+    <measure id="COMPARISON_AMOUNT_DIFFERENCE" order="77" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="Comparison Amount Difference"/>
+      <unitCurrencyAttribute attributeName="S4_DOCUMENT_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="COMPARISON_AMOUNT_DIFFERENCE"/>
+    </measure>
+    <measure id="TAX_COMPARISON_AMOUNT_DIFFERENCE" order="78" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="Tax Comparison Amount Difference"/>
+      <unitCurrencyAttribute attributeName="S4_DOCUMENT_CURRENCY"/>
+      <measureMapping columnObjectName="Join_1" columnName="TAX_COMPARISON_AMOUNT_DIFFERENCE"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="755" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="P_S4_SNAPSHOT" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="470" y="1141"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_OPS_SNAPSHOT" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1001" y="1301"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_MAP_DIVISIONS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="1301"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_CHASSIS_FILES" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="770" y="1493"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_MSG_ORDERS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="560" y="1301"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_MSG_CHASSIS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="770" y="1301"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="812" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_CHASSIS_FILES" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="896" y="1141"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="P_OPS_SNAPSHOT" modelObjectNameSpace="J_CHASSIS_FILES" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="P_CHASSIS_FILES" modelObjectNameSpace="J_CHASSIS_FILES" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="468" y="30"/>
+      <rectangleSize width="172"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_SAVED_CHASSIS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="317" y="1301"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_MSG_CHASSIS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="680" y="1141"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="P_MSG_ORDERS" modelObjectNameSpace="J_MSG_CHASSIS" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="164"/>
+    </shape>
+    <shape modelObjectName="P_MSG_CHASSIS" modelObjectNameSpace="J_MSG_CHASSIS" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="166"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118" y="1141"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="P_SAVED_CHASSIS" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="172"/>
+    </shape>
+    <shape modelObjectName="P_MAP_DIVISIONS" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="172"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_OPS_FILTERED" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="735" y="981"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_CHASSIS_FILES" modelObjectNameSpace="J_OPS_FILTERED" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="J_MSG_CHASSIS" modelObjectNameSpace="J_OPS_FILTERED" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="164"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="J_S4_FILTERED" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="444" y="981"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="P_S4_SNAPSHOT" modelObjectNameSpace="J_S4_FILTERED" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Join_3" modelObjectNameSpace="J_S4_FILTERED" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="102"/>
+    </shape>
+  
+  
+    <shape expanded="true" modelObjectName="U_OPS_S4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="622" y="821"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Key" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="645" y="696"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_OPS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="672" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Key" modelObjectNameSpace="J_OPS" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="195"/>
+    </shape>
+    <shape modelObjectName="J_OPS_FILTERED" modelObjectNameSpace="J_OPS" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="243"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="J_S4_OPS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="534" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_OPS" modelObjectNameSpace="J_S4_OPS" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="358" y="54"/>
+      <rectangleSize width="270"/>
+    </shape>
+    <shape modelObjectName="J_S4_FILTERED" modelObjectNameSpace="J_S4_OPS" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="795" y="47"/>
+      <rectangleSize width="290"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="755" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_S4_OPS" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="575" y="30"/>
+      <rectangleSize width="172"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>

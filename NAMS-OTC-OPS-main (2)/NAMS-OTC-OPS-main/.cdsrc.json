@@ -1,0 +1,31 @@
+{
+  "[development]": {
+    "auth": {
+      "passport": {
+        "strategy": "dummy",
+        "users": {
+          "joe": {
+            "password": "joe",
+            "roles": ["Admin", "Writer"],
+            "userAttributes": {
+              "Division": ["$UNRESTRICTED"]
+            }
+          },
+          "julie": {
+            "roles": ["Reader"],
+            "userAttributes": {
+              "Division": ["F", "K"]
+            }
+          },
+          "bob": {
+            "roles": ["Reader"],
+            "userAttributes": {
+              "Division": ["P"]
+            }
+          },
+          "*": true
+        }
+      }
+    }
+  }
+}

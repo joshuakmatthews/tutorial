@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="CV_DIM_CUSTOMER_CLASSIFICATION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Customer Classification"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="CV_DIM_CLASSIFICATION" value="011">
+    <targetVariable name="IP_KLART" resourceUri="CV_DIM_CLASSIFICATION"/>
+  </mapping>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="CV_DIM_CLASSIFICATION" value="011">
+    <targetVariable name="IP_CLASS_TYPE" resourceUri="CV_DIM_CLASSIFICATION"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="CV_DIM_CLASSIFICATION">
+    <resourceUri>CV_DIM_CLASSIFICATION</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CV_DIM_CLASSIFICATION">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER" source="OBJECT_KEY"/>
+    </input>
+    <filter>&quot;CHARACTERISTIC_NAME&quot; IN('FLOORINGSOURCE', 'DISTRICT_SALES_MANAGER', 'SALES_MANAGER')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="FlooringSource" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="FLOORING_SOURCE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLOORING_SOURCE" source="VALUE"/>
+    </input>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='FLOORINGSOURCE'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DistrictSalesManager" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="DISTRICT_SALES_MANAGER"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRICT_SALES_MANAGER" source="VALUE"/>
+    </input>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='DISTRICT_SALES_MANAGER'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="SalesManager" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="SALES_MANAGER"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_MANAGER" source="VALUE"/>
+    </input>
+    <filter>&quot;CHARACTERISTIC_NAME&quot;='SALES_MANAGER'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="FLOORING_SOURCE"/>
+      <viewAttribute id="DISTRICT_SALES_MANAGER"/>
+      <viewAttribute id="SALES_MANAGER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="FlooringSource" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER" source="CUSTOMER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLOORING_SOURCE" source="FLOORING_SOURCE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DISTRICT_SALES_MANAGER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MANAGER" null="true" value=""/>
+    </input>
+    <input node="DistrictSalesManager" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER" source="CUSTOMER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FLOORING_SOURCE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRICT_SALES_MANAGER" source="DISTRICT_SALES_MANAGER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALES_MANAGER" null="true" value=""/>
+    </input>
+    <input node="SalesManager" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER" source="CUSTOMER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FLOORING_SOURCE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DISTRICT_SALES_MANAGER" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_MANAGER" source="SALES_MANAGER"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="FLOORING_SOURCE" aggregationType="max"/>
+      <viewAttribute id="DISTRICT_SALES_MANAGER" aggregationType="max"/>
+      <viewAttribute id="SALES_MANAGER" aggregationType="max"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_1"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Aggregation_1">
+  <attributes>
+    <attribute id="CUSTOMER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Customer"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="CUSTOMER"/>
+    </attribute>
+    <attribute id="FLOORING_SOURCE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Flooring Source"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="FLOORING_SOURCE"/>
+    </attribute>
+    <attribute id="DISTRICT_SALES_MANAGER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="District Sales Manager"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="DISTRICT_SALES_MANAGER"/>
+    </attribute>
+    <attribute id="SALES_MANAGER" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Manager"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="SALES_MANAGER"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="355" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="641"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="FlooringSource" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="DistrictSalesManager" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="496"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="SalesManager" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="496"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="341"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="355" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

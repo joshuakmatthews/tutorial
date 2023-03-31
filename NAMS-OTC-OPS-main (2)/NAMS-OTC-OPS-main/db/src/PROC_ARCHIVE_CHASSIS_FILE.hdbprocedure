@@ -1,0 +1,324 @@
+PROCEDURE "PROC_ARCHIVE_CHASSIS_FILE"(
+    "I_DIVISION_CODE" NVARCHAR(1),
+    "I_VERSIONS_TO_KEEP" INTEGER) 
+  LANGUAGE SQLSCRIPT 
+  SQL SECURITY INVOKER 
+  --DEFAULT SCHEMA <default_schema_name>
+  --READS SQL DATA
+  AS
+BEGIN
+    declare s4div NVARCHAR(2);
+    declare c INT;
+
+    -- Get S/4 division code
+    select spart into s4div from map_divisions where divisionCd = :I_DIVISION_CODE;
+
+    -- Delete the previously generated S4 archive version 0
+    delete from chassis_filesarchive where divisioncd = :I_DIVISION_CODE and archiveversion = 0;
+
+    -- Generate a new archive version 0 from S4
+    INSERT INTO chassis_filesarchive(
+        ID,
+        createdAt,
+        createdBy,
+        modifiedAt,
+        modifiedBy,
+        materialSaved,
+        timesProcessed,
+        divisionCd,
+        chassisNo,
+        vinMfgCd,
+        vinModelCd,
+        vinAxleCd,
+        vinEngineCd,
+        vinGVWRCd,
+        vinUnuseCd,
+        vinCheckDigitCd,
+        vinYrCd,
+        pltCd,
+        engineSerNo,
+        DTPONumber,
+        orderAddDt,
+        tentSchedDt,
+        firmSchedDt,
+        frameSchedDt,
+        cabSchedDt,
+        reqDelDt,
+        frameLnSeqNo,
+        cabLnSeqNo,
+        opsStatus,
+        destBusName,
+        destAddrLn1,
+        destCity,
+        destSt,
+        destZipCd,
+        streamNo,
+        lineNo,
+        salesOrderSaved,
+        archiveVersion,
+        isDelta,
+        businessError
+    )
+    SELECT 
+        SUBSTRING(myuuid,1,8) || '-' || SUBSTRING(myuuid,9,4) || '-' || SUBSTRING(myuuid,13,4) || '-' || SUBSTRING(myuuid,17,4) || '-' || SUBSTRING(myuuid,21,12) AS ID,
+        createdAt,
+        'generated' AS createdBy,
+        modifiedAt,
+        'generated' AS modifiedBy,
+        TRUE AS materialSaved,
+        1 AS timesProcessed,
+        divisionCd,
+        chassisNo,
+        vinMfgCd,
+        vinModelCd,
+        vinAxleCd,
+        vinEngineCd,
+        vinGVWRCd,
+        vinUnuseCd,
+        vinCheckDigitCd,
+        vinYrCd,
+        pltCd,
+        engineSerNo,
+        DTPONumber,
+        orderAddDt,
+        tentSchedDt,
+        firmSchedDt,
+        frameSchedDt,
+        cabSchedDt,
+        reqDelDt,
+        frameLnSeqNo,
+        cabLnSeqNo,
+        opsStatus,
+        destBusName,
+        destAddrLn1,
+        destCity,
+        destSt,
+        destZipCd,
+        1 AS streamNo,
+        1 AS lineNo,
+        TRUE AS salesOrderSaved,
+        0 AS archiveVersion,
+        TRUE AS isDelta,
+        FALSE AS businessError
+    FROM (
+        SELECT
+            LOWER(TO_VARCHAR(SYSUUID)) myuuid,
+            createdAt,
+            modifiedAt,
+            divisionCd,
+            chassisNo,
+            vinMfgCd,
+            vinModelCd,
+            vinAxleCd,
+            vinEngineCd,
+            vinGVWRCd,
+            vinUnuseCd,
+            vinCheckDigitCd,
+            vinYrCd,
+            pltCd,
+            engineSerNo,
+            DTPONumber,
+            orderAddDt,
+            tentSchedDt,
+            firmSchedDt,
+            frameSchedDt,
+            cabSchedDt,
+            reqDelDt,
+            frameLnSeqNo,
+            cabLnSeqNo,
+            opsStatus,
+            destBusName,
+            destAddrLn1,
+            destCity,
+            destSt,
+            destZipCd
+        FROM (
+            SELECT
+                NOW() AS createdAt,
+                NOW() AS modifiedAt,
+                :I_DIVISION_CODE AS divisionCd,
+                LEFT(vbap.matnr,6) AS chassisNo,
+                vin.vinmfgcd AS vinMfgCd,
+                vin.vinmodelcd AS vinModelCd,
+                vin.vinaxlecd AS vinAxleCd,
+                vin.vinenginecd AS vinEngineCd,
+                vin.vingvwrcd AS vinGVWRCd,
+                vin.vinunusecd AS vinUnuseCd,
+                vin.vincheckdigitcd AS vinCheckDigitCd,
+                vin.vinyrcd AS vinYrCd,
+                vin.vinplant AS pltCd,
+                mc.engine_serial_number AS engineSerNo,
+                LEFT(vbkd_h.bstkd,8) AS DTPONumber,
+                to_date(vbak.bstdk) AS orderAddDt,
+                mc.tentative_schedule_date AS tentSchedDt,
+                mc.firm_schedule_date AS firmSchedDt,
+                _frameSchedDt.dats AS frameSchedDt,
+                _cabSchedDt.dats AS cabSchedDt,
+                to_date(vbep.edatu) AS reqDelDt,
+                LEFT(_frameLineSeqNo.value,7) AS frameLnSeqNo,
+                LEFT(_cabLineSeqNo.value,7) AS cabLnSeqNo,
+                LEFT(vbkd_i.ops_processing_status,4) AS opsStatus,
+                z1.destBusName AS destBusName,
+                z1.destAddrLn1 AS destAddrLn1,
+                z1.destCity AS destCity,
+                z1.destSt AS destSt,
+                z1.destZipCd AS destZipCd
+            FROM "slts4hc::VBAP" AS vbap
+            INNER JOIN "slts4hc::VBAK" AS vbak ON vbak.mandt = vbap.mandt AND vbak.vbeln = vbap.vbeln
+            INNER JOIN "slts4hc::VBKD" vbkd_h ON vbkd_h.mandt = vbap.mandt AND vbkd_h.vbeln = vbap.vbeln AND vbkd_h.posnr = '000000'
+            LEFT OUTER JOIN "slts4hc::VBEP" vbep ON vbep.mandt = vbap.mandt AND vbep.vbeln = vbap.vbeln AND vbep.posnr = vbap.posnr AND vbep.etenr = '0001'
+            LEFT OUTER JOIN cv_dim_material_classification mc ON mc.material = vbap.matnr
+            LEFT OUTER JOIN cv_dim_sales_bus_data_inherit vbkd_i ON vbkd_i.sales_order = vbap.vbeln AND vbkd_i.sales_order_item = vbap.posnr
+            LEFT OUTER JOIN (
+                SELECT vbpa.vbeln, vbpa.posnr, adrc.name1 AS destBusName, adrc.street AS destAddrLn1, adrc.city1 AS destCity, adrc.region AS destSt, adrc.post_code1 AS destZipcd
+                FROM "slts4hc::VBPA" vbpa
+                INNER JOIN "slts4hc::ADRC" adrc ON adrc.client = vbpa.mandt AND adrc.addrnumber = vbpa.adrnr
+                LEFT OUTER JOIN "slts4hc::KNA1" kna1 ON kna1.mandt = adrc.client AND kna1.kunnr = adrc.name1 WHERE vbpa.parvw = 'Z1'
+            ) z1 ON z1.vbeln = vbap.vbeln AND z1.posnr = vbap.posnr
+            LEFT OUTER JOIN (
+                SELECT "OBJECT_KEY" AS material, CASE date_value WHEN '00000000' THEN to_date(CASE SUBSTRING(value,5,1) WHEN '-' THEN LEFT(value,4) || SUBSTRING(value,6,2) || SUBSTRING(value,9,2) ELSE SUBSTRING(value,7,4) || LEFT(value,2) || SUBSTRING(value,4,2) END) ELSE to_date(date_value) END AS dats
+                FROM "CV_DIM_CLASSIFICATION"(placeholder."$$IP_CLASS_TYPE$$"=>'001')
+                WHERE characteristic_name = 'CHASS-FRAME-SCHED-DT'
+            ) _frameSchedDt ON _frameSchedDt.material = vbap.matnr
+            LEFT OUTER JOIN (
+                SELECT "OBJECT_KEY" AS material, CASE date_value WHEN '00000000' THEN to_date(CASE SUBSTRING(value,5,1) WHEN '-' THEN LEFT(value,4) || SUBSTRING(value,6,2) || SUBSTRING(value,9,2) ELSE SUBSTRING(value,7,4) || LEFT(value,2) || SUBSTRING(value,4,2) END) ELSE to_date(date_value) END AS dats
+                FROM "CV_DIM_CLASSIFICATION"(placeholder."$$IP_CLASS_TYPE$$"=>'001')
+                WHERE characteristic_name = 'CHASS-CAB-SCHED-DT'
+            ) _cabSchedDt ON _cabSchedDt.material = vbap.matnr
+            LEFT OUTER JOIN (
+                SELECT "OBJECT_KEY" AS material, "VALUE"
+                FROM "CV_DIM_CLASSIFICATION"(placeholder."$$IP_CLASS_TYPE$$"=>'001')
+                WHERE characteristic_name = 'CHASS-FRAME-LN-SEQ-NO'
+            ) _frameLineSeqNo ON _frameLineSeqNo.material = vbap.matnr
+            LEFT OUTER JOIN (
+                SELECT "OBJECT_KEY" AS material, "VALUE"
+                FROM "CV_DIM_CLASSIFICATION"(placeholder."$$IP_CLASS_TYPE$$"=>'001')
+                WHERE characteristic_name = 'CHASS-CAB-LN-SEQ-NO'
+            ) _cabLineSeqNo ON _cabLineSeqNo.material = vbap.matnr
+            LEFT OUTER JOIN (
+                SELECT material, LEFT(shortvin,3) vinMfgCd, SUBSTRING(shortvin,4,1) vinModelCd, SUBSTRING(shortvin,5,1) vinAxleCd, SUBSTRING(shortvin,6,1) vinEngineCd, SUBSTRING(shortvin,7,1) vinGVWRCd, SUBSTRING(shortvin,8,1) vinUnuseCd, substr(shortvin,9,1) vinCheckDigitCd, substr(shortvin,10,1) vinYrCd, vinplant
+                FROM (
+                    SELECT "OBJECT_KEY" AS material, CASE WHEN LENGTH(value) > 7 THEN LEFT(value,10) ELSE null END AS shortvin, CASE WHEN LENGTH(value) > 6 THEN LEFT(RIGHT(value,7),1) ELSE NULL END AS vinplant, RIGHT(value,6) AS vinchassis
+                    FROM "CV_DIM_CLASSIFICATION"(placeholder."$$IP_CLASS_TYPE$$"=>'001')
+                    WHERE characteristic_name = 'VIN'
+                )
+            ) vin ON vin.material = vbap.matnr
+            WHERE
+                vbap.abgru = ''
+                AND vbak.spart = :s4div
+        )
+    );
+
+    -- Get the count of records in the chassis file table
+    select count(*) cn into c from chassis_files where divisioncd = :I_DIVISION_CODE;
+
+    -- Only proceed if there are entries to archive
+    if :c > 0 then
+        -- Delete the oldest archive versions which are greater than the number to keep
+        delete from chassis_filesarchive where divisioncd = :I_DIVISION_CODE and archiveversion >= :I_VERSIONS_TO_KEEP;
+        -- Increment the archive version numbers
+        update chassis_filesarchive set archiveversion = archiveversion + 1 where divisioncd = :I_DIVISION_CODE and archiveversion >= 1;
+        
+        -- Upsert the records from the active table into the archive table
+        UPSERT CHASSIS_FILESARCHIVE(
+            ID,
+            createdAt,
+            createdBy,
+            modifiedAt,
+            modifiedBy,
+            materialSaved,
+            timesProcessed,
+            divisionCd,
+            chassisNo,
+            vinMfgCd,
+            vinModelCd,
+            vinAxleCd,
+            vinEngineCd,
+            vinGVWRCd,
+            vinUnuseCd,
+            vinCheckDigitCd,
+            vinYrCd,
+            pltCd,
+            engineSerNo,
+            vehActlWgt,
+            DTPONumber,
+            orderAddDt,
+            tentSchedDt,
+            firmSchedDt,
+            frameSchedDt,
+            cabSchedDt,
+            actlDlvryDt,
+            reqDelDt,
+            frameLnSeqNo,
+            cabLnSeqNo,
+            opsStatus,
+            chsStatus,
+            destBusName,
+            destCntctName,
+            destAddrLn1,
+            destAddrLn2,
+            destCity,
+            destSt,
+            destZipCd,
+            destCntctPhoneNo,
+            destCntry,
+            streamNo,
+            lineNo,
+            salesOrderSaved,
+            archiveVersion,
+            isDelta
+        )
+        SELECT
+            ID,
+            createdAt,
+            createdBy,
+            modifiedAt,
+            modifiedBy,
+            materialSaved,
+            timesProcessed,
+            divisionCd,
+            chassisNo,
+            vinMfgCd,
+            vinModelCd,
+            vinAxleCd,
+            vinEngineCd,
+            vinGVWRCd,
+            vinUnuseCd,
+            vinCheckDigitCd,
+            vinYrCd,
+            pltCd,
+            engineSerNo,
+            vehActlWgt,
+            DTPONumber,
+            orderAddDt,
+            tentSchedDt,
+            firmSchedDt,
+            frameSchedDt,
+            cabSchedDt,
+            actlDlvryDt,
+            reqDelDt,
+            frameLnSeqNo,
+            cabLnSeqNo,
+            opsStatus,
+            chsStatus,
+            destBusName,
+            destCntctName,
+            destAddrLn1,
+            destAddrLn2,
+            destCity,
+            destSt,
+            destZipCd,
+            destCntctPhoneNo,
+            destCntry,
+            streamNo,
+            lineNo,
+            salesOrderSaved,
+            1 AS archiveVersion,
+            isDelta
+        FROM CHASSIS_FILES
+        WHERE DIVISIONCD = :I_DIVISION_CODE;
+
+        -- Delete the records from the active table
+        delete from chassis_files where divisioncd = :I_DIVISION_CODE;
+    end if;
+END

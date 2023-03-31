@@ -1,0 +1,14 @@
+{
+  "logical-oms-grantor": {
+    "object_owner": {
+      "container_roles": [
+        "oms.db::ZR_S1_ALL_ITD0_OO#"
+      ]
+    },
+    "application_user": {
+      "container_roles": [
+        "oms.db::ZR_S1_ALL_ITD0_RT"
+      ]
+    }
+  }
+}

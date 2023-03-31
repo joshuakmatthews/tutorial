@@ -1,0 +1,2099 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="CV_TRUCK_ORDERS" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300">
+<descriptions defaultDescription="Truck Orders"/>
+<localVariables>
+  <variable id="IP_SALES_OPTIONS" parameter="true">
+    <descriptions defaultDescription="Sales Option Codes"/>
+    <variableProperties datatype="NVARCHAR" length="7" mandatory="false" defaultValue="" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_SALES_OPTION</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>SALES_OPTION</externalLikeElementName>
+      </valueDomain>
+      <selection multiLine="true" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+
+  <variable id="V_APPROVED_ON">
+    <descriptions defaultDescription="Approved On"/>
+    <variableProperties datatype="TIMESTAMP" length="27" scale="7">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_DATE</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>TIMESTAMP</externalLikeElementName>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="-36">
+          <targetVariable name="IP_LOWER_DATE_OFFSET"/>
+        </variableMapping>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="84">
+          <targetVariable name="IP_UPPER_DATE_OFFSET"/>
+        </variableMapping>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_BLOCKED">
+    <descriptions defaultDescription="Blocked"/>
+    <variableProperties datatype="NVARCHAR" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="BLOCKED_FLAG" resourceUri="CV_DIM_YN_BLOCKED"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_CANCEL_REPLACE_CODE">
+    <descriptions defaultDescription="Cancel/Replace Code"/>
+    <variableProperties datatype="NVARCHAR" length="12" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="CANCEL_REPLACE_CODE" resourceUri="CV_DIM_CANCEL_REPLACE_CODE"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_CANCELLATION_DATE">
+    <descriptions defaultDescription="Cancellation Date"/>
+    <variableProperties datatype="DATE" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_DATE</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>DATE</externalLikeElementName>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="-36">
+          <targetVariable name="IP_LOWER_DATE_OFFSET"/>
+        </variableMapping>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="84">
+          <targetVariable name="IP_UPPER_DATE_OFFSET"/>
+        </variableMapping>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+
+  <variable id="V_CC_MODEL">
+    <descriptions defaultDescription="CC Model"/>
+    <variableProperties datatype="NVARCHAR" length="20" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="CC_MODEL"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_CLASS">
+    <descriptions defaultDescription="Class"/>
+    <variableProperties datatype="NVARCHAR" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="CLASS" resourceUri="CV_DIM_CLASS"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_CREATION_DATE">
+    <descriptions defaultDescription="Creation Date"/>
+    <variableProperties datatype="DATE" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_DATE</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>DATE</externalLikeElementName>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="-36">
+          <targetVariable name="IP_LOWER_DATE_OFFSET"/>
+        </variableMapping>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="84">
+          <targetVariable name="IP_UPPER_DATE_OFFSET"/>
+        </variableMapping>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_CUSTOMER_GROUP">
+    <descriptions defaultDescription="Customer Group"/>
+    <variableProperties datatype="NVARCHAR" length="2" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="CUSTOMER_GROUP" resourceUri="CV_DIM_CUSTOMER_GROUP"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_DEALER_OWNER_GROUP">
+    <descriptions defaultDescription="Dealer Owner Group"/>
+    <variableProperties datatype="NVARCHAR" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="DEALER_OWNER_GROUP" resourceUri="CV_DIM_CUST_DEALER_OWNER_GROUP"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_DIVISION">
+    <descriptions defaultDescription="Division"/>
+    <variableProperties datatype="NVARCHAR" length="2" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="DIVISION" resourceUri="CV_DIM_DIVISION"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_DOCUMENT_DATE">
+    <descriptions defaultDescription="Document Date"/>
+    <variableProperties datatype="DATE" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_DATE</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>DATE</externalLikeElementName>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="-36">
+          <targetVariable name="IP_LOWER_DATE_OFFSET"/>
+        </variableMapping>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="84">
+          <targetVariable name="IP_UPPER_DATE_OFFSET"/>
+        </variableMapping>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_END_CUSTOMER">
+    <descriptions defaultDescription="End Customer"/>
+    <variableProperties datatype="NVARCHAR" length="35" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="END_CUSTOMER"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_ENGINE_TYPE">
+    <descriptions defaultDescription="Engine Type"/>
+    <variableProperties datatype="NVARCHAR" length="40" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="ENGINE_TYPE"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_FLEET">
+    <descriptions defaultDescription="Fleet"/>
+    <variableProperties datatype="NVARCHAR" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="FLEET_FLAG" resourceUri="CV_DIM_YN_FLEET"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_FLOORING_SOURCE">
+    <descriptions defaultDescription="Flooring Source"/>
+    <variableProperties datatype="NVARCHAR" length="70" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="DEALER_CONTRACT_CODE_FLOORING_SOURCE" resourceUri="CV_DIM_CUST_DEALER_CONTRACT_CODE"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_OPEN_ORDER">
+    <descriptions defaultDescription="Open Order"/>
+    <variableProperties datatype="NVARCHAR" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="OPEN_ORDER_FLAG" resourceUri="CV_DIM_YN_OPEN_ORDER"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_ORDER_ADD_DATE">
+    <descriptions defaultDescription="Order Add Date"/>
+    <variableProperties datatype="DATE" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_DATE</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>DATE</externalLikeElementName>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="-36">
+          <targetVariable name="IP_LOWER_DATE_OFFSET"/>
+        </variableMapping>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="84">
+          <targetVariable name="IP_UPPER_DATE_OFFSET"/>
+        </variableMapping>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_ORDER_OR_CANCELLATION_DATE">
+    <descriptions defaultDescription="Order/Cancellation Date"/>
+    <variableProperties datatype="DATE" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_DATE</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>DATE</externalLikeElementName>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="-36">
+          <targetVariable name="IP_LOWER_DATE_OFFSET"/>
+        </variableMapping>
+        <variableMapping xsi:type="Variable:ConstantVariableMapping" value="84">
+          <targetVariable name="IP_UPPER_DATE_OFFSET"/>
+        </variableMapping>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_PRODUCT_TYPE">
+    <descriptions defaultDescription="Product Type"/>
+    <variableProperties datatype="NVARCHAR" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="PRODUCT_TYPE" resourceUri="CV_DIM_PRODUCT_TYPE"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_PURCHASE_ORDER_TYPE">
+    <descriptions defaultDescription="Purchase Order Type"/>
+    <variableProperties datatype="NVARCHAR" length="4" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="PURCHASE_ORDER_TYPE" resourceUri="CV_DIM_PURCHASE_ORDER_TYPE"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_REQUESTED_DELIVERY_DATE">
+    <descriptions defaultDescription="Requested Delivery Date"/>
+    <variableProperties datatype="DATE" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_DATE</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>DATE</externalLikeElementName>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_SALES_DISTRICT">
+    <descriptions defaultDescription="Sales District"/>
+    <variableProperties datatype="NVARCHAR" length="6" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="SALES_DISTRICT" resourceUri="CV_DIM_SALES_DISTRICT"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_SALES_DOCUMENT_TYPE">
+    <descriptions defaultDescription="Sales Document Type"/>
+    <variableProperties datatype="NVARCHAR" length="4" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="SALES_DOCUMENT_TYPE" resourceUri="CV_DIM_SALES_DOC_TYPE"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_SALES_MODEL_FAMILY">
+    <descriptions defaultDescription="Sales Model Family"/>
+    <variableProperties datatype="NVARCHAR" length="20" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="SALES_MODEL_FAMILY"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_SALES_ORDER">
+    <descriptions defaultDescription="Sales Order"/>
+    <variableProperties datatype="NVARCHAR" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="SALES_ORDER"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_SHIPPING_POINT">
+    <descriptions defaultDescription="Shipping Point"/>
+    <variableProperties datatype="NVARCHAR" length="4" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="SHIPPING_POINT" resourceUri="CV_DIM_SHIPPING_POINT"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_SOLD_TO">
+    <descriptions defaultDescription="Sold-To"/>
+    <variableProperties datatype="NVARCHAR" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="SOLD_TO" resourceUri="CV_DIM_CUST_SOLD_TO"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_TENTATIVE_SCHEDULE_DATE">
+    <descriptions defaultDescription="Tentative Schedule Date"/>
+    <variableProperties datatype="DATE" length="10" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>CV_DIM_DATE</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>DATE</externalLikeElementName>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::VBAK">
+    <resourceUri>slts4hc::VBAK</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::VBAP">
+    <resourceUri>slts4hc::VBAP</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::VBKD">
+    <resourceUri>slts4hc::VBKD</resourceUri>
+  </DataSource>
+  <DataSource id="CV_DIM_MATERIAL_CLASSIFICATION">
+    <resourceUri>CV_DIM_MATERIAL_CLASSIFICATION</resourceUri>
+  </DataSource>
+  <DataSource id="CV_DIM_BILLING_BLOCK_REASON">
+    <resourceUri>CV_DIM_BILLING_BLOCK_REASON</resourceUri>
+  </DataSource>
+  <DataSource id="CV_SALES_ORDER_PARTNERS">
+    <resourceUri>CV_SALES_ORDER_PARTNERS</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="VBAK">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="APPROVAL_COMMENT"/>
+      <viewAttribute id="APPROVED_BY"/>
+      <viewAttribute id="APPROVED_ON"/>
+      <viewAttribute id="BILLING_BLOCK_REASON"/>
+      <viewAttribute id="BILLING_STATUS"/>
+      <viewAttribute id="MAHDT"/>
+      <viewAttribute id="ERDAT"/>
+      <viewAttribute id="CREATE_TIME"/>
+      <viewAttribute id="DISTRIBUTION_CHANNEL"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+      <viewAttribute id="AUDAT"/>
+      <viewAttribute id="END_CUSTOMER"/>
+      <viewAttribute id="SALES_ORGANIZATION"/>
+      <viewAttribute id="FORWARD_TO"/>
+      <viewAttribute id="FORWARDING_COMMENT"/>
+      <viewAttribute id="BSTDK"/>
+    
+      <viewAttribute id="VDATU"/>
+      <viewAttribute id="SALES_DOCUMENT_TYPE"/>
+      <viewAttribute id="SOLD_TO"/>
+    
+      <viewAttribute id="ORDER_NET_PRICE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CANCELLATION_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>CASE &quot;MAHDT&quot;
+	 WHEN '00000000' then null
+	 ELSE TO_DATE(&quot;MAHDT&quot;)
+ END
+</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CREATE_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;ERDAT&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="DOCUMENT_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;AUDAT&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="OPEN_ORDER" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;MAHDT&quot; 
+	WHEN '00000000' then 
+	CASE &quot;BILLING_STATUS&quot; 
+		WHEN 'C' then 'N' 
+		ELSE 'Y' 
+        END 
+	ELSE 'N' 
+END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ORDER_ADD_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;BSTDK&quot;)</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="REQUESTED_DELIVERY_DATE" datatype="DATE" expressionLanguage="SQL">
+    
+        <formula>TO_DATE(&quot;VDATU&quot;)</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="slts4hc::VBAK">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="VBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVAL_COMMENT" source="ZZ1_APPROVALCOMMENT_SDH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="ZZ1_APPROVEDAT_SDH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="ZZ1_APPROVEDBY_SDH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_BLOCK_REASON" source="FAKSK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_TIME" source="ERZET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION_CHANNEL" source="VTWEG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="SPART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="KNUMV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_CUSTOMER" source="BNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORGANIZATION" source="VKORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARD_TO" source="ZZ1_FORWARDTO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARDING_COMMENT" source="ZZ1_APPRFRWCOMMENT_SDH"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DOCUMENT_TYPE" source="AUART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOLD_TO" source="KUNNR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CURRENCY" source="WAERK"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_NET_PRICE" source="NETWR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_STATUS" source="FKSAK"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="VBAP" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="SALES_ORDER_ITEM"/>
+      <viewAttribute id="MATNR"/>
+      <viewAttribute id="TAXM1"/>
+    
+      <viewAttribute id="PLANT"/>
+      <viewAttribute id="SHIPPING_POINT"/>
+    
+      <viewAttribute id="REJECTION_REASON"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::VBAP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="VBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM" source="POSNR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIPPING_POINT" source="VSTEL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="REJECTION_REASON" source="ABGRU"/>
+    </input>
+    <filter>&quot;REJECTION_REASON&quot;=''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="VBKD" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="POSNR"/>
+      <viewAttribute id="CUSTOMER_GROUP"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+    
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER"/>
+      <viewAttribute id="PRSDT"/>
+      <viewAttribute id="PURCHASE_ORDER_TYPE"/>
+      <viewAttribute id="SALES_DISTRICT"/>
+    
+      <viewAttribute id="EXCHANGE_RATE"/>
+    
+      <viewAttribute id="OPS_PROCESSING_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FLEET_FLAG" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE &quot;CUSTOMER_GROUP&quot; 
+	 WHEN 'Z2' then 'Y' 
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="PRICE_EFFECTIVE_DATE" datatype="DATE" expressionLanguage="SQL">
+    
+        <formula>TO_DATE(&quot;PRSDT&quot;)</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="slts4hc::VBKD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="VBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER_GROUP" source="KDGRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="BSTKD"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREVIOUS_CHASSIS_NUMBER" source="BSTKD_E"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHASE_ORDER_TYPE" source="BSARK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT" source="BZIRK"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGE_RATE" source="KURRF"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESSING_STATUS" source="IHREZ_E"/>
+    </input>
+    <filter>&quot;POSNR&quot;='000000'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:TableFunctionView" id="TableFunction_1" tableFunctionName="TF_GET_ORDERS_WITH_OPTIONS">
+    <viewAttributes/>
+    <calculatedViewAttributes/>
+    <variableMapping xsi:type="Variable:VariableMapping">
+      <targetVariable name="I_OPTIONS_CSV"/>
+      <localVariable>IP_SALES_OPTIONS</localVariable>
+    </variableMapping>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="CAB_TYPE"/>
+      <viewAttribute id="CAB_WIDTH"/>
+      <viewAttribute id="CANCEL_REPLACE_CODE"/>
+      <viewAttribute id="CAR_NUMBER"/>
+      <viewAttribute id="CC_MODEL"/>
+      <viewAttribute id="CLASS"/>
+      <viewAttribute id="ENGINE_SERIAL_NUMBER"/>
+      <viewAttribute id="ENGINE_TYPE"/>
+      <viewAttribute id="FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="MARKETING_CLASS"/>
+      <viewAttribute id="MARKETING_NUMBER"/>
+      <viewAttribute id="PRODUCT_TYPE"/>
+      <viewAttribute id="PROMOTIONS"/>
+      <viewAttribute id="SALES_MODEL_FAMILY"/>
+      <viewAttribute id="TENTATIVE_SCHEDULE_DATE"/>
+    
+      <viewAttribute id="MATERIAL"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CV_DIM_MATERIAL_CLASSIFICATION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="BLOCKED"/>
+      <viewAttribute id="BILLING_BLOCK_REASON_TEXT"/>
+    
+      <viewAttribute id="BILLING_BLOCK_REASON"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CV_DIM_BILLING_BLOCK_REASON"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="DEALER_OWNER_GROUP"/>
+      <viewAttribute id="DEALER_CONTRACT_CODE"/>
+      <viewAttribute id="PAYER"/>
+      <viewAttribute id="SHIP_TO"/>
+    
+      <viewAttribute id="SALES_ORDER"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CV_SALES_ORDER_PARTNERS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="SALES_ORDER_ITEM_MIN" aggregationType="min"/>
+      <viewAttribute id="SALES_ORDER_ITEM_MAX" aggregationType="max"/>
+      <viewAttribute id="SALES_ORDER_ITEM_COUNT" aggregationType="count"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="VBAP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM_MIN" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM_MAX" source="SALES_ORDER_ITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM_COUNT" source="SALES_ORDER_ITEM"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_7" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="APPROVAL_COMMENT"/>
+      <viewAttribute id="APPROVED_BY"/>
+      <viewAttribute id="APPROVED_ON" aggregationType="sum"/>
+      <viewAttribute id="BILLING_BLOCK_REASON"/>
+      <viewAttribute id="CANCELLATION_DATE"/>
+      <viewAttribute id="CREATE_DATE"/>
+      <viewAttribute id="CREATE_TIME"/>
+      <viewAttribute id="DISTRIBUTION_CHANNEL"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="DOCUMENT_DATE"/>
+      <viewAttribute id="END_CUSTOMER"/>
+      <viewAttribute id="SALES_ORGANIZATION"/>
+      <viewAttribute id="FORWARD_TO"/>
+      <viewAttribute id="FORWARDING_COMMENT"/>
+      <viewAttribute id="OPEN_ORDER"/>
+      <viewAttribute id="ORDER_ADD_DATE"/>
+      <viewAttribute id="REQUESTED_DELIVERY_DATE"/>
+      <viewAttribute id="SALES_DOCUMENT_TYPE"/>
+      <viewAttribute id="SOLD_TO"/>
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+      <viewAttribute id="ORDER_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="BILLING_STATUS"/>
+    
+      <viewAttribute id="MAHDT"/>
+      <viewAttribute id="ERDAT"/>
+      <viewAttribute id="AUDAT"/>
+      <viewAttribute id="BSTDK"/>
+      <viewAttribute id="VDATU"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="VBAK">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVAL_COMMENT" source="APPROVAL_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_BLOCK_REASON" source="BILLING_BLOCK_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_STATUS" source="BILLING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MAHDT" source="MAHDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERDAT" source="ERDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_TIME" source="CREATE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION_CHANNEL" source="DISTRIBUTION_CHANNEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CURRENCY" source="DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUDAT" source="AUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_CUSTOMER" source="END_CUSTOMER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORGANIZATION" source="SALES_ORGANIZATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARD_TO" source="FORWARD_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARDING_COMMENT" source="FORWARDING_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BSTDK" source="BSTDK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VDATU" source="VDATU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DOCUMENT_TYPE" source="SALES_DOCUMENT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOLD_TO" source="SOLD_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_NET_PRICE" source="ORDER_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCELLATION_DATE" source="CANCELLATION_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_DATE" source="CREATE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_DATE" source="DOCUMENT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPEN_ORDER" source="OPEN_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_ADD_DATE" source="ORDER_ADD_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTED_DELIVERY_DATE" source="REQUESTED_DELIVERY_DATE"/>
+    </input>
+    <input node="TableFunction_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="VBAP_S" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="TAXM1"/>
+      <viewAttribute id="PLANT"/>
+      <viewAttribute id="SHIPPING_POINT"/>
+      <viewAttribute id="SALES_ORDER_ITEM_COUNT" aggregationType="count"/>
+      <viewAttribute id="SALES_ORDER_ITEM_MIN" aggregationType="min"/>
+      <viewAttribute id="SALES_ORDER_ITEM_MAX" aggregationType="max"/>
+      <viewAttribute hidden="true" id="JOIN$SALES_ORDER_ITEM$SALES_ORDER_ITEM_MIN"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="STARTING_CHASSIS" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>CASE &quot;SALES_ORDER_ITEM_MIN&quot; 
+	 WHEN &quot;SALES_ORDER_ITEM_MAX&quot; then '' 
+	 ELSE &quot;CHASSIS&quot; 
+ END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="QUANTITY" datatype="INTEGER" expressionLanguage="SQL">
+    
+        <formula>&quot;SALES_ORDER_ITEM_COUNT&quot;</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="VBAP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="MATNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXM1" source="TAXM1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIPPING_POINT" source="SHIPPING_POINT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SALES_ORDER_ITEM$SALES_ORDER_ITEM_MIN" source="SALES_ORDER_ITEM"/>
+    </input>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM_MIN" source="SALES_ORDER_ITEM_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM_MAX" source="SALES_ORDER_ITEM_MAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM_COUNT" source="SALES_ORDER_ITEM_COUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SALES_ORDER_ITEM$SALES_ORDER_ITEM_MIN" source="SALES_ORDER_ITEM_MIN"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+    <joinAttribute name="JOIN$SALES_ORDER_ITEM$SALES_ORDER_ITEM_MIN"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="VBAP_E" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="MATNR"/>
+      <viewAttribute id="SALES_ORDER_ITEM_MIN" aggregationType="min"/>
+      <viewAttribute id="SALES_ORDER_ITEM_MAX" aggregationType="max"/>
+      <viewAttribute hidden="true" id="JOIN$SALES_ORDER_ITEM$SALES_ORDER_ITEM_MAX"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ENDING_CHASSIS" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>CASE &quot;SALES_ORDER_ITEM_MAX&quot; 
+	 WHEN &quot;SALES_ORDER_ITEM_MIN&quot; then '' 
+	 ELSE &quot;MATNR&quot; 
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="VBAP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATNR" source="MATNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SALES_ORDER_ITEM$SALES_ORDER_ITEM_MAX" source="SALES_ORDER_ITEM"/>
+    </input>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM_MIN" source="SALES_ORDER_ITEM_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER_ITEM_MAX" source="SALES_ORDER_ITEM_MAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SALES_ORDER_ITEM$SALES_ORDER_ITEM_MAX" source="SALES_ORDER_ITEM_MAX"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+    <joinAttribute name="JOIN$SALES_ORDER_ITEM$SALES_ORDER_ITEM_MAX"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="APPROVAL_COMMENT"/>
+      <viewAttribute id="APPROVED_BY"/>
+      <viewAttribute id="APPROVED_ON" aggregationType="sum"/>
+      <viewAttribute id="BILLING_BLOCK_REASON"/>
+    
+      <viewAttribute id="BILLING_STATUS"/>
+    
+      <viewAttribute id="CANCELLATION_DATE"/>
+      <viewAttribute id="CREATE_DATE"/>
+      <viewAttribute id="CREATE_TIME"/>
+      <viewAttribute id="CUSTOMER_GROUP"/>
+      <viewAttribute id="DISTRIBUTION_CHANNEL"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+      <viewAttribute id="DOCUMENT_DATE"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+      <viewAttribute id="END_CUSTOMER"/>
+      <viewAttribute id="FLEET_FLAG"/>
+      <viewAttribute id="FORWARD_TO"/>
+      <viewAttribute id="FORWARDING_COMMENT"/>
+      <viewAttribute id="OPEN_ORDER"/>
+      <viewAttribute id="ORDER_ADD_DATE"/>
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER"/>
+      <viewAttribute id="PRICE_EFFECTIVE_DATE"/>
+      <viewAttribute id="PURCHASE_ORDER_TYPE"/>
+      <viewAttribute id="REQUESTED_DELIVERY_DATE"/>
+      <viewAttribute id="SALES_DISTRICT"/>
+      <viewAttribute id="SALES_DOCUMENT_TYPE"/>
+      <viewAttribute id="SALES_ORGANIZATION"/>
+    
+      <viewAttribute id="SOLD_TO"/>
+    
+      <viewAttribute id="EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="ORDER_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="OPS_PROCESSING_STATUS"/></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ORDER_NET_PRICE_USD" datatype="DECIMAL" length="15" scale="2" expressionLanguage="SQL">
+        <formula>CASE
+	WHEN &quot;DOCUMENT_CURRENCY&quot; = 'USD' THEN &quot;ORDER_NET_PRICE&quot;
+	WHEN &quot;EXCHANGE_RATE&quot; = 0 THEN 0
+	ELSE &quot;ORDER_NET_PRICE&quot;/&quot;EXCHANGE_RATE&quot;
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_7">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVAL_COMMENT" source="APPROVAL_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_BLOCK_REASON" source="BILLING_BLOCK_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCELLATION_DATE" source="CANCELLATION_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_DATE" source="CREATE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_TIME" source="CREATE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION_CHANNEL" source="DISTRIBUTION_CHANNEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_DATE" source="DOCUMENT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_CUSTOMER" source="END_CUSTOMER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORGANIZATION" source="SALES_ORGANIZATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARD_TO" source="FORWARD_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARDING_COMMENT" source="FORWARDING_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPEN_ORDER" source="OPEN_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_ADD_DATE" source="ORDER_ADD_DATE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTED_DELIVERY_DATE" source="REQUESTED_DELIVERY_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DOCUMENT_TYPE" source="SALES_DOCUMENT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOLD_TO" source="SOLD_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CURRENCY" source="DOCUMENT_CURRENCY"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_NET_PRICE" source="ORDER_NET_PRICE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_STATUS" source="BILLING_STATUS"/></input>
+    <input node="VBKD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER_GROUP" source="CUSTOMER_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLEET_FLAG" source="FLEET_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREVIOUS_CHASSIS_NUMBER" source="PREVIOUS_CHASSIS_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_EFFECTIVE_DATE" source="PRICE_EFFECTIVE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHASE_ORDER_TYPE" source="PURCHASE_ORDER_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT" source="SALES_DISTRICT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGE_RATE" source="EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESSING_STATUS" source="OPS_PROCESSING_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true">
+    <viewAttributes>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="TAXM1"/>
+      <viewAttribute id="CAB_TYPE"/>
+      <viewAttribute id="CAB_WIDTH"/>
+      <viewAttribute id="CANCEL_REPLACE_CODE"/>
+      <viewAttribute id="CAR_NUMBER"/>
+      <viewAttribute id="CC_MODEL"/>
+      <viewAttribute id="CLASS"/>
+      <viewAttribute id="ENGINE_SERIAL_NUMBER"/>
+      <viewAttribute id="ENGINE_TYPE"/>
+      <viewAttribute id="FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="MARKETING_CLASS"/>
+      <viewAttribute id="MARKETING_NUMBER"/>
+    
+      <viewAttribute id="PLANT"/>
+      <viewAttribute id="PRODUCT_TYPE"/>
+      <viewAttribute id="PROMOTIONS"/>
+      <viewAttribute id="SALES_MODEL_FAMILY"/>
+      <viewAttribute id="SHIPPING_POINT"/>
+    
+      <viewAttribute id="STARTING_CHASSIS"/>
+      <viewAttribute id="TENTATIVE_SCHEDULE_DATE"/>
+      <viewAttribute id="QUANTITY" aggregationType="count"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="VBAP_S">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STARTING_CHASSIS" source="STARTING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXM1" source="TAXM1"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIPPING_POINT" source="SHIPPING_POINT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY" source="QUANTITY"/>
+    </input>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAB_TYPE" source="CAB_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAB_WIDTH" source="CAB_WIDTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE" source="CANCEL_REPLACE_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAR_NUMBER" source="CAR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_MODEL" source="CC_MODEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLASS" source="CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_SERIAL_NUMBER" source="ENGINE_SERIAL_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_TYPE" source="ENGINE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRM_SCHEDULE_DATE" source="FIRM_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_CLASS" source="MARKETING_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_NUMBER" source="MARKETING_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_TYPE" source="PRODUCT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROMOTIONS" source="PROMOTIONS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_MODEL_FAMILY" source="SALES_MODEL_FAMILY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENTATIVE_SCHEDULE_DATE" source="TENTATIVE_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="MATERIAL"/>
+    </input>
+    <joinAttribute name="CHASSIS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="C1_1" joinType="inner" optimizeJoinColumns="false">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="APPROVAL_COMMENT"/>
+      <viewAttribute id="APPROVED_BY"/>
+      <viewAttribute id="APPROVED_ON" aggregationType="sum"/>
+      <viewAttribute id="BILLING_BLOCK_REASON"/>
+      <viewAttribute id="CANCELLATION_DATE"/>
+      <viewAttribute id="CREATE_DATE"/>
+      <viewAttribute id="CREATE_TIME"/>
+      <viewAttribute id="CUSTOMER_GROUP"/>
+    
+      <viewAttribute id="DISTRIBUTION_CHANNEL"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="DOCUMENT_DATE"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+      <viewAttribute id="END_CUSTOMER"/>
+      <viewAttribute id="SALES_ORGANIZATION"/>
+      <viewAttribute id="FLEET_FLAG"/>
+      <viewAttribute id="FORWARD_TO"/>
+      <viewAttribute id="FORWARDING_COMMENT"/>
+      <viewAttribute id="OPEN_ORDER"/>
+      <viewAttribute id="ORDER_ADD_DATE"/>
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER"/>
+      <viewAttribute id="PRICE_EFFECTIVE_DATE"/>
+    
+      <viewAttribute id="PURCHASE_ORDER_TYPE"/>
+      <viewAttribute id="REQUESTED_DELIVERY_DATE"/>
+      <viewAttribute id="SALES_DISTRICT"/>
+      <viewAttribute id="SALES_DOCUMENT_TYPE"/>
+    
+      <viewAttribute id="SOLD_TO"/>
+      <viewAttribute id="DEALER_OWNER_GROUP"/>
+      <viewAttribute id="DEALER_CONTRACT_CODE"/>
+      <viewAttribute id="PAYER"/>
+      <viewAttribute id="SHIP_TO"/>
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+      <viewAttribute id="EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="ORDER_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="ORDER_NET_PRICE_USD" aggregationType="sum"/>
+    
+      <viewAttribute id="BILLING_STATUS"/>
+      <viewAttribute id="OPS_PROCESSING_STATUS"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVAL_COMMENT" source="APPROVAL_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_BLOCK_REASON" source="BILLING_BLOCK_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCELLATION_DATE" source="CANCELLATION_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_DATE" source="CREATE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_TIME" source="CREATE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER_GROUP" source="CUSTOMER_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION_CHANNEL" source="DISTRIBUTION_CHANNEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_DATE" source="DOCUMENT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_CUSTOMER" source="END_CUSTOMER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLEET_FLAG" source="FLEET_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARD_TO" source="FORWARD_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARDING_COMMENT" source="FORWARDING_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPEN_ORDER" source="OPEN_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_ADD_DATE" source="ORDER_ADD_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREVIOUS_CHASSIS_NUMBER" source="PREVIOUS_CHASSIS_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_EFFECTIVE_DATE" source="PRICE_EFFECTIVE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHASE_ORDER_TYPE" source="PURCHASE_ORDER_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTED_DELIVERY_DATE" source="REQUESTED_DELIVERY_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT" source="SALES_DISTRICT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DOCUMENT_TYPE" source="SALES_DOCUMENT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORGANIZATION" source="SALES_ORGANIZATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOLD_TO" source="SOLD_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CURRENCY" source="DOCUMENT_CURRENCY"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGE_RATE" source="EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_NET_PRICE" source="ORDER_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_NET_PRICE_USD" source="ORDER_NET_PRICE_USD"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_STATUS" source="BILLING_STATUS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESSING_STATUS" source="OPS_PROCESSING_STATUS"/></input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_OWNER_GROUP" source="DEALER_OWNER_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_CONTRACT_CODE" source="DEALER_CONTRACT_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER" source="PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIP_TO" source="SHIP_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="CAB_TYPE"/>
+      <viewAttribute id="CAB_WIDTH"/>
+    
+      <viewAttribute id="CANCEL_REPLACE_CODE"/>
+      <viewAttribute id="CAR_NUMBER"/>
+      <viewAttribute id="CC_MODEL"/>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="CLASS"/>
+      <viewAttribute id="ENDING_CHASSIS"/>
+      <viewAttribute id="ENGINE_SERIAL_NUMBER"/>
+      <viewAttribute id="ENGINE_TYPE"/>
+      <viewAttribute id="FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="MARKETING_CLASS"/>
+      <viewAttribute id="MARKETING_NUMBER"/>
+      <viewAttribute id="TAXM1"/>
+      <viewAttribute id="PLANT"/>
+      <viewAttribute id="PRODUCT_TYPE"/>
+      <viewAttribute id="PROMOTIONS"/>
+      <viewAttribute id="SALES_MODEL_FAMILY"/>
+      <viewAttribute id="SHIPPING_POINT"/>
+      <viewAttribute id="STARTING_CHASSIS"/>
+      <viewAttribute id="TENTATIVE_SCHEDULE_DATE"/>
+      <viewAttribute id="QUANTITY" aggregationType="count"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXM1" source="TAXM1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAB_TYPE" source="CAB_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAB_WIDTH" source="CAB_WIDTH"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE" source="CANCEL_REPLACE_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAR_NUMBER" source="CAR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_MODEL" source="CC_MODEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLASS" source="CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_SERIAL_NUMBER" source="ENGINE_SERIAL_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_TYPE" source="ENGINE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRM_SCHEDULE_DATE" source="FIRM_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_CLASS" source="MARKETING_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_NUMBER" source="MARKETING_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_TYPE" source="PRODUCT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROMOTIONS" source="PROMOTIONS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_MODEL_FAMILY" source="SALES_MODEL_FAMILY"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIPPING_POINT" source="SHIPPING_POINT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STARTING_CHASSIS" source="STARTING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENTATIVE_SCHEDULE_DATE" source="TENTATIVE_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY" source="QUANTITY"/>
+    </input>
+    <input node="VBAP_E">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDING_CHASSIS" source="ENDING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="APPROVAL_COMMENT"/>
+      <viewAttribute id="APPROVED_BY"/>
+      <viewAttribute id="APPROVED_ON" aggregationType="sum"/>
+      <viewAttribute id="BILLING_BLOCK_REASON"/>
+      <viewAttribute id="CANCELLATION_DATE"/>
+      <viewAttribute id="CREATE_DATE"/>
+      <viewAttribute id="CREATE_TIME"/>
+      <viewAttribute id="CUSTOMER_GROUP"/>
+      <viewAttribute id="DISTRIBUTION_CHANNEL"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="DOCUMENT_DATE"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+      <viewAttribute id="END_CUSTOMER"/>
+      <viewAttribute id="SALES_ORGANIZATION"/>
+      <viewAttribute id="FLEET_FLAG"/>
+      <viewAttribute id="FORWARD_TO"/>
+      <viewAttribute id="FORWARDING_COMMENT"/>
+      <viewAttribute id="OPEN_ORDER"/>
+      <viewAttribute id="ORDER_ADD_DATE"/>
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER"/>
+      <viewAttribute id="PRICE_EFFECTIVE_DATE"/>
+      <viewAttribute id="PURCHASE_ORDER_TYPE"/>
+      <viewAttribute id="REQUESTED_DELIVERY_DATE"/>
+      <viewAttribute id="SALES_DISTRICT"/>
+      <viewAttribute id="SALES_DOCUMENT_TYPE"/>
+      <viewAttribute id="SOLD_TO"/>
+      <viewAttribute id="DEALER_OWNER_GROUP"/>
+      <viewAttribute id="DEALER_CONTRACT_CODE"/>
+      <viewAttribute id="PAYER"/>
+      <viewAttribute id="SHIP_TO"/>
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+      <viewAttribute id="EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="ORDER_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="ORDER_NET_PRICE_USD" aggregationType="sum"/>
+    
+      <viewAttribute id="BILLING_BLOCK_REASON_TEXT"/>
+    
+      <viewAttribute id="BLOCKED"/>
+      <viewAttribute id="BILLING_STATUS"/>
+      <viewAttribute id="OPS_PROCESSING_STATUS"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVAL_COMMENT" source="APPROVAL_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_BLOCK_REASON" source="BILLING_BLOCK_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCELLATION_DATE" source="CANCELLATION_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_DATE" source="CREATE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_TIME" source="CREATE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER_GROUP" source="CUSTOMER_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION_CHANNEL" source="DISTRIBUTION_CHANNEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_DATE" source="DOCUMENT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_CUSTOMER" source="END_CUSTOMER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORGANIZATION" source="SALES_ORGANIZATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLEET_FLAG" source="FLEET_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARD_TO" source="FORWARD_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARDING_COMMENT" source="FORWARDING_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPEN_ORDER" source="OPEN_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_ADD_DATE" source="ORDER_ADD_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREVIOUS_CHASSIS_NUMBER" source="PREVIOUS_CHASSIS_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_EFFECTIVE_DATE" source="PRICE_EFFECTIVE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHASE_ORDER_TYPE" source="PURCHASE_ORDER_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTED_DELIVERY_DATE" source="REQUESTED_DELIVERY_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT" source="SALES_DISTRICT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DOCUMENT_TYPE" source="SALES_DOCUMENT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOLD_TO" source="SOLD_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_OWNER_GROUP" source="DEALER_OWNER_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_CONTRACT_CODE" source="DEALER_CONTRACT_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER" source="PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIP_TO" source="SHIP_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CURRENCY" source="DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGE_RATE" source="EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_NET_PRICE" source="ORDER_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_NET_PRICE_USD" source="ORDER_NET_PRICE_USD"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_STATUS" source="BILLING_STATUS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESSING_STATUS" source="OPS_PROCESSING_STATUS"/></input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BLOCKED" source="BLOCKED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_BLOCK_REASON_TEXT" source="BILLING_BLOCK_REASON_TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_BLOCK_REASON" source="BILLING_BLOCK_REASON"/>
+    </input>
+    <joinAttribute name="BILLING_BLOCK_REASON"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="APPROVAL_COMMENT"/>
+      <viewAttribute id="APPROVED_BY"/>
+      <viewAttribute id="APPROVED_ON" aggregationType="sum"/>
+      <viewAttribute id="BILLING_BLOCK_REASON"/>
+      <viewAttribute id="BILLING_BLOCK_REASON_TEXT"/>
+      <viewAttribute id="BLOCKED"/>
+      <viewAttribute id="CAB_TYPE"/>
+      <viewAttribute id="CAB_WIDTH"/>
+      <viewAttribute id="CANCEL_REPLACE_CODE"/>
+      <viewAttribute id="CANCELLATION_DATE"/>
+      <viewAttribute id="CAR_NUMBER"/>
+      <viewAttribute id="CC_MODEL"/>
+      <viewAttribute id="CHASSIS"/>
+      <viewAttribute id="CLASS"/>
+      <viewAttribute id="CREATE_DATE"/>
+      <viewAttribute id="CREATE_TIME"/>
+      <viewAttribute id="CUSTOMER_GROUP"/>
+    
+      <viewAttribute id="DEALER_CONTRACT_CODE"/>
+      <viewAttribute id="DEALER_OWNER_GROUP"/>
+      <viewAttribute id="DISTRIBUTION_CHANNEL"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="DOCUMENT_CONDITION"/>
+      <viewAttribute id="DOCUMENT_CURRENCY"/>
+      <viewAttribute id="DOCUMENT_DATE"/>
+      <viewAttribute id="DTPO_NUMBER"/>
+      <viewAttribute id="END_CUSTOMER"/>
+      <viewAttribute id="ENDING_CHASSIS"/>
+      <viewAttribute id="ENGINE_SERIAL_NUMBER"/>
+      <viewAttribute id="ENGINE_TYPE"/>
+      <viewAttribute id="FIRM_SCHEDULE_DATE"/>
+      <viewAttribute id="FLEET_FLAG"/>
+      <viewAttribute id="FORWARD_TO"/>
+      <viewAttribute id="FORWARDING_COMMENT"/>
+      <viewAttribute id="MARKETING_CLASS"/>
+      <viewAttribute id="MARKETING_NUMBER"/>
+      <viewAttribute id="OPEN_ORDER"/>
+      <viewAttribute id="ORDER_ADD_DATE"/>
+      <viewAttribute id="PAYER"/>
+    
+      <viewAttribute id="PLANT"/>
+      <viewAttribute id="PREVIOUS_CHASSIS_NUMBER"/>
+      <viewAttribute id="PRICE_EFFECTIVE_DATE"/>
+      <viewAttribute id="PRODUCT_TYPE"/>
+      <viewAttribute id="PROMOTIONS"/>
+      <viewAttribute id="PURCHASE_ORDER_TYPE"/>
+      <viewAttribute id="REQUESTED_DELIVERY_DATE"/>
+      <viewAttribute id="SALES_DISTRICT"/>
+      <viewAttribute id="SALES_DOCUMENT_TYPE"/>
+      <viewAttribute id="SALES_MODEL_FAMILY"/>
+      <viewAttribute id="SALES_ORGANIZATION"/>
+      <viewAttribute id="SHIP_TO"/>
+      <viewAttribute id="SHIPPING_POINT"/>
+      <viewAttribute id="SOLD_TO"/>
+      <viewAttribute id="STARTING_CHASSIS"/>
+      <viewAttribute id="TENTATIVE_SCHEDULE_DATE"/>
+      <viewAttribute id="EXCHANGE_RATE" aggregationType="sum"/>
+      <viewAttribute id="ORDER_NET_PRICE" aggregationType="sum"/>
+      <viewAttribute id="ORDER_NET_PRICE_USD" aggregationType="sum"/>
+      <viewAttribute id="QUANTITY" aggregationType="count"/>
+    
+      <viewAttribute id="TAXM1"/>
+    
+      <viewAttribute id="BILLING_STATUS"/>
+    
+      <viewAttribute id="OPS_PROCESSING_STATUS"/></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CANADIAN_TAXES_IND" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE	
+	WHEN &quot;SALES_ORGANIZATION&quot; BETWEEN '2000' and '2999' then
+        CASE	
+            WHEN &quot;TAXM1&quot; = '1' then 'Y'	
+            ELSE 'N'	
+        END	
+	ELSE ' '
+END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="FET_IND" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE	
+	WHEN &quot;SALES_ORGANIZATION&quot; BETWEEN '1000' and '1999' then
+        CASE	
+            WHEN &quot;TAXM1&quot; = '1' then 'Y'	
+            ELSE 'N'	
+        END	
+	ELSE ' '
+END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="ORDER_OR_CANCEL_DATE" datatype="DATE" expressionLanguage="SQL">
+    
+        <formula>CASE
+    WHEN &quot;CANCELLATION_DATE&quot; != '0000-00-00'
+    AND  (    &quot;CANCEL_REPLACE_CODE&quot; = 'CANCELLED'
+           OR &quot;CANCEL_REPLACE_CODE&quot; = 'CANCELLED_NC' ) THEN &quot;CANCELLATION_DATE&quot;
+    ELSE &quot;CREATE_DATE&quot;
+END</formula>
+    
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CANCELLATION_COUNT" datatype="INTEGER" expressionLanguage="SQL">
+    
+        <formula>CASE
+    WHEN &quot;CANCELLATION_DATE&quot; != '0000-00-00'
+    AND  (    &quot;CANCEL_REPLACE_CODE&quot; = 'CANCELLED'
+           OR &quot;CANCEL_REPLACE_CODE&quot; = 'CANCELLED_NC' ) THEN &quot;QUANTITY&quot;
+    ELSE 0
+END</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="NET_NEW_ORDERS_COUNT" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE
+    WHEN &quot;CANCELLATION_DATE&quot; != '0000-00-00'
+     AND (    &quot;CANCEL_REPLACE_CODE&quot; = 'CANCELLED'
+           OR &quot;CANCEL_REPLACE_CODE&quot; = 'CANCELLED_NC' ) THEN -&quot;QUANTITY&quot;
+
+    WHEN ( &quot;CANCELLATION_DATE&quot; != '0000-00-00' AND &quot;CANCEL_REPLACE_CODE&quot; = 'PLACEHOLDER' )
+      OR &quot;CANCEL_REPLACE_CODE&quot; = 'REPLACEMENT' THEN 0
+
+    ELSE &quot;QUANTITY&quot;
+END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="NEW_ORDERS_COUNT" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE
+    WHEN &quot;CANCELLATION_DATE&quot; != '0000-00-00'
+      OR &quot;CANCEL_REPLACE_CODE&quot; = 'REPLACEMENT' THEN 0
+    ELSE &quot;QUANTITY&quot;
+END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVAL_COMMENT" source="APPROVAL_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_BLOCK_REASON" source="BILLING_BLOCK_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCELLATION_DATE" source="CANCELLATION_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_DATE" source="CREATE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATE_TIME" source="CREATE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER_GROUP" source="CUSTOMER_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION_CHANNEL" source="DISTRIBUTION_CHANNEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CONDITION" source="DOCUMENT_CONDITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_DATE" source="DOCUMENT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DTPO_NUMBER" source="DTPO_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_CUSTOMER" source="END_CUSTOMER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORGANIZATION" source="SALES_ORGANIZATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLEET_FLAG" source="FLEET_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARD_TO" source="FORWARD_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORWARDING_COMMENT" source="FORWARDING_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPEN_ORDER" source="OPEN_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_ADD_DATE" source="ORDER_ADD_DATE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREVIOUS_CHASSIS_NUMBER" source="PREVIOUS_CHASSIS_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRICE_EFFECTIVE_DATE" source="PRICE_EFFECTIVE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHASE_ORDER_TYPE" source="PURCHASE_ORDER_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTED_DELIVERY_DATE" source="REQUESTED_DELIVERY_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DISTRICT" source="SALES_DISTRICT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_DOCUMENT_TYPE" source="SALES_DOCUMENT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOLD_TO" source="SOLD_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_OWNER_GROUP" source="DEALER_OWNER_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_CONTRACT_CODE" source="DEALER_CONTRACT_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER" source="PAYER"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIP_TO" source="SHIP_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOCUMENT_CURRENCY" source="DOCUMENT_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCHANGE_RATE" source="EXCHANGE_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_NET_PRICE" source="ORDER_NET_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_NET_PRICE_USD" source="ORDER_NET_PRICE_USD"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_BLOCK_REASON_TEXT" source="BILLING_BLOCK_REASON_TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BLOCKED" source="BLOCKED"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BILLING_STATUS" source="BILLING_STATUS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_PROCESSING_STATUS" source="OPS_PROCESSING_STATUS"/></input>
+    <input node="Join_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHASSIS" source="CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDING_CHASSIS" source="ENDING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAB_TYPE" source="CAB_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAB_WIDTH" source="CAB_WIDTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CANCEL_REPLACE_CODE" source="CANCEL_REPLACE_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAR_NUMBER" source="CAR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_MODEL" source="CC_MODEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLASS" source="CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_SERIAL_NUMBER" source="ENGINE_SERIAL_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_TYPE" source="ENGINE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRM_SCHEDULE_DATE" source="FIRM_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_CLASS" source="MARKETING_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_NUMBER" source="MARKETING_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_TYPE" source="PRODUCT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROMOTIONS" source="PROMOTIONS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_MODEL_FAMILY" source="SALES_MODEL_FAMILY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIPPING_POINT" source="SHIPPING_POINT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STARTING_CHASSIS" source="STARTING_CHASSIS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENTATIVE_SCHEDULE_DATE" source="TENTATIVE_SCHEDULE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY" source="QUANTITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXM1" source="TAXM1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+    </input>
+    <joinAttribute name="SALES_ORDER"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_3">
+  <attributes>
+    <attribute id="SALES_ORDER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Order"/>
+      <localVariable>V_SALES_ORDER</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="SALES_ORDER"/>
+    </attribute>
+    <attribute id="APPROVAL_COMMENT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Approval Comment"/>
+      <keyMapping columnObjectName="Join_3" columnName="APPROVAL_COMMENT"/>
+    </attribute>
+    <attribute id="APPROVED_BY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Approved By"/>
+      <keyMapping columnObjectName="Join_3" columnName="APPROVED_BY"/>
+    </attribute>
+    <attribute id="APPROVED_ON" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Approved On"/>
+      <localVariable>V_APPROVED_ON</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="APPROVED_ON"/>
+    </attribute>
+    <attribute id="BILLING_BLOCK_REASON" order="5" descriptionColumnName="BILLING_BLOCK_REASON_TEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Billing Block Reason"/>
+      <keyMapping columnObjectName="Join_3" columnName="BILLING_BLOCK_REASON"/>
+    </attribute>
+    <attribute id="BILLING_BLOCK_REASON_TEXT" order="6" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Billing Block Reason Text"/>
+      <keyMapping columnObjectName="Join_3" columnName="BILLING_BLOCK_REASON_TEXT"/>
+    </attribute>
+    <attribute id="BILLING_STATUS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Billing Status"/>
+      <keyMapping columnObjectName="Join_3" columnName="BILLING_STATUS"/>
+    </attribute>
+    <attribute id="CAB_TYPE" order="8" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Cab Type"/>
+      <keyMapping columnObjectName="Join_3" columnName="CAB_TYPE"/>
+    </attribute>
+    <attribute id="CAB_WIDTH" order="9" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Cab Width"/>
+      <keyMapping columnObjectName="Join_3" columnName="CAB_WIDTH"/>
+    </attribute>
+    <attribute id="CANADIAN_TAXES_IND" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Canadian Taxes"/>
+      <keyMapping columnObjectName="Join_3" columnName="CANADIAN_TAXES_IND"/>
+    </attribute>
+    <attribute id="CANCELLATION_DATE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cancellation Date"/>
+      <localVariable>V_CANCELLATION_DATE</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="CANCELLATION_DATE"/>
+    </attribute>
+    <attribute id="CAR_NUMBER" order="12" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="CAR Number"/>
+      <keyMapping columnObjectName="Join_3" columnName="CAR_NUMBER"/>
+    </attribute>
+    <attribute id="CC_MODEL" order="13" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="CC Model"/>
+      <localVariable>V_CC_MODEL</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="CC_MODEL"/>
+    </attribute>
+    <attribute id="CHASSIS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Chassis"/>
+      <keyMapping columnObjectName="Join_3" columnName="CHASSIS"/>
+    </attribute>
+    <attribute id="CREATE_DATE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Create Date"/>
+      <localVariable>V_CREATION_DATE</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="CREATE_DATE"/>
+    </attribute>
+    <attribute id="CREATE_TIME" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Create Time"/>
+      <keyMapping columnObjectName="Join_3" columnName="CREATE_TIME"/>
+    </attribute>
+    <attribute id="DISTRIBUTION_CHANNEL" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Distribution Channel"/>
+      <keyMapping columnObjectName="Join_3" columnName="DISTRIBUTION_CHANNEL"/>
+    </attribute>
+    <attribute id="DOCUMENT_CONDITION" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Document Condition"/>
+      <keyMapping columnObjectName="Join_3" columnName="DOCUMENT_CONDITION"/>
+    </attribute>
+    <attribute id="DOCUMENT_CURRENCY" order="19" displayAttribute="false" attributeHierarchyActive="false" semanticType="currencyCode">
+      <descriptions defaultDescription="Document Currency"/>
+      <keyMapping columnObjectName="Join_3" columnName="DOCUMENT_CURRENCY"/>
+    </attribute>
+    <attribute id="DOCUMENT_DATE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Document Date"/>
+      <localVariable>V_DOCUMENT_DATE</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="DOCUMENT_DATE"/>
+    </attribute>
+    <attribute id="DTPO_NUMBER" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DTPO Number"/>
+      <keyMapping columnObjectName="Join_3" columnName="DTPO_NUMBER"/>
+    </attribute>
+    <attribute id="END_CUSTOMER" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="End Customer"/>
+      <localVariable>V_END_CUSTOMER</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="END_CUSTOMER"/>
+    </attribute>
+    <attribute id="ENDING_CHASSIS" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Ending Chassis"/>
+      <keyMapping columnObjectName="Join_3" columnName="ENDING_CHASSIS"/>
+    </attribute>
+    <attribute id="ENGINE_SERIAL_NUMBER" order="24" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Engine Serial Number"/>
+      <keyMapping columnObjectName="Join_3" columnName="ENGINE_SERIAL_NUMBER"/>
+    </attribute>
+    <attribute id="ENGINE_TYPE" order="25" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Engine Type"/>
+      <localVariable>V_ENGINE_TYPE</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="ENGINE_TYPE"/>
+    </attribute>
+    <attribute id="FET_IND" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FET"/>
+      <keyMapping columnObjectName="Join_3" columnName="FET_IND"/>
+    </attribute>
+    <attribute id="FIRM_SCHEDULE_DATE" order="27" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Firm Schedule Date"/>
+      <keyMapping columnObjectName="Join_3" columnName="FIRM_SCHEDULE_DATE"/>
+    </attribute>
+    <attribute id="FORWARD_TO" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Forward To"/>
+      <keyMapping columnObjectName="Join_3" columnName="FORWARD_TO"/>
+    </attribute>
+    <attribute id="FORWARDING_COMMENT" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Forwarding Comment"/>
+      <keyMapping columnObjectName="Join_3" columnName="FORWARDING_COMMENT"/>
+    </attribute>
+    <attribute id="MARKETING_CLASS" order="30" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Marketing Class"/>
+      <keyMapping columnObjectName="Join_3" columnName="MARKETING_CLASS"/>
+    </attribute>
+    <attribute id="MARKETING_NUMBER" order="31" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Marketing Number"/>
+      <keyMapping columnObjectName="Join_3" columnName="MARKETING_NUMBER"/>
+    </attribute>
+    <attribute id="OPS_PROCESSING_STATUS" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Processing Status"/>
+      <keyMapping columnObjectName="Join_3" columnName="OPS_PROCESSING_STATUS"/>
+    </attribute>
+    <attribute id="ORDER_ADD_DATE" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Order Add Date"/>
+      <localVariable>V_ORDER_ADD_DATE</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="ORDER_ADD_DATE"/>
+    </attribute>
+    <attribute id="ORDER_OR_CANCEL_DATE" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Order/Cancellation Date"/>
+      <localVariable>V_ORDER_OR_CANCELLATION_DATE</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="ORDER_OR_CANCEL_DATE"/>
+    </attribute>
+  
+    <attribute id="PLANT" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Plant"/>
+  
+      <keyMapping columnObjectName="Join_3" columnName="PLANT"/>
+  
+    </attribute>
+    <attribute id="PREVIOUS_CHASSIS_NUMBER" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Previous Chassis"/>
+      <keyMapping columnObjectName="Join_3" columnName="PREVIOUS_CHASSIS_NUMBER"/>
+    </attribute>
+    <attribute id="PRICE_EFFECTIVE_DATE" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Price Effective Date"/>
+      <keyMapping columnObjectName="Join_3" columnName="PRICE_EFFECTIVE_DATE"/>
+    </attribute>
+    <attribute id="PROMOTIONS" order="38" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Promotions"/>
+      <keyMapping columnObjectName="Join_3" columnName="PROMOTIONS"/>
+    </attribute>
+    <attribute id="REQUESTED_DELIVERY_DATE" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Requested Delivery Date"/>
+      <localVariable>V_REQUESTED_DELIVERY_DATE</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="REQUESTED_DELIVERY_DATE"/>
+    </attribute>
+    <attribute id="SALES_MODEL_FAMILY" order="40" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Sales Model Family"/>
+      <localVariable>V_SALES_MODEL_FAMILY</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="SALES_MODEL_FAMILY"/>
+    </attribute>
+    <attribute id="SALES_ORGANIZATION" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Organization"/>
+      <keyMapping columnObjectName="Join_3" columnName="SALES_ORGANIZATION"/>
+    </attribute>
+    <attribute id="STARTING_CHASSIS" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Starting Chassis"/>
+      <keyMapping columnObjectName="Join_3" columnName="STARTING_CHASSIS"/>
+    </attribute>
+    <attribute id="TENTATIVE_SCHEDULE_DATE" order="43" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+      <descriptions defaultDescription="Tentative Schedule Date"/>
+      <localVariable>V_TENTATIVE_SCHEDULE_DATE</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="TENTATIVE_SCHEDULE_DATE"/>
+    </attribute>
+    <attribute id="EXCHANGE_RATE" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Exchange Rate"/>
+      <keyMapping columnObjectName="Join_3" columnName="EXCHANGE_RATE"/>
+    </attribute>
+    <attribute id="DEALER_OWNER_GROUP" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dealer Owner Group"/>
+      <localVariable>V_DEALER_OWNER_GROUP</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="DEALER_OWNER_GROUP"/>
+    </attribute>
+    <attribute id="DIVISION" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Division"/>
+      <localVariable>V_DIVISION</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="DIVISION"/>
+    </attribute>
+    <attribute id="SOLD_TO" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-To"/>
+      <localVariable>V_SOLD_TO</localVariable>
+      <keyMapping columnObjectName="Join_3" columnName="SOLD_TO"/>
+    </attribute>
+    <attribute id="SALES_DOCUMENT_TYPE" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Document Type"/>
+      <keyMapping columnObjectName="Join_3" columnName="SALES_DOCUMENT_TYPE"/>
+    </attribute>
+    <attribute id="DEALER_CONTRACT_CODE$local">
+      <keyMapping columnObjectName="Join_3" columnName="DEALER_CONTRACT_CODE"/>
+    </attribute>
+    <attribute id="DEALER_OWNER_GROUP$local">
+      <keyMapping columnObjectName="Join_3" columnName="DEALER_OWNER_GROUP"/>
+    </attribute>
+    <attribute id="PAYER$local">
+      <keyMapping columnObjectName="Join_3" columnName="PAYER"/>
+    </attribute>
+    <attribute id="SHIP_TO$local">
+      <keyMapping columnObjectName="Join_3" columnName="SHIP_TO"/>
+    </attribute>
+    <attribute id="SOLD_TO$local">
+      <keyMapping columnObjectName="Join_3" columnName="SOLD_TO"/>
+    </attribute>
+    <attribute id="CUSTOMER_GROUP$local">
+      <keyMapping columnObjectName="Join_3" columnName="CUSTOMER_GROUP"/>
+    </attribute>
+    <attribute id="PURCHASE_ORDER_TYPE$local">
+      <keyMapping columnObjectName="Join_3" columnName="PURCHASE_ORDER_TYPE"/>
+    </attribute>
+    <attribute id="SALES_DISTRICT$local">
+      <keyMapping columnObjectName="Join_3" columnName="SALES_DISTRICT"/>
+    </attribute>
+    <attribute id="SHIPPING_POINT$local">
+      <keyMapping columnObjectName="Join_3" columnName="SHIPPING_POINT"/>
+    </attribute>
+    <attribute id="FLEET_FLAG$local">
+      <keyMapping columnObjectName="Join_3" columnName="FLEET_FLAG"/>
+    </attribute>
+    <attribute id="OPEN_ORDER$local">
+      <keyMapping columnObjectName="Join_3" columnName="OPEN_ORDER"/>
+    </attribute>
+    <attribute id="BLOCKED$local">
+      <descriptions defaultDescription="Blocked"/>
+      <keyMapping columnObjectName="Join_3" columnName="BLOCKED"/>
+    </attribute>
+    <attribute id="DIVISION$local">
+      <keyMapping columnObjectName="Join_3" columnName="DIVISION"/>
+    </attribute>
+    <attribute id="CANCEL_REPLACE_CODE$local">
+      <keyMapping columnObjectName="Join_3" columnName="CANCEL_REPLACE_CODE"/>
+    </attribute>
+    <attribute id="CLASS$local">
+      <keyMapping columnObjectName="Join_3" columnName="CLASS"/>
+    </attribute>
+    <attribute id="PRODUCT_TYPE$local">
+      <keyMapping columnObjectName="Join_3" columnName="PRODUCT_TYPE"/>
+    </attribute>
+    <attribute id="SALES_DOCUMENT_TYPE$local">
+      <keyMapping columnObjectName="Join_3" columnName="SALES_DOCUMENT_TYPE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+  
+    <measure id="CANCELLATION_COUNT" order="44" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Cancellation Count"/>
+      <measureMapping columnObjectName="Join_3" columnName="CANCELLATION_COUNT"/>
+    </measure>
+    <measure id="NET_NEW_ORDERS_COUNT" order="46" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Net New Chassis"/>
+      <measureMapping columnObjectName="Join_3" columnName="NET_NEW_ORDERS_COUNT"/>
+    </measure>
+    <measure id="NEW_ORDERS_COUNT" order="47" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="New Chassis Count"/>
+      <measureMapping columnObjectName="Join_3" columnName="NEW_ORDERS_COUNT"/>
+    </measure>
+    <measure id="ORDER_NET_PRICE" order="48" aggregationType="sum" measureType="amount" semanticType="amount">
+      <descriptions defaultDescription="Order Net Price"/>
+      <unitCurrencyAttribute attributeName="DOCUMENT_CURRENCY"/>
+      <measureMapping columnObjectName="Join_3" columnName="ORDER_NET_PRICE"/>
+    </measure>
+    <measure id="ORDER_NET_PRICE_USD" order="49" aggregationType="sum" measureType="amount" semanticType="amount">
+      <descriptions defaultDescription="Order Net Price (USD)"/>
+      <fixedCurrency>USD</fixedCurrency>
+      <measureMapping columnObjectName="Join_3" columnName="ORDER_NET_PRICE_USD"/>
+    </measure>
+    <measure id="QUANTITY" order="50" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Quantity"/>
+      <measureMapping columnObjectName="Join_3" columnName="QUANTITY"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+  <sharedDimensions>
+    <logicalJoin associatedObjectUri="CV_DIM_CUST_DEALER_CONTRACT_CODE">
+      <attributes>
+        <attributeRef>DEALER_CONTRACT_CODE$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>DEALER_CONTRACT_CODE</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="DEALER_CONTRACT_CODE_1" attributeName="DEALER_CONTRACT_CODE"/>
+        <attributeReference attributeName="DEALER_CONTRACT_CODE_FLOORING_SOURCE">
+          <localVariable>V_FLOORING_SOURCE</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_CUST_DEALER_OWNER_GROUP">
+      <attributes>
+        <attributeRef>DEALER_OWNER_GROUP$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>DEALER_OWNER_GROUP</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="DEALER_OWNER_GROUP_1" attributeName="DEALER_OWNER_GROUP"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_CUST_PAYER">
+      <attributes>
+        <attributeRef>PAYER$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>PAYER</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="PAYER_1" attributeName="PAYER"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_CUST_SHIP_TO">
+      <attributes>
+        <attributeRef>SHIP_TO$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>SHIP_TO</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="SHIP_TO_1" attributeName="SHIP_TO"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_CUST_SOLD_TO">
+      <attributes>
+        <attributeRef>SOLD_TO$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>SOLD_TO</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="SOLD_TO_1" attributeName="SOLD_TO"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_CUSTOMER_GROUP">
+      <attributes>
+        <attributeRef>CUSTOMER_GROUP$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>CUSTOMER_GROUP</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="CUSTOMER_GROUP">
+          <localVariable>V_CUSTOMER_GROUP</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_PURCHASE_ORDER_TYPE">
+      <attributes>
+        <attributeRef>PURCHASE_ORDER_TYPE$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>PURCHASE_ORDER_TYPE</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="PURCHASE_ORDER_TYPE">
+          <localVariable>V_PURCHASE_ORDER_TYPE</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_SALES_DISTRICT">
+      <attributes>
+        <attributeRef>SALES_DISTRICT$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>SALES_DISTRICT</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="SALES_DISTRICT">
+          <localVariable>V_SALES_DISTRICT</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_SHIPPING_POINT">
+      <attributes>
+        <attributeRef>SHIPPING_POINT$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>SHIPPING_POINT</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="SHIPPING_POINT">
+          <localVariable>V_SHIPPING_POINT</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_YN_FLEET">
+      <attributes>
+        <attributeRef>FLEET_FLAG$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>FLEET_FLAG</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="FLEET_FLAG">
+          <localVariable>V_FLEET</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_YN_OPEN_ORDER">
+      <attributes>
+        <attributeRef>OPEN_ORDER$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>OPEN_ORDER_FLAG</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="OPEN_ORDER_FLAG">
+          <localVariable>V_OPEN_ORDER</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_YN_BLOCKED">
+      <attributes>
+        <attributeRef>BLOCKED$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>BLOCKED_FLAG</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="BLOCKED_FLAG">
+          <localVariable>V_BLOCKED</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_DIVISION">
+      <attributes>
+        <attributeRef>DIVISION$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>DIVISION</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="DIVISION_1" attributeName="DIVISION"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_CANCEL_REPLACE_CODE">
+      <attributes>
+        <attributeRef>CANCEL_REPLACE_CODE$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>CANCEL_REPLACE_CODE</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="CANCEL_REPLACE_CODE_1" attributeName="CANCEL_REPLACE_CODE">
+          <localVariable>V_CANCEL_REPLACE_CODE</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_CLASS">
+      <attributes>
+        <attributeRef>CLASS$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>CLASS</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="CLASS_1" attributeName="CLASS">
+          <localVariable>V_CLASS</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_PRODUCT_TYPE">
+      <attributes>
+        <attributeRef>PRODUCT_TYPE$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>PRODUCT_TYPE</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="PRODUCT_TYPE_1" attributeName="PRODUCT_TYPE">
+          <localVariable>V_PRODUCT_TYPE</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="CV_DIM_SALES_DOC_TYPE">
+      <attributes>
+        <attributeRef>SALES_DOCUMENT_TYPE$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>SALES_DOCUMENT_TYPE</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" optimizeJoinColumns="true" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="SALES_DOCUMENT_TYPE_1" attributeName="SALES_DOCUMENT_TYPE">
+          <localVariable>V_SALES_DOCUMENT_TYPE</localVariable>
+        </attributeReference>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+  </sharedDimensions>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="404" y="112"/>
+    
+      <rectangleSize width="307"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="VBAK" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="334" y="1331"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="VBAP" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="727" y="1331"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="810" y="1163"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="VBAP_S" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="748" y="971"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="VBAP" modelObjectNameSpace="VBAP_S" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="VBAP_S" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="VBAP_E" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="958" y="971"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="VBAP" modelObjectNameSpace="VBAP_E" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="199"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="VBAP_E" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="244"/>
+    </shape>
+    <shape expanded="true" modelObjectName="VBKD" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="1151"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118" y="971"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_7" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="VBKD" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="308" y="1151"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="VBAK" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="TableFunction_1" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="232"/>
+    </shape>
+    <shape expanded="true" modelObjectName="TableFunction_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="124" y="1331"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="628" y="631"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_4" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="229"/>
+    </shape>
+    <shape modelObjectName="VBAP_E" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="229"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="601" y="791"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="VBAP_S" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="245"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="538" y="971"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="477" y="472"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_6" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="348" y="631"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="258"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="375" y="791"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="235"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="165" y="791"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="328" y="971"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_3" modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository">
+      <upperLeftCorner x="33" y="-271"/>
+      <rectangleSize width="251"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_CUST_DEALER_CONTRACT_CODE" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_CUST_DEALER_OWNER_GROUP" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="920" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_CUST_PAYER" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="1220" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_CUST_SHIP_TO" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="1520" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_CUST_SOLD_TO" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="1820" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_CUSTOMER_GROUP" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="-356" y="167"/>
+      <rectangleSize width="235"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_PURCHASE_ORDER_TYPE" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="-276" y="500"/>
+      <rectangleSize width="271"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_SALES_DISTRICT" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="-703" y="677"/>
+      <rectangleSize width="218"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_SHIPPING_POINT" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="-357" y="647"/>
+      <rectangleSize width="216"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_YN_FLEET" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="-520" y="514"/>
+      <rectangleSize width="189"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_YN_OPEN_ORDER" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="-597" y="362"/>
+      <rectangleSize width="223"/>
+    </shape>
+  
+    <shape modelObjectName="CV_DIM_YN_BLOCKED" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="-297" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  
+    <shape modelObjectName="CV_DIM_DIVISION" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="370" y="139"/>
+      <rectangleSize width="172"/>
+    </shape>
+  
+    <shape modelObjectName="CV_DIM_CANCEL_REPLACE_CODE" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="377" y="-99"/>
+      <rectangleSize width="271"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_CLASS" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="377" y="-4"/>
+      <rectangleSize width="156"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_PRODUCT_TYPE" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="327" y="506"/>
+      <rectangleSize width="213"/>
+    </shape>
+    <shape modelObjectName="CV_DIM_SALES_DOC_TYPE" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="346" y="749"/>
+      <rectangleSize width="260"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

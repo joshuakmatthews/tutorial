@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_CHASSIS_FILES" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="Chassis Files"/>
+<localVariables>
+  <variable id="V_DIVISION_CD">
+    <descriptions defaultDescription="Division Code"/>
+    <variableProperties datatype="NVARCHAR" length="1" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="DIVISIONCD"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_DTPO">
+    <descriptions defaultDescription="DTPO Number"/>
+    <variableProperties datatype="NVARCHAR" length="8" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="DTPONUMBER"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_CHASSIS_CONTROL">
+    <descriptions defaultDescription="Chassis Control"/>
+    <variableProperties datatype="NVARCHAR" length="8">
+      <valueDomain type="AttributeValue">
+        <attribute name="CHASSIS_CONTROL"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_CHASSIS">
+    <descriptions defaultDescription="Chassis No"/>
+    <variableProperties datatype="NVARCHAR" length="8" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <attribute name="CHASSISNO"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_RELEVANT">
+    <descriptions defaultDescription="Relevant"/>
+    <variableProperties datatype="BOOLEAN" defaultValue="">
+      <valueDomain type="AttributeValue">
+        <attribute name="IS_RELEVANT"/>
+      </valueDomain>
+      <selection type="SingleValue"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_WAITING">
+    <descriptions defaultDescription="Waiting"/>
+    <variableProperties datatype="BOOLEAN" defaultValue="">
+      <valueDomain type="AttributeValue">
+        <attribute name="IS_WAITING"/>
+      </valueDomain>
+      <selection type="SingleValue"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_SAVED">
+    <descriptions defaultDescription="Saved"/>
+    <variableProperties datatype="BOOLEAN" defaultValue="">
+      <valueDomain type="AttributeValue">
+        <attribute name="IS_SAVED"/>
+      </valueDomain>
+      <selection type="SingleValue"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_ERROR">
+    <descriptions defaultDescription="Error"/>
+    <variableProperties datatype="BOOLEAN" defaultValue="">
+      <valueDomain type="AttributeValue">
+        <attribute name="IS_ERROR"/>
+      </valueDomain>
+      <selection type="SingleValue"/>
+    </variableProperties>
+  </variable>
+  <variable id="V_STATUS">
+    <descriptions defaultDescription="Status"/>
+    <variableProperties datatype="NVARCHAR" length="20">
+      <valueDomain type="AttributeValue">
+        <attribute name="STATUS"/>
+      </valueDomain>
+      <selection multiLine="true" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="V_CHASSIS_FILES_SO_BAPI_RETURN">
+    <resourceUri>V_CHASSIS_FILES_SO_BAPI_RETURN</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="CREATEDAT"/>
+      <viewAttribute id="CREATEDBY"/>
+      <viewAttribute id="MODIFIEDAT"/>
+      <viewAttribute id="MODIFIEDBY"/>
+      <viewAttribute id="MATERIALSAVED"/>
+      <viewAttribute id="TIMESPROCESSED"/>
+      <viewAttribute id="DIVISIONCD"/>
+      <viewAttribute id="CHASSISNO"/>
+      <viewAttribute id="VINMFGCD"/>
+      <viewAttribute id="VINMODELCD"/>
+      <viewAttribute id="VINAXLECD"/>
+      <viewAttribute id="VINENGINECD"/>
+      <viewAttribute id="VINGVWRCD"/>
+      <viewAttribute id="VINUNUSECD"/>
+      <viewAttribute id="VINCHECKDIGITCD"/>
+      <viewAttribute id="VINYRCD"/>
+      <viewAttribute id="PLTCD"/>
+      <viewAttribute id="ENGINESERNO"/>
+      <viewAttribute id="VEHACTLWGT"/>
+      <viewAttribute id="DTPONUMBER"/>
+      <viewAttribute id="ORDERADDDT"/>
+      <viewAttribute id="TENTSCHEDDT"/>
+      <viewAttribute id="FIRMSCHEDDT"/>
+      <viewAttribute id="FRAMESCHEDDT"/>
+      <viewAttribute id="CABSCHEDDT"/>
+      <viewAttribute id="ACTLDLVRYDT"/>
+      <viewAttribute id="REQDELDT"/>
+      <viewAttribute id="FRAMELNSEQNO"/>
+      <viewAttribute id="CABLNSEQNO"/>
+      <viewAttribute id="OPSSTATUS"/>
+      <viewAttribute id="CHSSTATUS"/>
+      <viewAttribute id="DESTBUSNAME"/>
+      <viewAttribute id="DESTCNTCTNAME"/>
+      <viewAttribute id="DESTADDRLN1"/>
+      <viewAttribute id="DESTADDRLN2"/>
+      <viewAttribute id="DESTCITY"/>
+      <viewAttribute id="DESTST"/>
+      <viewAttribute id="DESTZIPCD"/>
+      <viewAttribute id="DESTCNTCTPHONENO"/>
+      <viewAttribute id="DESTCNTRY"/>
+      <viewAttribute id="PREBILLDT"/>
+      <viewAttribute id="STREAMNO"/>
+      <viewAttribute id="LINENO"/>
+      <viewAttribute id="SALESORDERSAVED"/>
+      <viewAttribute id="ARCHIVEVERSION"/>
+      <viewAttribute id="ISDELTA"/>
+      <viewAttribute id="BUSINESSERROR"/>
+      <viewAttribute id="MATERIALRETURN_TYPE"/>
+      <viewAttribute id="MATERIALRETURN_ID"/>
+      <viewAttribute id="MATERIALRETURN_NUMBER"/>
+      <viewAttribute id="MATERIALRETURN_MESSAGE"/>
+      <viewAttribute id="MATERIALRETURN_LOG_NO"/>
+      <viewAttribute id="MATERIALRETURN_LOG_MSG_NO"/>
+      <viewAttribute id="MATERIALRETURN_MESSAGE_V1"/>
+      <viewAttribute id="MATERIALRETURN_MESSAGE_V2"/>
+      <viewAttribute id="MATERIALRETURN_MESSAGE_V3"/>
+      <viewAttribute id="MATERIALRETURN_MESSAGE_V4"/>
+      <viewAttribute id="MATERIALRETURN_PARAMETER"/>
+      <viewAttribute id="MATERIALRETURN_ROW"/>
+      <viewAttribute id="MATERIALRETURN_FIELD"/>
+      <viewAttribute id="MATERIALRETURN_SYSTEM"/>
+      <viewAttribute id="SALESORDERRETURNS0_MESSAGE"/>
+      <viewAttribute id="SALESORDERRETURNS0_MESSAGE_V1"/>
+      <viewAttribute id="SALESORDERRETURNS1_MESSAGE"/>
+      <viewAttribute id="SALESORDERRETURNS1_MESSAGE_V1"/>
+      <viewAttribute id="SALESORDERRETURNS2_MESSAGE"/>
+      <viewAttribute id="SALESORDERRETURNS2_MESSAGE_V1"/>
+      <viewAttribute id="SALESORDER"/>
+      <viewAttribute id="SALESORDERITEM"/>
+      <viewAttribute id="SALESORG"/>
+      <viewAttribute id="STARTINGCHASSIS"/>
+      <viewAttribute id="ENDINGCHASSIS"/>
+    
+      <viewAttribute id="DIVISION"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="VIN" datatype="NVARCHAR" length="10" expressionLanguage="SQL">
+        <formula>&quot;VINMFGCD&quot;||&quot;VINMODELCD&quot;||&quot;VINAXLECD&quot;||&quot;VINENGINECD&quot;||&quot;VINGVWRCD&quot;||&quot;VINUNUSECD&quot;||&quot;VINCHECKDIGITCD&quot;||&quot;VINYRCD&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="IS_RELEVANT" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE
+	 WHEN &quot;STREAMNO&quot; &gt; 0 then 'Y'
+	 ELSE 'N'
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="IS_WAITING" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE
+	 WHEN &quot;STREAMNO&quot; &gt; 0 and &quot;TIMESPROCESSED&quot; = 0 then 'Y'
+	 ELSE 'N'
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="IS_SAVED" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE
+	 WHEN &quot;MATERIALSAVED&quot; = true and &quot;SALESORDERSAVED&quot; = true then 'Y'
+	 ELSE 'N' 
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="IS_ERROR" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>CASE
+	 WHEN &quot;STREAMNO&quot; &gt; 0 and &quot;TIMESPROCESSED&quot; &gt; 0 and (&quot;MATERIALSAVED&quot; = false or &quot;SALESORDERSAVED&quot; = false) then 'Y'
+	 ELSE 'N'
+ END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="COUNTER" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>1</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CHASSIS_CONTROL" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
+        <formula>IFNULL(&quot;STARTINGCHASSIS&quot;, &quot;CHASSISNO&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="STATUS" datatype="NVARCHAR" length="20" expressionLanguage="SQL">
+        <formula>CASE
+	 WHEN &quot;MATERIALSAVED&quot; = true and &quot;SALESORDERSAVED&quot; = true then 'Saved' 
+	 WHEN &quot;STREAMNO&quot; &gt; 0 and &quot;TIMESPROCESSED&quot; &gt; 0 and (&quot;MATERIALSAVED&quot; = false or &quot;SALESORDERSAVED&quot; = false) then 'Error' 
+	 WHEN &quot;STREAMNO&quot; &gt; 0 and &quot;TIMESPROCESSED&quot; = 0 then 'Waiting' 
+	 ELSE 'Not Relevant' 
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="V_CHASSIS_FILES_SO_BAPI_RETURN"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ID"/>
+    </attribute>
+    <attribute id="CREATEDAT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Created At"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CREATEDAT"/>
+    </attribute>
+    <attribute id="CREATEDBY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Created By"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CREATEDBY"/>
+    </attribute>
+    <attribute id="MODIFIEDAT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Modifed At"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MODIFIEDAT"/>
+    </attribute>
+    <attribute id="MODIFIEDBY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Modified By"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MODIFIEDBY"/>
+    </attribute>
+    <attribute id="MATERIALSAVED" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material Saved"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALSAVED"/>
+    </attribute>
+    <attribute id="DIVISIONCD" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Division Cd"/>
+      <localVariable>V_DIVISION_CD</localVariable>
+      <keyMapping columnObjectName="Projection_1" columnName="DIVISIONCD"/>
+    </attribute>
+    <attribute id="CHASSISNO" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Chassis No"/>
+      <localVariable>V_CHASSIS</localVariable>
+      <keyMapping columnObjectName="Projection_1" columnName="CHASSISNO"/>
+    </attribute>
+    <attribute id="VINMFGCD" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIN Mfg Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VINMFGCD"/>
+    </attribute>
+    <attribute id="VINMODELCD" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIN Model Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VINMODELCD"/>
+    </attribute>
+    <attribute id="VINAXLECD" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIN Axle Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VINAXLECD"/>
+    </attribute>
+    <attribute id="VINENGINECD" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIN Engine Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VINENGINECD"/>
+    </attribute>
+    <attribute id="VINGVWRCD" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIN GVWR Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VINGVWRCD"/>
+    </attribute>
+    <attribute id="VINUNUSECD" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIN Unused Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VINUNUSECD"/>
+    </attribute>
+    <attribute id="VINCHECKDIGITCD" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIN Check Digit Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VINCHECKDIGITCD"/>
+    </attribute>
+    <attribute id="VINYRCD" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIN Year Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VINYRCD"/>
+    </attribute>
+    <attribute id="PLTCD" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Plant Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PLTCD"/>
+    </attribute>
+    <attribute id="ENGINESERNO" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Engine Serial No"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ENGINESERNO"/>
+    </attribute>
+    <attribute id="DTPONUMBER" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DTPO Number"/>
+      <localVariable>V_DTPO</localVariable>
+      <keyMapping columnObjectName="Projection_1" columnName="DTPONUMBER"/>
+    </attribute>
+    <attribute id="ORDERADDDT" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Order Add Dt"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ORDERADDDT"/>
+    </attribute>
+    <attribute id="TENTSCHEDDT" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Tent Schedule Dt"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TENTSCHEDDT"/>
+    </attribute>
+    <attribute id="FIRMSCHEDDT" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Firm Schedule Dt"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FIRMSCHEDDT"/>
+    </attribute>
+    <attribute id="FRAMESCHEDDT" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Frame Schedule Dt"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FRAMESCHEDDT"/>
+    </attribute>
+    <attribute id="CABSCHEDDT" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cab Schedule Dt"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CABSCHEDDT"/>
+    </attribute>
+    <attribute id="ACTLDLVRYDT" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Actual Delivery Dt"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ACTLDLVRYDT"/>
+    </attribute>
+    <attribute id="REQDELDT" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Requested Delivery Dt"/>
+      <keyMapping columnObjectName="Projection_1" columnName="REQDELDT"/>
+    </attribute>
+    <attribute id="FRAMELNSEQNO" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Frame Line Seq No"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FRAMELNSEQNO"/>
+    </attribute>
+    <attribute id="CABLNSEQNO" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cab Line Seq No"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CABLNSEQNO"/>
+    </attribute>
+    <attribute id="OPSSTATUS" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Status"/>
+      <keyMapping columnObjectName="Projection_1" columnName="OPSSTATUS"/>
+    </attribute>
+    <attribute id="CHSSTATUS" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Chassis Status"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHSSTATUS"/>
+    </attribute>
+    <attribute id="DESTBUSNAME" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dest Bus Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DESTBUSNAME"/>
+    </attribute>
+    <attribute id="DESTCNTCTNAME" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dest Contact Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DESTCNTCTNAME"/>
+    </attribute>
+    <attribute id="DESTADDRLN1" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dest Addr Ln 1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DESTADDRLN1"/>
+    </attribute>
+    <attribute id="DESTADDRLN2" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dest Addr Ln 2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DESTADDRLN2"/>
+    </attribute>
+    <attribute id="DESTCITY" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dest City"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DESTCITY"/>
+    </attribute>
+    <attribute id="DESTST" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dest Region"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DESTST"/>
+    </attribute>
+    <attribute id="DESTZIPCD" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dest Postal Cd"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DESTZIPCD"/>
+    </attribute>
+    <attribute id="DESTCNTCTPHONENO" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dest Contact Phone No"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DESTCNTCTPHONENO"/>
+    </attribute>
+    <attribute id="DESTCNTRY" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dest Country"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DESTCNTRY"/>
+    </attribute>
+    <attribute id="PREBILLDT" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Prebill Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PREBILLDT"/>
+    </attribute>
+    <attribute id="STREAMNO" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Stream No"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STREAMNO"/>
+    </attribute>
+    <attribute id="LINENO" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Line No"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LINENO"/>
+    </attribute>
+    <attribute id="SALESORDERSAVED" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Order Saved"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORDERSAVED"/>
+    </attribute>
+    <attribute id="ARCHIVEVERSION" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Archive Version"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ARCHIVEVERSION"/>
+    </attribute>
+    <attribute id="ISDELTA" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Delta"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ISDELTA"/>
+    </attribute>
+    <attribute id="BUSINESSERROR" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Error"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUSINESSERROR"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_TYPE" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Type"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_TYPE"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_ID" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_ID"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_NUMBER" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Number"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_NUMBER"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_MESSAGE" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Message"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_MESSAGE"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_LOG_NO" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Log No"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_LOG_NO"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_LOG_MSG_NO" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Log Msg No"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_LOG_MSG_NO"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_MESSAGE_V1" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Message V1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_MESSAGE_V1"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_MESSAGE_V2" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Message V2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_MESSAGE_V2"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_MESSAGE_V3" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Message V3"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_MESSAGE_V3"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_MESSAGE_V4" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Message V4"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_MESSAGE_V4"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_PARAMETER" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Parameter"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_PARAMETER"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_ROW" order="60" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Row"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_ROW"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_FIELD" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return Field"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_FIELD"/>
+    </attribute>
+    <attribute id="MATERIALRETURN_SYSTEM" order="62" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material BAPI Return System"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MATERIALRETURN_SYSTEM"/>
+    </attribute>
+    <attribute id="SALESORDERRETURNS0_MESSAGE" order="63" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SO BAPI Return 0 Message"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORDERRETURNS0_MESSAGE"/>
+    </attribute>
+    <attribute id="SALESORDERRETURNS0_MESSAGE_V1" order="64" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SO BAPI Return 0 Message V1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORDERRETURNS0_MESSAGE_V1"/>
+    </attribute>
+    <attribute id="SALESORDERRETURNS1_MESSAGE" order="65" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SO BAPI Return 1 Message"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORDERRETURNS1_MESSAGE"/>
+    </attribute>
+    <attribute id="SALESORDERRETURNS1_MESSAGE_V1" order="66" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SO BAPI Return 1 Message V1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORDERRETURNS1_MESSAGE_V1"/>
+    </attribute>
+    <attribute id="SALESORDERRETURNS2_MESSAGE" order="67" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SO BAPI Return 2 Message"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORDERRETURNS2_MESSAGE"/>
+    </attribute>
+    <attribute id="SALESORDERRETURNS2_MESSAGE_V1" order="68" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SO BAPI Return 2 Message V2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORDERRETURNS2_MESSAGE_V1"/>
+    </attribute>
+    <attribute id="SALESORDER" order="69" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Order"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORDER"/>
+    </attribute>
+    <attribute id="SALESORDERITEM" order="70" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Order Item"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORDERITEM"/>
+    </attribute>
+    <attribute id="SALESORG" order="71" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Org"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SALESORG"/>
+    </attribute>
+    <attribute id="STARTINGCHASSIS" order="72" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Starting Chassis"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STARTINGCHASSIS"/>
+    </attribute>
+    <attribute id="ENDINGCHASSIS" order="73" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Ending Chassis"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ENDINGCHASSIS"/>
+    </attribute>
+    <attribute id="VIN" order="74" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VIN"/>
+    </attribute>
+    <attribute id="IS_RELEVANT" order="75" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Relevant"/>
+      <localVariable>V_RELEVANT</localVariable>
+      <keyMapping columnObjectName="Projection_1" columnName="IS_RELEVANT"/>
+    </attribute>
+    <attribute id="IS_WAITING" order="76" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Waiting"/>
+      <localVariable>V_WAITING</localVariable>
+      <keyMapping columnObjectName="Projection_1" columnName="IS_WAITING"/>
+    </attribute>
+    <attribute id="IS_SAVED" order="77" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Saved"/>
+      <localVariable>V_SAVED</localVariable>
+      <keyMapping columnObjectName="Projection_1" columnName="IS_SAVED"/>
+    </attribute>
+    <attribute id="IS_ERROR" order="78" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Error"/>
+      <localVariable>V_ERROR</localVariable>
+      <keyMapping columnObjectName="Projection_1" columnName="IS_ERROR"/>
+    </attribute>
+    <attribute id="CHASSIS_CONTROL" order="80" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Chassis Control No"/>
+      <localVariable>V_CHASSIS_CONTROL</localVariable>
+      <keyMapping columnObjectName="Projection_1" columnName="CHASSIS_CONTROL"/>
+    </attribute>
+    <attribute id="STATUS" order="81" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Status"/>
+      <localVariable>V_STATUS</localVariable>
+      <keyMapping columnObjectName="Projection_1" columnName="STATUS"/>
+    </attribute>
+  
+    <attribute id="DIVISION" order="82" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="S4 Division"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DIVISION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="TIMESPROCESSED" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Times Processed"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TIMESPROCESSED"/>
+    </measure>
+    <measure id="VEHACTLWGT" order="20" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Vehicle Actual Weight"/>
+      <measureMapping columnObjectName="Projection_1" columnName="VEHACTLWGT"/>
+    </measure>
+    <measure id="COUNTER" order="79" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Counter"/>
+      <measureMapping columnObjectName="Projection_1" columnName="COUNTER"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="195"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

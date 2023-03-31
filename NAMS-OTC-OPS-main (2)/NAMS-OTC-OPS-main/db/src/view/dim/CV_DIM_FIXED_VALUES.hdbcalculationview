@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_FIXED_VALUES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Domain Fixed Values"/>
+<localVariables>
+  <variable id="IP_DOMAIN" parameter="true">
+    <descriptions defaultDescription="Domain"/>
+    <variableProperties datatype="NVARCHAR" length="30" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::DD07L">
+    <resourceUri>slts4hc::DD07L</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::DD07T">
+    <resourceUri>slts4hc::DD07T</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="DOMAIN"/>
+      <viewAttribute id="VALUE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::DD07L">
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="DOMVALUE_L"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOMAIN" source="DOMNAME"/>
+    </input>
+    <filter>&quot;DOMAIN&quot;='$$IP_DOMAIN$$'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="DOMAIN"/>
+      <viewAttribute id="LANGUAGE"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="TEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::DD07T">
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="DOMVALUE_L"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEXT" source="DDTEXT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DOMAIN" source="DOMNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="DDLANGUAGE"/>
+    </input>
+    <filter>&quot;DOMAIN&quot;='$$IP_DOMAIN$$'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="textTable" languageColumn="LANGUAGE">
+    <viewAttributes>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="TEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="VALUE"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEXT" source="TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="VALUE"/>
+    </input>
+    <joinAttribute name="VALUE"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="VALUE" order="1" descriptionColumnName="TEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Value"/>
+      <keyMapping columnObjectName="Join_1" columnName="VALUE"/>
+    </attribute>
+    <attribute id="TEXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Text"/>
+      <keyMapping columnObjectName="Join_1" columnName="TEXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="143"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="164"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_YN_FLEET" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Fleet Flag"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="CV_DIM_YES_NO">
+    <resourceUri>CV_DIM_YES_NO</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+
+<logicalModel id="CV_DIM_YES_NO">
+  <attributes>
+    <attribute id="FLEET_FLAG" order="1" descriptionColumnName="FLEET_FLAG_TEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Fleet Flag"/>
+      <keyMapping columnObjectName="CV_DIM_YES_NO" columnName="YES_NO"/>
+    </attribute>
+    <attribute id="FLEET_FLAG_TEXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Fleet Flag Text"/>
+      <keyMapping columnObjectName="CV_DIM_YES_NO" columnName="YES_NO_TEXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

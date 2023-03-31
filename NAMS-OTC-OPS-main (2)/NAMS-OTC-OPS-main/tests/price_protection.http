@@ -1,0 +1,2903 @@
+### No price protection for future price effective dates
+POST http://localhost:4004/manage/MsgOrders
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "action": null,
+    "actualDeliveryDt": null,
+    "allocationDt": null,
+    "auxTransCd": null,
+    "bodyHgt": 0,
+    "bodyLadenCpcty": 0,
+    "bodyLgth": 0,
+    "bodyType": null,
+    "bumperLength": 0,
+    "cabAxleDimeension": 2766.06,
+    "cabEOFDimeension": 4112.26,
+    "cabLineSequenceNo": null,
+    "cabScheduleDt": null,
+    "CARAmt": null,
+    "CARNumber": null,
+    "CARPct": 0,
+    "changeOrderDtTm": null,
+    "changeOrderNo": 0,
+    "chasHwyPct": 100,
+    "chassisNo": "898744",
+    "chassisPrevNo": null,
+    "chassisStatusComment": null,
+    "chassisSystemStatus": "**",
+    "chasMetricCustmryInd": "C",
+    "chasOpsClassBPct": "000",
+    "chasOpsClassCPct": "000",
+    "chasOpsClassDPct": "000",
+    "chngOrdChrg": 0,
+    "comdtyHaulID": null,
+    "cornerRadius": 25.4,
+    "costModelCd": "567-DM",
+    "createTimestamp": "2022-09-02T07:30:51.000Z",
+    "credInDtTm": null,
+    "credOutDtTm": null,
+    "ctrlnAxle": 0,
+    "cuPoNo": null,
+    "custNo": "ZKXL",
+    "customerNm": "MAJOR CEMENT",
+    "customerStockCd": "C",
+    "dealerCd": "R760",
+    "divisionCd": "P",
+    "dlrBasePriceAmt": 0,
+    "dlrPoPresentId": "MI SPECIAL",
+    "DTPONumber": "10053715",
+    "endingChassis": null,
+    "engineCd": "2059919",
+    "engineClassCd": null,
+    "estimatedDeliveryDt": "2023-03-05",
+    "exchangeRateAmt": 100,
+    "FETInd": "Y",
+    "FETGSTCd": "F",
+    "FET": "000000",
+    "fifthWheelCd": "0854110",
+    "firmScheduleDt": null,
+    "fleetQty": 1,
+    "frameCd": "0514000",
+    "frameLineSequenceNo": null,
+    "frameScheduleDt": null,
+    "frontAxleBOCDimeension": 1882.14,
+    "frontAxleCd": "1011890",
+    "frontAxleLoad": 8164.8,
+    "gawrFirstRear": 0,
+    "gawrFront": 0,
+    "gawrRear": 0,
+    "gawrSecRear": 0,
+    "gcw": 72576,
+    "gvwr": 0,
+    "intendSvcClass": null,
+    "interCompDisc": 0,
+    "interDivDisc": 0,
+    "invcTermDays": 15,
+    "kingPinSet": 914.4,
+    "mainTransCd": "4010130",
+    "maxGradePct": 3,
+    "messageType": "UpdateNAMSOrder",
+    "modelCd": "0005671",
+    "noTrlrAxle": 2,
+    "operAreaDesc": null,
+    "operAreaHgt": 4.11,
+    "operAreaLgth": 19.81,
+    "operAreaWidth": 2.59,
+    "orderAddDt": "2022-09-02",
+    "orderCancelDt": null,
+    "orderReceivedDt": "2022-09-01",
+    "orderType": "O",
+    "plantCd": "D",
+    "priceEffectiveDt": "2023-01-01",
+    "procesingStatusCd": "16RH",
+    "prodConvChrg": 0,
+    "promoProgCd": 1360,
+    "promoProgPct": 21.61,
+    "rearAxleCd": "1526120",
+    "rearAxleLoad": 20865.6,
+    "rearAxleRatio": 0,
+    "rearAxleRatioCd": "1704100",
+    "releaseWriter": null,
+    "requestedDeliveryDt": "2023-03-07",
+    "shippingDestination": "R760",
+    "spclRqmntCd1": "0098170",
+    "spclRqmntCd2": null,
+    "spclRqmntCd3": null,
+    "spclRqmntCd4": null,
+    "startingChassis": null,
+    "stateProvinceCd": "XX",
+    "statusCode": null,
+    "stdDlrDiscPct": 77,
+    "suspensionCd": "1821640",
+    "tentativeScheduleDt": "2023-02-28",
+    "tireRollRadius": null,
+    "trlrHgt": 4.11,
+    "trlrLgth": 16.15,
+    "trlrType": "0096010",
+    "unitTypeCd": "1",
+    "wheelbase": 4648.2,
+    "Options": [
+        {
+            "status": "Ok",
+            "text": "0890550"
+        },
+        {
+            "status": "Ok",
+            "text": "1911010"
+        },
+        {
+            "status": "Ok",
+            "text": "4520420"
+        },
+        {
+            "status": "Ok",
+            "text": "5650250"
+        },
+        {
+            "status": "Ok",
+            "text": "6939480"
+        },
+        {
+            "status": "Ok",
+            "text": "6939580"
+        },
+        {
+            "status": "Ok",
+            "text": "1380070"
+        },
+        {
+            "status": "Ok",
+            "text": "2091310"
+        },
+        {
+            "status": "Ok",
+            "text": "2091315"
+        },
+        {
+            "status": "Ok",
+            "text": "2921340"
+        },
+        {
+            "status": "Ok",
+            "text": "6800510"
+        },
+        {
+            "status": "Ok",
+            "text": "6700000"
+        },
+        {
+            "status": "Ok",
+            "text": "5652590"
+        },
+        {
+            "status": "Ok",
+            "text": "5652680"
+        },
+        {
+            "status": "Ok",
+            "text": "9409001"
+        },
+        {
+            "status": "Ok",
+            "text": "2092014"
+        },
+        {
+            "status": "Ok",
+            "text": "2091372"
+        },
+        {
+            "status": "Ok",
+            "text": "0091200"
+        },
+        {
+            "status": "Ok",
+            "text": "0096010"
+        },
+        {
+            "status": "Ok",
+            "text": "0651010"
+        },
+        {
+            "status": "Ok",
+            "text": "0960020"
+        },
+        {
+            "status": "Ok",
+            "text": "1250250"
+        },
+        {
+            "status": "Ok",
+            "text": "1380290"
+        },
+        {
+            "status": "Ok",
+            "text": "1673090"
+        },
+        {
+            "status": "Ok",
+            "text": "1680470"
+        },
+        {
+            "status": "Ok",
+            "text": "1682710"
+        },
+        {
+            "status": "Ok",
+            "text": "1687040"
+        },
+        {
+            "status": "Ok",
+            "text": "2521090"
+        },
+        {
+            "status": "Ok",
+            "text": "2812170"
+        },
+        {
+            "status": "Ok",
+            "text": "3381820"
+        },
+        {
+            "status": "Ok",
+            "text": "6921740"
+        },
+        {
+            "status": "Ok",
+            "text": "1380380"
+        },
+        {
+            "status": "Ok",
+            "text": "1687090"
+        },
+        {
+            "status": "Ok",
+            "text": "7748740"
+        },
+        {
+            "status": "Ok",
+            "text": "7725740"
+        },
+        {
+            "status": "Ok",
+            "text": "3281680"
+        },
+        {
+            "status": "Ok",
+            "text": "5602150"
+        },
+        {
+            "status": "Ok",
+            "text": "5603100"
+        },
+        {
+            "status": "Ok",
+            "text": "0005671"
+        },
+        {
+            "status": "Ok",
+            "text": "1113020"
+        },
+        {
+            "status": "Ok",
+            "text": "1390630"
+        },
+        {
+            "status": "Ok",
+            "text": "1526120"
+        },
+        {
+            "status": "Ok",
+            "text": "1684200"
+        },
+        {
+            "status": "Ok",
+            "text": "1821640"
+        },
+        {
+            "status": "Ok",
+            "text": "2140010"
+        },
+        {
+            "status": "Ok",
+            "text": "3114270"
+        },
+        {
+            "status": "Ok",
+            "text": "3291680"
+        },
+        {
+            "status": "Ok",
+            "text": "3381770"
+        },
+        {
+            "status": "Ok",
+            "text": "4540420"
+        },
+        {
+            "status": "Ok",
+            "text": "4543320"
+        },
+        {
+            "status": "Ok",
+            "text": "4614810"
+        },
+        {
+            "status": "Ok",
+            "text": "4614850"
+        },
+        {
+            "status": "Ok",
+            "text": "5552190"
+        },
+        {
+            "status": "Ok",
+            "text": "6540160"
+        },
+        {
+            "status": "Ok",
+            "text": "6930500"
+        },
+        {
+            "status": "Ok",
+            "text": "6939400"
+        },
+        {
+            "status": "Ok",
+            "text": "6939420"
+        },
+        {
+            "status": "Ok",
+            "text": "6939510"
+        },
+        {
+            "status": "Ok",
+            "text": "6939520"
+        },
+        {
+            "status": "Ok",
+            "text": "7210420"
+        },
+        {
+            "status": "Ok",
+            "text": "7230060"
+        },
+        {
+            "status": "Ok",
+            "text": "7322010"
+        },
+        {
+            "status": "Ok",
+            "text": "7851040"
+        },
+        {
+            "status": "Ok",
+            "text": "7901130"
+        },
+        {
+            "status": "Ok",
+            "text": "8012240"
+        },
+        {
+            "status": "Ok",
+            "text": "1233110"
+        },
+        {
+            "status": "Ok",
+            "text": "5653000"
+        },
+        {
+            "status": "Ok",
+            "text": "5652890"
+        },
+        {
+            "status": "Ok",
+            "text": "5655029"
+        },
+        {
+            "status": "Ok",
+            "text": "0898030"
+        },
+        {
+            "status": "Ok",
+            "text": "2539720"
+        },
+        {
+            "status": "Ok",
+            "text": "7852020"
+        },
+        {
+            "status": "Ok",
+            "text": "6939100"
+        },
+        {
+            "status": "Ok",
+            "text": "7210540"
+        },
+        {
+            "status": "Ok",
+            "text": "2513060"
+        },
+        {
+            "status": "Ok",
+            "text": "2538120"
+        },
+        {
+            "status": "Ok",
+            "text": "7788055"
+        },
+        {
+            "status": "Ok",
+            "text": "5652990"
+        },
+        {
+            "status": "Ok",
+            "text": "7850015"
+        },
+        {
+            "status": "Ok",
+            "text": "0891260"
+        },
+        {
+            "status": "Ok",
+            "text": "8070000"
+        },
+        {
+            "status": "Ok",
+            "text": "4252610"
+        },
+        {
+            "status": "Ok",
+            "text": "2140410"
+        },
+        {
+            "status": "Ok",
+            "text": "7037130"
+        },
+        {
+            "status": "Ok",
+            "text": "2921130"
+        },
+        {
+            "status": "Ok",
+            "text": "1616295"
+        },
+        {
+            "status": "Ok",
+            "text": "0651220"
+        },
+        {
+            "status": "Ok",
+            "text": "1680390"
+        },
+        {
+            "status": "Ok",
+            "text": "1682420"
+        },
+        {
+            "status": "Ok",
+            "text": "1682850"
+        },
+        {
+            "status": "Ok",
+            "text": "2539410"
+        },
+        {
+            "status": "Ok",
+            "text": "3010400"
+        },
+        {
+            "status": "Ok",
+            "text": "4216330"
+        },
+        {
+            "status": "Ok",
+            "text": "5409320"
+        },
+        {
+            "status": "Ok",
+            "text": "5554400"
+        },
+        {
+            "status": "Ok",
+            "text": "6010390"
+        },
+        {
+            "status": "Ok",
+            "text": "6121120"
+        },
+        {
+            "status": "Ok",
+            "text": "7410040"
+        },
+        {
+            "status": "Ok",
+            "text": "7851480"
+        },
+        {
+            "status": "Ok",
+            "text": "3387890"
+        },
+        {
+            "status": "Ok",
+            "text": "7514010"
+        },
+        {
+            "status": "Ok",
+            "text": "7514050"
+        },
+        {
+            "status": "Ok",
+            "text": "7900310"
+        },
+        {
+            "status": "Ok",
+            "text": "7210510"
+        },
+        {
+            "status": "Ok",
+            "text": "7740140"
+        },
+        {
+            "status": "Ok",
+            "text": "8073060"
+        },
+        {
+            "status": "Ok",
+            "text": "8071900"
+        },
+        {
+            "status": "Ok",
+            "text": "8011410"
+        },
+        {
+            "status": "Ok",
+            "text": "8011420"
+        },
+        {
+            "status": "Ok",
+            "text": "8022160"
+        },
+        {
+            "status": "Ok",
+            "text": "8021530"
+        },
+        {
+            "status": "Ok",
+            "text": "8011470"
+        },
+        {
+            "status": "Ok",
+            "text": "7620400"
+        },
+        {
+            "status": "Ok",
+            "text": "8120990"
+        },
+        {
+            "status": "Ok",
+            "text": "5220130"
+        },
+        {
+            "status": "Ok",
+            "text": "4233900"
+        },
+        {
+            "status": "Ok",
+            "text": "8070100"
+        },
+        {
+            "status": "Ok",
+            "text": "6515700"
+        },
+        {
+            "status": "Ok",
+            "text": "7852090"
+        },
+        {
+            "status": "Ok",
+            "text": "8140060"
+        },
+        {
+            "status": "Ok",
+            "text": "6800160"
+        },
+        {
+            "status": "Ok",
+            "text": "3365270"
+        },
+        {
+            "status": "Ok",
+            "text": "6913200"
+        },
+        {
+            "status": "Ok",
+            "text": "7000025"
+        },
+        {
+            "status": "Ok",
+            "text": "1011890"
+        },
+        {
+            "status": "Ok",
+            "text": "4610920"
+        },
+        {
+            "status": "Ok",
+            "text": "8151190"
+        },
+        {
+            "status": "Ok",
+            "text": "2522110"
+        },
+        {
+            "status": "Ok",
+            "text": "0890665"
+        },
+        {
+            "status": "Ok",
+            "text": "2059919"
+        },
+        {
+            "status": "Ok",
+            "text": "2091130"
+        },
+        {
+            "status": "Ok",
+            "text": "4510210"
+        },
+        {
+            "status": "Ok",
+            "text": "0611250"
+        },
+        {
+            "status": "Ok",
+            "text": "0611790"
+        },
+        {
+            "status": "Ok",
+            "text": "0644000"
+        },
+        {
+            "status": "Ok",
+            "text": "1922260"
+        },
+        {
+            "status": "Ok",
+            "text": "4611660"
+        },
+        {
+            "status": "Ok",
+            "text": "6040550"
+        },
+        {
+            "status": "Ok",
+            "text": "6132450"
+        },
+        {
+            "status": "Ok",
+            "text": "7001520"
+        },
+        {
+            "status": "Ok",
+            "text": "7900090"
+        },
+        {
+            "status": "Ok",
+            "text": "8133960"
+        },
+        {
+            "status": "Ok",
+            "text": "8530770"
+        },
+        {
+            "status": "Ok",
+            "text": "2621000"
+        },
+        {
+            "status": "Ok",
+            "text": "8133250"
+        },
+        {
+            "status": "Ok",
+            "text": "7852050"
+        },
+        {
+            "status": "Ok",
+            "text": "7230360"
+        },
+        {
+            "status": "Ok",
+            "text": "7110680"
+        },
+        {
+            "status": "Ok",
+            "text": "8110070"
+        },
+        {
+            "status": "Ok",
+            "text": "7510060"
+        },
+        {
+            "status": "Ok",
+            "text": "1353550"
+        },
+        {
+            "status": "Ok",
+            "text": "4257050"
+        },
+        {
+            "status": "Ok",
+            "text": "1391480"
+        },
+        {
+            "status": "Ok",
+            "text": "1660040"
+        },
+        {
+            "status": "Ok",
+            "text": "2725270"
+        },
+        {
+            "status": "Ok",
+            "text": "2140450"
+        },
+        {
+            "status": "Ok",
+            "text": "7728030"
+        },
+        {
+            "status": "Ok",
+            "text": "0890925"
+        },
+        {
+            "status": "Ok",
+            "text": "2091638"
+        },
+        {
+            "status": "Ok",
+            "text": "4211510"
+        },
+        {
+            "status": "Ok",
+            "text": "1920385"
+        },
+        {
+            "status": "Ok",
+            "text": "0611330"
+        },
+        {
+            "status": "Ok",
+            "text": "2921240"
+        },
+        {
+            "status": "Ok",
+            "text": "0093170"
+        },
+        {
+            "status": "Ok",
+            "text": "2140220"
+        },
+        {
+            "status": "Ok",
+            "text": "2141990"
+        },
+        {
+            "status": "Ok",
+            "text": "2092033"
+        },
+        {
+            "status": "Ok",
+            "text": "9400090"
+        },
+        {
+            "status": "Ok",
+            "text": "1704100"
+        },
+        {
+            "status": "Ok",
+            "text": "0514000"
+        },
+        {
+            "status": "Ok",
+            "text": "0854110"
+        },
+        {
+            "status": "Ok",
+            "text": "0870020"
+        },
+        {
+            "status": "Ok",
+            "text": "5190008"
+        },
+        {
+            "status": "Ok",
+            "text": "5390008"
+        },
+        {
+            "status": "Ok",
+            "text": "5650710"
+        },
+        {
+            "status": "Ok",
+            "text": "2092079"
+        },
+        {
+            "status": "Ok",
+            "text": "9407147"
+        },
+        {
+            "status": "Ok",
+            "text": "0200700"
+        },
+        {
+            "status": "Ok",
+            "text": "9408703"
+        },
+        {
+            "status": "Ok",
+            "text": "0890090"
+        },
+        {
+            "status": "Ok",
+            "text": "6930800"
+        },
+        {
+            "status": "Ok",
+            "text": "0098170"
+        },
+        {
+            "status": "Ok",
+            "text": "8134160"
+        },
+        {
+            "status": "Ok",
+            "text": "8021800"
+        },
+        {
+            "status": "Ok",
+            "text": "8021810"
+        },
+        {
+            "status": "Ok",
+            "text": "8021830"
+        },
+        {
+            "status": "Ok",
+            "text": "8021880"
+        },
+        {
+            "status": "Ok",
+            "text": "8070820"
+        },
+        {
+            "status": "Ok",
+            "text": "8070830"
+        },
+        {
+            "status": "Ok",
+            "text": "8070390"
+        },
+        {
+            "status": "Ok",
+            "text": "7722120"
+        },
+        {
+            "status": "Ok",
+            "text": "7728040"
+        },
+        {
+            "status": "Ok",
+            "text": "7728050"
+        },
+        {
+            "status": "Review",
+            "text": "4010130"
+        },
+        {
+            "status": "Ok",
+            "text": "8070450"
+        },
+        {
+            "status": "Ok",
+            "text": "7850555"
+        },
+        {
+            "status": "Ok",
+            "text": "5133600"
+        },
+        {
+            "status": "Ok",
+            "text": "7788058"
+        },
+        {
+            "status": "Ok",
+            "text": "4240030"
+        },
+        {
+            "status": "Ok",
+            "text": "1683235"
+        },
+        {
+            "status": "Ok",
+            "text": "2140670"
+        },
+        {
+            "status": "Ok",
+            "text": "8011860"
+        },
+        {
+            "status": "Ok",
+            "text": "8133115"
+        },
+        {
+            "status": "Ok",
+            "text": "5312150"
+        },
+        {
+            "status": "Ok",
+            "text": "5033720"
+        },
+        {
+            "status": "Ok",
+            "text": "9409072"
+        }
+    ],
+    "Narratives": [
+        {
+            "approvalCd": "A",
+            "cd": "2132",
+            "text": "C399 120...GREEN HOUSE GAS VEHICLE SPEE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2133",
+            "text": "C402 0.....GREEN HOUSE GAS VEHICLE SPEE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2134",
+            "text": "C209 120...MAXIMUM VEHICLE SPEED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2135",
+            "text": "C121 68....MAXIMUM ACCELERATOR VEHICLE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2137",
+            "text": "C128 68....MAXIMUM CRUISE CONTROL SPEED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2140",
+            "text": "C400 252...DRIVER INITIATED OVERRIDE RE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2141",
+            "text": "C334 0.....DRIVER INITIATED OVERRIDE MA"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2142",
+            "text": "C401 10....GREEN HOUSE GAS VEHICLE SPEE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2143",
+            "text": "C333 0.....DRIVER INITIATED OVERRIDEMAX"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2144",
+            "text": "C234 YES...ENGINE PROTECTION SHUTDOWN"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2145",
+            "text": "C231 NO....GEAR DOWN PROTECTION"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2146",
+            "text": "C132 1400..PTO MAXIMUM ENGINE SPEED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2147",
+            "text": "C239 NO....CRUISE CONTROL AUTO-RESUME"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2148",
+            "text": "C238 NO....CRUISE CONTROL AND ENGINE BR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2150",
+            "text": "C395 0.....GREEN HOUSE GAS AUTOMATIC EN"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2151",
+            "text": "C225 NO....IDLE SHUTDOWN WITH PARKING B"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2152",
+            "text": "C133 1.....IDLE SHUTDOWN TIMER"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2153",
+            "text": "C396 YES...IDLE SHUTDOWN WARNING PERIOD"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2154",
+            "text": "C397 30....IDLE SHUTDOWN WARNING PERIOD"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2155",
+            "text": "C206 0.....IDLE SHUTDOWN PERCENT ENGINE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2157",
+            "text": "C233 NO....IDLE SHUTDOWN MANUAL OVERRID"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2159",
+            "text": "C382 YES...IDLE SHUTDOWN HOT AMBIENT AU"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2161",
+            "text": "C188 0.....IDLE SHUTDOWN COLD AMBIENT A"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2162",
+            "text": "C189 60....IDLE SHUTDOWN INTERMEDIATE A"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "2163",
+            "text": "C190 80....IDLE SHUTDOWN HOT AMBIENT AI"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "8502",
+            "text": "A -         L3781EY       VIPER RED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "8520",
+            "text": "FRAME       L0001EA       BLACK"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "8530",
+            "text": "FENDER      L3781EY       VIPER RED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "8540",
+            "text": "HOOD TOP    L3781EY       VIPER RED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "8550",
+            "text": "CAB ROOF    L3781EY       VIPER RED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9994",
+            "text": "EMAIL: RWHITE@REEFERPETERBILT.COM"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9995",
+            "text": "CELL PHONE:"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9996",
+            "text": "SALESPERSON ID: ADAM REEFER"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9997",
+            "text": "DEALER CONTACT"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9998",
+            "text": "NAME: RICHARD WHITE     PH:(248) 852-8300"
+        }
+    ]
+}
+
+### Old order missing price protection
+POST http://localhost:4004/manage/MsgOrders
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+	"bodyHgt": "0.000",
+	"bodyLadenCpcty": "0.000",
+	"bodyLgth": "0.000",
+	"bumperLength": "0.0",
+	"cabAxleDimeension": "2590.800",
+	"cabEOFDimeension": "4140.200",
+	"cabScheduleDt": "2012-01-17",
+	"changeOrderDtTm": "2021-11-02T13:45:42Z",
+	"changeOrderNo": 34,
+	"chasHwyPct": 79,
+	"chassisNo": "331328",
+	"chassisPrevNo": "281581",
+	"chassisSystemStatus": "IO",
+	"chasMetricCustmryInd": "C",
+	"chasOpsClassBPct": "020",
+	"chasOpsClassCPct": "001",
+	"chasOpsClassDPct": "000",
+	"chngOrdChrg": 0,
+	"cornerRadius": "25.400",
+	"costModelCd": "T6ANS",
+	"createTimestamp": "2022-07-21T07:41:39Z",
+	"credInDtTm": "2011-09-16T09:33:59Z",
+	"credOutDtTm": "2011-09-27T14:32:19Z",
+	"ctrlnAxle": "0.000",
+	"custNo": "Z1DY",
+	"customerNm": "PTC",
+	"customerStockCd": "C",
+	"dealerCd": "Y993",
+	"divisionCd": "K",
+	"dlrBasePriceAmt": 126677,
+	"DTPONumber": "52899585",
+	"engineCd": "0123201",
+	"engineClassCd": "6",
+	"estimatedDeliveryDt": "2012-01-27",
+	"exchangeRateAmt": "100.00",
+	"FETInd": "N",
+	"FETGSTCd": "F",
+	"FET": "000000",
+	"fifthWheelCd": "6543315",
+	"firmScheduleDt": "2012-01-19",
+	"fleetQty": 1,
+	"frameCd": "6054200",
+	"frameScheduleDt": "2012-01-19",
+	"frontAxleBOCDimeension": "1879.600",
+	"frontAxleCd": "2502321",
+	"frontAxleLoad": "5987.500",
+	"gawrFirstRear": "9072.000",
+	"gawrFront": "5987.500",
+	"gawrRear": "9072.000",
+	"gawrSecRear": "0.000",
+	"gcw": "36288.000",
+	"gvwr": "24131.500",
+	"interCompDisc": "0.00",
+	"interDivDisc": "0.00",
+	"invcTermDays": 15,
+	"kingPinSet": "914.400",
+	"mainTransCd": "2058771",
+	"maxGradePct": 6,
+	"messageType": "UpdateNAMSOrder",
+	"modelCd": "0000610",
+	"noTrlrAxle": 3,
+	"operAreaHgt": "4.570",
+	"operAreaLgth": "36.580",
+	"operAreaWidth": "2.590",
+	"orderAddDt": "2011-08-25",
+	"orderReceivedDt": "2011-08-25",
+	"orderSaved": false,
+	"orderType": "O",
+	"plantCd": "C",
+	"priceEffectiveDt": "2011-07-01",
+	"priceProtAmt": 0,
+	"procesingStatusCd": "APPH",
+	"prodConvChrg": 0,
+	"promoProgCd": 327,
+	"promoProgPct": "0.0000",
+	"rearAxleCd": "3121444",
+	"rearAxleLoad": "18144.000",
+	"rearAxleRatio": 370,
+	"rearAxleRatioCd": "3200370",
+	"releaseWriter": "JRK",
+	"requestedDeliveryDt": "2012-01-03",
+	"shippingDestination": "PTC MT VERNON",
+	"spclRqmntCd1": "0098025",
+	"stateProvinceCd": "XX",
+	"stdDlrDiscPct": "67.00",
+	"suspensionCd": "3730030",
+	"tentativeScheduleDt": "2012-01-16",
+	"timesProcessed": 0,
+	"trlrHgt": "4.110",
+	"trlrLgth": "16.150",
+	"trlrType": "0096080",
+	"unitTypeCd": "1",
+	"wheelbase": "4470.400",
+	"Options": [
+		{
+			"status": "Ok",
+			"text": "0000610"
+		},
+		{
+			"status": "Ok",
+			"text": "0070043"
+		},
+		{
+			"status": "Ok",
+			"text": "0080055"
+		},
+		{
+			"status": "Ok",
+			"text": "0090000"
+		},
+		{
+			"status": "Ok",
+			"text": "0123201"
+		},
+		{
+			"status": "Ok",
+			"text": "1000055"
+		},
+		{
+			"status": "Ok",
+			"text": "1000152"
+		},
+		{
+			"status": "Ok",
+			"text": "1002060"
+		},
+		{
+			"status": "Ok",
+			"text": "1051200"
+		},
+		{
+			"status": "Ok",
+			"text": "1107190"
+		},
+		{
+			"status": "Ok",
+			"text": "1123555"
+		},
+		{
+			"status": "Ok",
+			"text": "1160728"
+		},
+		{
+			"status": "Ok",
+			"text": "1247156"
+		},
+		{
+			"status": "Ok",
+			"text": "1290160"
+		},
+		{
+			"status": "Ok",
+			"text": "1324383"
+		},
+		{
+			"status": "Ok",
+			"text": "1500024"
+		},
+		{
+			"status": "Ok",
+			"text": "1812190"
+		},
+		{
+			"status": "Ok",
+			"text": "1821210"
+		},
+		{
+			"status": "Ok",
+			"text": "1836100"
+		},
+		{
+			"status": "Ok",
+			"text": "1900996"
+		},
+		{
+			"status": "Ok",
+			"text": "2058771"
+		},
+		{
+			"status": "Ok",
+			"text": "2250620"
+		},
+		{
+			"status": "Ok",
+			"text": "2406205"
+		},
+		{
+			"status": "Ok",
+			"text": "2429102"
+		},
+		{
+			"status": "Ok",
+			"text": "2460042"
+		},
+		{
+			"status": "Ok",
+			"text": "2493009"
+		},
+		{
+			"status": "Ok",
+			"text": "2502321"
+		},
+		{
+			"status": "Ok",
+			"text": "2601605"
+		},
+		{
+			"status": "Ok",
+			"text": "2690016"
+		},
+		{
+			"status": "Ok",
+			"text": "2701300"
+		},
+		{
+			"status": "Ok",
+			"text": "2741950"
+		},
+		{
+			"status": "Ok",
+			"text": "2750001"
+		},
+		{
+			"status": "Ok",
+			"text": "2765001"
+		},
+		{
+			"status": "Ok",
+			"text": "2864012"
+		},
+		{
+			"status": "Ok",
+			"text": "2893671"
+		},
+		{
+			"status": "Ok",
+			"text": "2899336"
+		},
+		{
+			"status": "Ok",
+			"text": "3121444"
+		},
+		{
+			"status": "Ok",
+			"text": "3200370"
+		},
+		{
+			"status": "Ok",
+			"text": "3304006"
+		},
+		{
+			"status": "Ok",
+			"text": "3392130"
+		},
+		{
+			"status": "Ok",
+			"text": "3407050"
+		},
+		{
+			"status": "Ok",
+			"text": "3441952"
+		},
+		{
+			"status": "Ok",
+			"text": "3465002"
+		},
+		{
+			"status": "Ok",
+			"text": "3485207"
+		},
+		{
+			"status": "Ok",
+			"text": "3495231"
+		},
+		{
+			"status": "Ok",
+			"text": "3500057"
+		},
+		{
+			"status": "Ok",
+			"text": "3730030"
+		},
+		{
+			"status": "Ok",
+			"text": "4077029"
+		},
+		{
+			"status": "Ok",
+			"text": "4277314"
+		},
+		{
+			"status": "Ok",
+			"text": "4900008"
+		},
+		{
+			"status": "Ok",
+			"text": "5045162"
+		},
+		{
+			"status": "Ok",
+			"text": "5245162"
+		},
+		{
+			"status": "Ok",
+			"text": "5859010"
+		},
+		{
+			"status": "Ok",
+			"text": "5859012"
+		},
+		{
+			"status": "Ok",
+			"text": "5900008"
+		},
+		{
+			"status": "Ok",
+			"text": "6054200"
+		},
+		{
+			"status": "Ok",
+			"text": "6308710"
+		},
+		{
+			"status": "Ok",
+			"text": "6319504"
+		},
+		{
+			"status": "Ok",
+			"text": "6321005"
+		},
+		{
+			"status": "Ok",
+			"text": "6390103"
+		},
+		{
+			"status": "Ok",
+			"text": "6400500"
+		},
+		{
+			"status": "Ok",
+			"text": "6409903"
+		},
+		{
+			"status": "Ok",
+			"text": "6410011"
+		},
+		{
+			"status": "Ok",
+			"text": "6414012"
+		},
+		{
+			"status": "Ok",
+			"text": "6417007"
+		},
+		{
+			"status": "Ok",
+			"text": "6451037"
+		},
+		{
+			"status": "Ok",
+			"text": "6543315"
+		},
+		{
+			"status": "Ok",
+			"text": "6679811"
+		},
+		{
+			"status": "Ok",
+			"text": "6690000"
+		},
+		{
+			"status": "Ok",
+			"text": "6721144"
+		},
+		{
+			"status": "Ok",
+			"text": "6722000"
+		},
+		{
+			"status": "Ok",
+			"text": "6734005"
+		},
+		{
+			"status": "Ok",
+			"text": "6744001"
+		},
+		{
+			"status": "Ok",
+			"text": "6747000"
+		},
+		{
+			"status": "Ok",
+			"text": "7210120"
+		},
+		{
+			"status": "Ok",
+			"text": "7722010"
+		},
+		{
+			"status": "Ok",
+			"text": "7840015"
+		},
+		{
+			"status": "Ok",
+			"text": "7840038"
+		},
+		{
+			"status": "Ok",
+			"text": "7880009"
+		},
+		{
+			"status": "Ok",
+			"text": "7889061"
+		},
+		{
+			"status": "Ok",
+			"text": "7889245"
+		},
+		{
+			"status": "Ok",
+			"text": "7889603"
+		},
+		{
+			"status": "Ok",
+			"text": "7920120"
+		},
+		{
+			"status": "Ok",
+			"text": "8025301"
+		},
+		{
+			"status": "Ok",
+			"text": "8090603"
+		},
+		{
+			"status": "Ok",
+			"text": "8108011"
+		},
+		{
+			"status": "Ok",
+			"text": "8201013"
+		},
+		{
+			"status": "Ok",
+			"text": "8201200"
+		},
+		{
+			"status": "Ok",
+			"text": "8203058"
+		},
+		{
+			"status": "Ok",
+			"text": "8221144"
+		},
+		{
+			"status": "Ok",
+			"text": "8222656"
+		},
+		{
+			"status": "Ok",
+			"text": "8222720"
+		},
+		{
+			"status": "Ok",
+			"text": "8226660"
+		},
+		{
+			"status": "Ok",
+			"text": "8282007"
+		},
+		{
+			"status": "Ok",
+			"text": "8282013"
+		},
+		{
+			"status": "Ok",
+			"text": "8300008"
+		},
+		{
+			"status": "Ok",
+			"text": "8330860"
+		},
+		{
+			"status": "Ok",
+			"text": "8338604"
+		},
+		{
+			"status": "Ok",
+			"text": "8390643"
+		},
+		{
+			"status": "Ok",
+			"text": "8410197"
+		},
+		{
+			"status": "Ok",
+			"text": "8460197"
+		},
+		{
+			"status": "Ok",
+			"text": "8490187"
+		},
+		{
+			"status": "Ok",
+			"text": "8601880"
+		},
+		{
+			"status": "Ok",
+			"text": "8698974"
+		},
+		{
+			"status": "Ok",
+			"text": "8700168"
+		},
+		{
+			"status": "Ok",
+			"text": "8700954"
+		},
+		{
+			"status": "Ok",
+			"text": "8800402"
+		},
+		{
+			"status": "Ok",
+			"text": "8823011"
+		},
+		{
+			"status": "Ok",
+			"text": "8829600"
+		},
+		{
+			"status": "Ok",
+			"text": "8829612"
+		},
+		{
+			"status": "Ok",
+			"text": "8832113"
+		},
+		{
+			"status": "Ok",
+			"text": "8841411"
+		},
+		{
+			"status": "Ok",
+			"text": "8850139"
+		},
+		{
+			"status": "Ok",
+			"text": "8865002"
+		},
+		{
+			"status": "Ok",
+			"text": "8871438"
+		},
+		{
+			"status": "Ok",
+			"text": "8890003"
+		},
+		{
+			"status": "Ok",
+			"text": "8890101"
+		},
+		{
+			"status": "Ok",
+			"text": "9010801"
+		},
+		{
+			"status": "Ok",
+			"text": "9027110"
+		},
+		{
+			"status": "Ok",
+			"text": "9030016"
+		},
+		{
+			"status": "Ok",
+			"text": "9052011"
+		},
+		{
+			"status": "Ok",
+			"text": "9059921"
+		},
+		{
+			"status": "Ok",
+			"text": "9070012"
+		},
+		{
+			"status": "Ok",
+			"text": "9090039"
+		},
+		{
+			"status": "Ok",
+			"text": "9090126"
+		},
+		{
+			"status": "Ok",
+			"text": "9101210"
+		},
+		{
+			"status": "Ok",
+			"text": "9108001"
+		},
+		{
+			"status": "Ok",
+			"text": "9110072"
+		},
+		{
+			"status": "Ok",
+			"text": "9120012"
+		},
+		{
+			"status": "Ok",
+			"text": "9140020"
+		},
+		{
+			"status": "Ok",
+			"text": "9140188"
+		},
+		{
+			"status": "Ok",
+			"text": "9140328"
+		},
+		{
+			"status": "Ok",
+			"text": "9140700"
+		},
+		{
+			"status": "Ok",
+			"text": "9200021"
+		},
+		{
+			"status": "Ok",
+			"text": "9210210"
+		},
+		{
+			"status": "Ok",
+			"text": "9210345"
+		},
+		{
+			"status": "Ok",
+			"text": "9290014"
+		},
+		{
+			"status": "Ok",
+			"text": "9490003"
+		},
+		{
+			"status": "Ok",
+			"text": "9490404"
+		},
+		{
+			"status": "Ok",
+			"text": "9700000"
+		},
+		{
+			"status": "Ok",
+			"text": "9800001"
+		},
+		{
+			"status": "Ok",
+			"text": "9940030"
+		},
+		{
+			"status": "Ok",
+			"text": "9943119"
+		},
+		{
+			"status": "Ok",
+			"text": "9960006"
+		},
+		{
+			"status": "Ok",
+			"text": "9965510"
+		},
+		{
+			"status": "Ok",
+			"text": "0091090"
+		},
+		{
+			"status": "Ok",
+			"text": "0093007"
+		},
+		{
+			"status": "Ok",
+			"text": "0096080"
+		},
+		{
+			"status": "Ok",
+			"text": "0098025"
+		}
+	],
+	"Narratives": [
+		{
+			"approvalCd": "A",
+			"cd": "0902",
+			"text": "P02  YES...CRUISE CONTROL AUTO RESUME"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "0904",
+			"text": "P04  NO....AUTO ENGINE BRAKE IN CRUISE"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "0906",
+			"text": "P06  YES...GEAR DOWN PROTECTION"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "0910",
+			"text": "P11  NO....ENGINE PROTECTION SHTDWN"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "0912",
+			"text": "P14  75....MAX VEHICLE SPEED IN TOP GEA"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "0914",
+			"text": "P19  65....MAX CRUISE CONTROL SPEED"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "0916",
+			"text": "P26  1400..MAX PTO SPEED"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "0918",
+			"text": "P10  NO....IDLE SHTDWN"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "0920",
+			"text": "P32  8.....IDLE SHTDWN TIME"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "0922",
+			"text": "P33  NO....IDLE SHTDWN OVERRIDE"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "2894",
+			"text": "POWER STRG COOLER  RAD MTD"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "8203",
+			"text": "KEY ALIKE G454"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "8823",
+			"text": "8823011:  NOT AVAIALBE AT BUILD REQST"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "8824",
+			"text": "PROVISIONS FOR MOUNTING ONLY"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9495",
+			"text": "ORDER PER IOC AUG 9TH"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9496",
+			"text": "NGP KW OWNED QV"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9600",
+			"text": "ICOH TO 16RH 082511"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9601",
+			"text": "ICOH TO 16RH 9/16/11"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9650",
+			"text": "BASIS OF THE SERVICE CHASSIS:        618114"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9651",
+			"text": "OKAY TO RELEASE PER KW GM 8/12/11"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9652",
+			"text": "RELS DAB 10/7"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9653",
+			"text": "*VXPC(C) UNL-10/07/11 12:50:04 TD2BAILE"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9654",
+			"text": "RELS DBA 10182001"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9655",
+			"text": "DRVH TO OVPS CA 10/31/2011 7:24:01 AM"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9656",
+			"text": "DRVH TO OVPS CA 11/4/2011 6:54:12 AM"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9657",
+			"text": "DRVH TO OVPS 11/14/11 RK"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9658",
+			"text": "DRVH TO OVPS 11/18/11 RK"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9659",
+			"text": "DRVH TO OVPS 11/29/11 RK"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9660",
+			"text": "DRVH TO OVPS 11/29/11 RK"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9702",
+			"text": "A  -        F6456EB       DARK CLOISONN"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9720",
+			"text": "FRAME       N0001EA       BLACK"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9770",
+			"text": "BUMPER      F6456EB       DARK CLOISONN"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9780",
+			"text": "CH FAIRINGS F6456EB DARK CLOISONN"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9802",
+			"text": "8700044 DAYCAB BEVERAGE HOLDER"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9803",
+			"text": "8699169 ADD'L ACC PWR SUPPLY IN HEADER"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9996",
+			"text": "SALESPERSON ID: TROYJOHNSON"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9997",
+			"text": "DEALER CONTACT"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9998",
+			"text": "NAME: STAR GROSSAINT    PH:425-828-5105"
+		},
+		{
+			"approvalCd": "A",
+			"cd": "9999",
+			"text": "JRK 11/14/11 OC030"
+		}
+	]
+}
+
+### Defect 200 calculate price protection amount with default model discount
+POST http://localhost:4004/manage/MsgOrders
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "action": null,
+    "actualDeliveryDt": null,
+    "allocationDt": null,
+    "auxTransCd": null,
+    "bodyHgt": 3962.4,
+    "bodyLadenCpcty": 1814.4,
+    "bodyLgth": 7010.4,
+    "bodyType": "0095145",
+    "bumperLength": 0,
+    "cabAxleDimeension": 4279.9,
+    "cabEOFDimeension": 7175.5,
+    "cabLineSequenceNo": null,
+    "cabScheduleDt": null,
+    "CARAmt": null,
+    "CARNumber": null,
+    "CARPct": 0,
+    "changeOrderDtTm": "2022-03-30T11:31:46Z",
+    "changeOrderNo": 6,
+    "chasHwyPct": 97,
+    "chassisNo": "232553",
+    "chassisPrevNo": "148862",
+    "chassisStatusComment": null,
+    "chassisSystemStatus": "ER",
+    "chasMetricCustmryInd": "C",
+    "chasOpsClassBPct": null,
+    "chasOpsClassCPct": null,
+    "chasOpsClassDPct": null,
+    "chngOrdChrg": 0,
+    "comdtyHaulID": null,
+    "cornerRadius": 0,
+    "costModelCd": "T38MDA",
+    "createTimestamp": "2022-05-27T15:46:06.000Z",
+    "credInDtTm": "2021-10-28T12:56:29Z",
+    "credOutDtTm": "2021-10-28T12:56:29Z",
+    "ctrlnAxle": 0,
+    "cuPoNo": null,
+    "custNo": null,
+    "customerNm": "COWIN EQUIPMENT",
+    "customerStockCd": "C",
+    "dealerCd": "K415",
+    "divisionCd": "K",
+    "dlrBasePriceAmt": 87402,
+    "dlrPoPresentId": "COWIN",
+    "DTPONumber": "10060177",
+    "endingChassis": "232556",
+    "engineCd": "0130103",
+    "engineClassCd": null,
+    "estimatedDeliveryDt": "2022-08-18",
+    "exchangeRateAmt": 100,
+    "FETInd": "N",
+    "FETGSTCd": "F",
+    "FET": "000000",
+    "fifthWheelCd": null,
+    "firmScheduleDt": null,
+    "fleetQty": 4,
+    "frameCd": "6054410",
+    "frameLineSequenceNo": null,
+    "frameScheduleDt": null,
+    "frontAxleBOCDimeension": 1714.5,
+    "frontAxleCd": "2512044",
+    "frontAxleLoad": 5443.2,
+    "gawrFirstRear": 0,
+    "gawrFront": 0,
+    "gawrRear": 0,
+    "gawrSecRear": 0,
+    "gcw": 14968.8,
+    "gvwr": 0,
+    "intendSvcClass": null,
+    "interCompDisc": 0,
+    "interDivDisc": 0,
+    "invcTermDays": 15,
+    "kingPinSet": 0,
+    "mainTransCd": "2010860",
+    "maxGradePct": 6,
+    "messageType": "UpdateNAMSOrder",
+    "modelCd": "0000380",
+    "noTrlrAxle": 0,
+    "operAreaDesc": null,
+    "operAreaHgt": 4.57,
+    "operAreaLgth": 36.58,
+    "operAreaWidth": 2.59,
+    "orderAddDt": "2021-10-28",
+    "orderCancelDt": null,
+    "orderReceivedDt": "2021-10-26",
+    "orderType": "O",
+    "plantCd": "M",
+    "priceEffectiveDt": "2022-01-01",
+    "procesingStatusCd": "APPH",
+    "prodConvChrg": 0,
+    "promoProgCd": 809,
+    "promoProgPct": 17.9,
+    "rearAxleCd": "3031094",
+    "rearAxleLoad": 9525.6,
+    "rearAxleRatio": 557,
+    "rearAxleRatioCd": "3200557",
+    "releaseWriter": null,
+    "requestedDeliveryDt": "2022-07-04",
+    "shippingDestination": "SEE INSTRUCTIONS",
+    "spclRqmntCd1": "0098025",
+    "spclRqmntCd2": null,
+    "spclRqmntCd3": null,
+    "spclRqmntCd4": null,
+    "startingChassis": "232553",
+    "stateProvinceCd": "XX",
+    "statusCode": null,
+    "stdDlrDiscPct": 82,
+    "suspensionCd": "3636421",
+    "tentativeScheduleDt": "2022-08-08",
+    "tireRollRadius": null,
+    "trlrHgt": 0,
+    "trlrLgth": 0,
+    "trlrType": null,
+    "unitTypeCd": "2",
+    "wheelbase": 5994.4,
+    "Options": [
+        {
+            "status": "Ok",
+            "text": "9510833"
+        },
+        {
+            "status": "Ok",
+            "text": "0000380"
+        },
+        {
+            "status": "Ok",
+            "text": "0070086"
+        },
+        {
+            "status": "Ok",
+            "text": "0080075"
+        },
+        {
+            "status": "Ok",
+            "text": "0090143"
+        },
+        {
+            "status": "Ok",
+            "text": "0098401"
+        },
+        {
+            "status": "Ok",
+            "text": "0130103"
+        },
+        {
+            "status": "Ok",
+            "text": "1000046"
+        },
+        {
+            "status": "Ok",
+            "text": "1000151"
+        },
+        {
+            "status": "Ok",
+            "text": "1000242"
+        },
+        {
+            "status": "Ok",
+            "text": "1000254"
+        },
+        {
+            "status": "Ok",
+            "text": "1000684"
+        },
+        {
+            "status": "Ok",
+            "text": "1000858"
+        },
+        {
+            "status": "Ok",
+            "text": "1000859"
+        },
+        {
+            "status": "Ok",
+            "text": "1000891"
+        },
+        {
+            "status": "Ok",
+            "text": "1002060"
+        },
+        {
+            "status": "Ok",
+            "text": "1041399"
+        },
+        {
+            "status": "Ok",
+            "text": "1105261"
+        },
+        {
+            "status": "Ok",
+            "text": "1121232"
+        },
+        {
+            "status": "Ok",
+            "text": "1160205"
+        },
+        {
+            "status": "Ok",
+            "text": "1247234"
+        },
+        {
+            "status": "Ok",
+            "text": "1290124"
+        },
+        {
+            "status": "Ok",
+            "text": "1321102"
+        },
+        {
+            "status": "Ok",
+            "text": "1321200"
+        },
+        {
+            "status": "Ok",
+            "text": "1321300"
+        },
+        {
+            "status": "Ok",
+            "text": "1816160"
+        },
+        {
+            "status": "Ok",
+            "text": "1821271"
+        },
+        {
+            "status": "Ok",
+            "text": "1836107"
+        },
+        {
+            "status": "Ok",
+            "text": "1901019"
+        },
+        {
+            "status": "Ok",
+            "text": "2010860"
+        },
+        {
+            "status": "Ok",
+            "text": "2406811"
+        },
+        {
+            "status": "Ok",
+            "text": "2410018"
+        },
+        {
+            "status": "Ok",
+            "text": "2410204"
+        },
+        {
+            "status": "Ok",
+            "text": "2410405"
+        },
+        {
+            "status": "Ok",
+            "text": "2429087"
+        },
+        {
+            "status": "Ok",
+            "text": "2512044"
+        },
+        {
+            "status": "Ok",
+            "text": "2621310"
+        },
+        {
+            "status": "Ok",
+            "text": "2690002"
+        },
+        {
+            "status": "Ok",
+            "text": "2701300"
+        },
+        {
+            "status": "Ok",
+            "text": "2741970"
+        },
+        {
+            "status": "Ok",
+            "text": "2750001"
+        },
+        {
+            "status": "Ok",
+            "text": "2765001"
+        },
+        {
+            "status": "Ok",
+            "text": "2864070"
+        },
+        {
+            "status": "Ok",
+            "text": "2895223"
+        },
+        {
+            "status": "Ok",
+            "text": "2900055"
+        },
+        {
+            "status": "Ok",
+            "text": "3031094"
+        },
+        {
+            "status": "Ok",
+            "text": "3200557"
+        },
+        {
+            "status": "Ok",
+            "text": "3330004"
+        },
+        {
+            "status": "Ok",
+            "text": "3392007"
+        },
+        {
+            "status": "Ok",
+            "text": "3403220"
+        },
+        {
+            "status": "Ok",
+            "text": "3441971"
+        },
+        {
+            "status": "Ok",
+            "text": "3465001"
+        },
+        {
+            "status": "Ok",
+            "text": "3485007"
+        },
+        {
+            "status": "Ok",
+            "text": "3495226"
+        },
+        {
+            "status": "Ok",
+            "text": "3636421"
+        },
+        {
+            "status": "Ok",
+            "text": "4079059"
+        },
+        {
+            "status": "Ok",
+            "text": "4277444"
+        },
+        {
+            "status": "Ok",
+            "text": "4900004"
+        },
+        {
+            "status": "Ok",
+            "text": "5042289"
+        },
+        {
+            "status": "Ok",
+            "text": "5242389"
+        },
+        {
+            "status": "Ok",
+            "text": "5853906"
+        },
+        {
+            "status": "Ok",
+            "text": "5900004"
+        },
+        {
+            "status": "Ok",
+            "text": "6054410"
+        },
+        {
+            "status": "Ok",
+            "text": "6308710"
+        },
+        {
+            "status": "Ok",
+            "text": "6319040"
+        },
+        {
+            "status": "Ok",
+            "text": "6321010"
+        },
+        {
+            "status": "Ok",
+            "text": "6405000"
+        },
+        {
+            "status": "Ok",
+            "text": "6409906"
+        },
+        {
+            "status": "Ok",
+            "text": "6451127"
+        },
+        {
+            "status": "Ok",
+            "text": "6490138"
+        },
+        {
+            "status": "Ok",
+            "text": "6490434"
+        },
+        {
+            "status": "Ok",
+            "text": "6679915"
+        },
+        {
+            "status": "Ok",
+            "text": "6721102"
+        },
+        {
+            "status": "Ok",
+            "text": "6722000"
+        },
+        {
+            "status": "Ok",
+            "text": "6742009"
+        },
+        {
+            "status": "Ok",
+            "text": "7140050"
+        },
+        {
+            "status": "Ok",
+            "text": "7722170"
+        },
+        {
+            "status": "Ok",
+            "text": "7839006"
+        },
+        {
+            "status": "Ok",
+            "text": "7889203"
+        },
+        {
+            "status": "Ok",
+            "text": "7889606"
+        },
+        {
+            "status": "Ok",
+            "text": "7920050"
+        },
+        {
+            "status": "Ok",
+            "text": "8024311"
+        },
+        {
+            "status": "Ok",
+            "text": "8090154"
+        },
+        {
+            "status": "Ok",
+            "text": "8108002"
+        },
+        {
+            "status": "Ok",
+            "text": "8108011"
+        },
+        {
+            "status": "Ok",
+            "text": "8201047"
+        },
+        {
+            "status": "Ok",
+            "text": "8201200"
+        },
+        {
+            "status": "Ok",
+            "text": "8205177"
+        },
+        {
+            "status": "Ok",
+            "text": "8208495"
+        },
+        {
+            "status": "Ok",
+            "text": "8222405"
+        },
+        {
+            "status": "Ok",
+            "text": "8222409"
+        },
+        {
+            "status": "Ok",
+            "text": "8222418"
+        },
+        {
+            "status": "Ok",
+            "text": "8222419"
+        },
+        {
+            "status": "Ok",
+            "text": "8282024"
+        },
+        {
+            "status": "Ok",
+            "text": "8282108"
+        },
+        {
+            "status": "Ok",
+            "text": "8330591"
+        },
+        {
+            "status": "Ok",
+            "text": "8410126"
+        },
+        {
+            "status": "Ok",
+            "text": "8450126"
+        },
+        {
+            "status": "Ok",
+            "text": "8601432"
+        },
+        {
+            "status": "Ok",
+            "text": "8698965"
+        },
+        {
+            "status": "Ok",
+            "text": "8700154"
+        },
+        {
+            "status": "Ok",
+            "text": "8700283"
+        },
+        {
+            "status": "Ok",
+            "text": "8700501"
+        },
+        {
+            "status": "Ok",
+            "text": "8800260"
+        },
+        {
+            "status": "Ok",
+            "text": "8800402"
+        },
+        {
+            "status": "Ok",
+            "text": "8832113"
+        },
+        {
+            "status": "Ok",
+            "text": "8850139"
+        },
+        {
+            "status": "Ok",
+            "text": "8850842"
+        },
+        {
+            "status": "Ok",
+            "text": "8860852"
+        },
+        {
+            "status": "Ok",
+            "text": "8871446"
+        },
+        {
+            "status": "Ok",
+            "text": "8890101"
+        },
+        {
+            "status": "Ok",
+            "text": "8890874"
+        },
+        {
+            "status": "Ok",
+            "text": "8891011"
+        },
+        {
+            "status": "Ok",
+            "text": "9010803"
+        },
+        {
+            "status": "Ok",
+            "text": "9022137"
+        },
+        {
+            "status": "Ok",
+            "text": "9070138"
+        },
+        {
+            "status": "Ok",
+            "text": "9090027"
+        },
+        {
+            "status": "Ok",
+            "text": "9090115"
+        },
+        {
+            "status": "Ok",
+            "text": "9090312"
+        },
+        {
+            "status": "Ok",
+            "text": "9090849"
+        },
+        {
+            "status": "Ok",
+            "text": "9101218"
+        },
+        {
+            "status": "Ok",
+            "text": "9108001"
+        },
+        {
+            "status": "Ok",
+            "text": "9140020"
+        },
+        {
+            "status": "Ok",
+            "text": "9200007"
+        },
+        {
+            "status": "Ok",
+            "text": "9200022"
+        },
+        {
+            "status": "Ok",
+            "text": "9210362"
+        },
+        {
+            "status": "Ok",
+            "text": "9220001"
+        },
+        {
+            "status": "Ok",
+            "text": "9400060"
+        },
+        {
+            "status": "Ok",
+            "text": "9409852"
+        },
+        {
+            "status": "Ok",
+            "text": "9490003"
+        },
+        {
+            "status": "Ok",
+            "text": "9490206"
+        },
+        {
+            "status": "Ok",
+            "text": "9490404"
+        },
+        {
+            "status": "Ok",
+            "text": "9491659"
+        },
+        {
+            "status": "Ok",
+            "text": "9700000"
+        },
+        {
+            "status": "Ok",
+            "text": "9800001"
+        },
+        {
+            "status": "Ok",
+            "text": "9943001"
+        },
+        {
+            "status": "Ok",
+            "text": "9943050"
+        },
+        {
+            "status": "Ok",
+            "text": "9944820"
+        },
+        {
+            "status": "Ok",
+            "text": "9960006"
+        },
+        {
+            "status": "Ok",
+            "text": "9965510"
+        },
+        {
+            "status": "Ok",
+            "text": "9999995"
+        },
+        {
+            "status": "Ok",
+            "text": "0091040"
+        },
+        {
+            "status": "Ok",
+            "text": "0093005"
+        },
+        {
+            "status": "Ok",
+            "text": "0095145"
+        },
+        {
+            "status": "Ok",
+            "text": "0098025"
+        }
+    ],
+    "Narratives": [
+        {
+            "approvalCd": "A",
+            "cd": "9997",
+            "text": "DEALER CONTACT"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9998",
+            "text": "NAME: MICHAEL KING      PH:251-957-4000"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9996",
+            "text": "SALESPERSON ID: MICHAEL KING"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9995",
+            "text": "CELL PHONE: 251-422-7357"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9994",
+            "text": "EMAIL: MICHAELK@TRUCKWORX.COM"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9720",
+            "text": "FRAME       N0001EA         BLACK"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9702",
+            "text": "A -         L0225EY         WHITE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0920",
+            "text": "C399 120...STANDARD MAXIMUM SPEED LIMIT"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0978",
+            "text": "C190 80....HIGH AMBIENT TEMPERATURE THR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0976",
+            "text": "C189 60....INTERMEDIATE AMBIENT TEMPERA"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9600",
+            "text": "10/29/2021 CHNG#,002"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9100",
+            "text": "9999995 220280, 220294, 220295, 220296"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0922",
+            "text": "C402 0.....EXPIRATION DISTANCE (N207)"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0950",
+            "text": "C239 NO....CRUISE CONTROL AUTO RESUME"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0926",
+            "text": "C121 75....MAX VEHICLE SPEED IN TOP GEA"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0930",
+            "text": "C128 75....MAX CRUISE CONTROL SPEED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0948",
+            "text": "C132 1400..MAX PTO SPEED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0960",
+            "text": "C396 YES...ENABLE IMPENDING SHUTDOWN WA"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0944",
+            "text": "C234 YES...ENGINE PROTECTION SHTDWN"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0964",
+            "text": "C206 35....ENGINE LOAD THRESHOLD"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0946",
+            "text": "C231 NO....GEAR DOWN PROTECTION"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0956",
+            "text": "C225 YES...ENABLE IDLE SHUTDOWN PARK BR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0954",
+            "text": "C395 0.....EXPIRATION DISTANCE (N209)"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0958",
+            "text": "C133 5.....IDLE SHTDWN TIME"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0952",
+            "text": "C238 NO....AUTO ENGINE BRAKE IN CRUISE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0962",
+            "text": "C397 60....TIMER FOR IMPENDING SHUTDOWN"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0942",
+            "text": "C333 0.....RESERVE SPEED LIMIT OFFSET ("
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0940",
+            "text": "C401 10....MAXIMUM ACTIVE DISTANCE (N20"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0974",
+            "text": "C188 40....LOW AMBIENT TEMPERATURE THRE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0968",
+            "text": "C233 NO....IDLE SHTDWN OVERRIDE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0972",
+            "text": "C382 YES...ENABLE HOT AMBIENT AUTOMATIC"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0936",
+            "text": "C400 252...RESERVE SPEED FUNCTION RESET"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0938",
+            "text": "C334 0.....MAXIMUM CYCLE DISTANCE (N202"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9801",
+            "text": "1900082 MULTI-FUNCTION ENGINE CONNECTOR FOR B"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9802",
+            "text": "2410405 ALLISON GEN 5 RDS PKG 354"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9770",
+            "text": "BUMPER      L0225EY         WHITE"
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+name: 'checkmarx-scan'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  checkmarx:
+    runs-on:
+      group: checkmarx-runners-demo
+      labels: checkmarx
+    permissions:
+     contents: 'read'
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copy cli into path
+        shell: bash
+        run: |
+          cp /home/azureuser/actions-runner/_work/cxcli.zip .
+      - name: Checkmarx CxFlow Action
+        uses: checkmarx-ts/checkmarx-github-action@v1.0.6
+        with:
+          cxProject: NAMS-OTC-OPS
+          cxTeam: \CxServer\SP\ITD\SAP
+          cxServer: ${{ secrets.CHECKMARX_URL }}
+          cxUsername: ${{ secrets.CHECKMARX_USERNAME }}
+          cxPassword: ${{ secrets.CHECKMARX_PASSWORD }}
+          cxTrustedCertificates: false

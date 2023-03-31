@@ -1,0 +1,2676 @@
+{
+  "namespace": "bapi",
+  "definitions": {
+    "chassis.msg.Chassis": {
+      "kind": "entity",
+      "@cds.persistence.journal": true,
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 36,
+          "@cds.persistence.name": "ID"
+        },
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "CREATEDAT"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "CREATEDBY"
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "MODIFIEDAT"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "MODIFIEDBY"
+        },
+        "action": {
+          "type": "cds.String",
+          "length": 6,
+          "@cds.persistence.name": "ACTION"
+        },
+        "divisionCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "DIVISIONCD"
+        },
+        "chassisNo": {
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "CHASSISNO"
+        },
+        "orderType": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "ORDERTYPE"
+        },
+        "plantCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "PLANTCD"
+        },
+        "startingChassis": {
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "STARTINGCHASSIS"
+        },
+        "endingChassis": {
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "ENDINGCHASSIS"
+        },
+        "fleetQty": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "FLEETQTY"
+        },
+        "statusCode": {
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "STATUSCODE"
+        },
+        "DTPOControlNumber": {
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "DTPOCONTROLNUMBER"
+        },
+        "chassisAddDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "CHASSISADDDT"
+        },
+        "changeOrderNo": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "CHANGEORDERNO"
+        },
+        "engineSerialNo": {
+          "type": "cds.String",
+          "length": 9,
+          "@cds.persistence.name": "ENGINESERIALNO"
+        },
+        "vehicleActualWeight": {
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "VEHICLEACTUALWEIGHT"
+        },
+        "createTimestamp": {
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "CREATETIMESTAMP"
+        },
+        "invoiceQueueDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "INVOICEQUEUEDT"
+        },
+        "orderSaved": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "ORDERSAVED"
+        },
+        "timesProcessed": {
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "TIMESPROCESSED"
+        },
+        "returns": {
+          "type": "cds.LargeString",
+          "@cds.persistence.name": "RETURNS"
+        },
+        "to_Order": {
+          "type": "cds.Association",
+          "target": "chassis.msg.Order",
+          "on": [
+            {
+              "ref": [
+                "to_Order",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "TO_ORDER"
+        }
+      },
+      "@cds.persistence.name": "CHASSIS_MSG_CHASSIS"
+    },
+    "chassis.Files": {
+      "kind": "entity",
+      "@cds.persistence.journal": true,
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 36,
+          "@cds.persistence.name": "ID"
+        },
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "CREATEDAT"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "CREATEDBY"
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "MODIFIEDAT"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "MODIFIEDBY"
+        },
+        "materialSaved": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "MATERIALSAVED"
+        },
+        "timesProcessed": {
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "TIMESPROCESSED"
+        },
+        "divisionCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "DIVISIONCD"
+        },
+        "chassisNo": {
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "CHASSISNO"
+        },
+        "vinMfgCd": {
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "VINMFGCD"
+        },
+        "vinModelCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINMODELCD"
+        },
+        "vinAxleCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINAXLECD"
+        },
+        "vinEngineCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINENGINECD"
+        },
+        "vinGVWRCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINGVWRCD"
+        },
+        "vinUnuseCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINUNUSECD"
+        },
+        "vinCheckDigitCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINCHECKDIGITCD"
+        },
+        "vinYrCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINYRCD"
+        },
+        "pltCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "PLTCD"
+        },
+        "engineSerNo": {
+          "type": "cds.String",
+          "length": 9,
+          "@cds.persistence.name": "ENGINESERNO"
+        },
+        "vehActlWgt": {
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "VEHACTLWGT"
+        },
+        "DTPONumber": {
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "DTPONUMBER"
+        },
+        "orderAddDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ORDERADDDT"
+        },
+        "tentSchedDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "TENTSCHEDDT"
+        },
+        "firmSchedDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "FIRMSCHEDDT"
+        },
+        "frameSchedDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "FRAMESCHEDDT"
+        },
+        "cabSchedDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "CABSCHEDDT"
+        },
+        "actlDlvryDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ACTLDLVRYDT"
+        },
+        "reqDelDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "REQDELDT"
+        },
+        "frameLnSeqNo": {
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "FRAMELNSEQNO"
+        },
+        "cabLnSeqNo": {
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "CABLNSEQNO"
+        },
+        "opsStatus": {
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "OPSSTATUS"
+        },
+        "chsStatus": {
+          "type": "cds.String",
+          "length": 2,
+          "@cds.persistence.name": "CHSSTATUS"
+        },
+        "destBusName": {
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "DESTBUSNAME"
+        },
+        "destCntctName": {
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "DESTCNTCTNAME"
+        },
+        "destAddrLn1": {
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "DESTADDRLN1"
+        },
+        "destAddrLn2": {
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "DESTADDRLN2"
+        },
+        "destCity": {
+          "type": "cds.String",
+          "length": 20,
+          "@cds.persistence.name": "DESTCITY"
+        },
+        "destSt": {
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "DESTST"
+        },
+        "destZipCd": {
+          "type": "cds.String",
+          "length": 10,
+          "@cds.persistence.name": "DESTZIPCD"
+        },
+        "destCntctPhoneNo": {
+          "type": "cds.String",
+          "length": 21,
+          "@cds.persistence.name": "DESTCNTCTPHONENO"
+        },
+        "destCntry": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "DESTCNTRY"
+        },
+        "preBillDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "PREBILLDT"
+        },
+        "streamNo": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "STREAMNO"
+        },
+        "lineNo": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "LINENO"
+        },
+        "salesOrderSaved": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "SALESORDERSAVED"
+        },
+        "archiveVersion": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "ARCHIVEVERSION"
+        },
+        "isDelta": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": true
+          },
+          "@cds.persistence.name": "ISDELTA"
+        },
+        "businessError": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "BUSINESSERROR"
+        },
+        "materialReturn_TYPE": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "MATERIALRETURN_TYPE"
+        },
+        "materialReturn_ID": {
+          "type": "cds.String",
+          "length": 20,
+          "@cds.persistence.name": "MATERIALRETURN_ID"
+        },
+        "materialReturn_NUMBER": {
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "MATERIALRETURN_NUMBER"
+        },
+        "materialReturn_MESSAGE": {
+          "type": "cds.String",
+          "length": 220,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE"
+        },
+        "materialReturn_LOG_NO": {
+          "type": "cds.String",
+          "length": 20,
+          "@cds.persistence.name": "MATERIALRETURN_LOG_NO"
+        },
+        "materialReturn_LOG_MSG_NO": {
+          "type": "cds.String",
+          "length": 6,
+          "@cds.persistence.name": "MATERIALRETURN_LOG_MSG_NO"
+        },
+        "materialReturn_MESSAGE_V1": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE_V1"
+        },
+        "materialReturn_MESSAGE_V2": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE_V2"
+        },
+        "materialReturn_MESSAGE_V3": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE_V3"
+        },
+        "materialReturn_MESSAGE_V4": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE_V4"
+        },
+        "materialReturn_PARAMETER": {
+          "type": "cds.String",
+          "length": 32,
+          "@cds.persistence.name": "MATERIALRETURN_PARAMETER"
+        },
+        "materialReturn_ROW": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "MATERIALRETURN_ROW"
+        },
+        "materialReturn_FIELD": {
+          "type": "cds.String",
+          "length": 30,
+          "@cds.persistence.name": "MATERIALRETURN_FIELD"
+        },
+        "materialReturn_SYSTEM": {
+          "type": "cds.String",
+          "length": 10,
+          "@cds.persistence.name": "MATERIALRETURN_SYSTEM"
+        },
+        "salesOrderReturns": {
+          "type": "cds.LargeString",
+          "@cds.persistence.name": "SALESORDERRETURNS"
+        },
+        "Division": {
+          "type": "cds.Association",
+          "target": "map.Divisions",
+          "on": [
+            {
+              "ref": [
+                "Division",
+                "divisionCd"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "divisionCd"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "DIVISION"
+        },
+        "Order": {
+          "type": "cds.Association",
+          "target": "chassis.Orders",
+          "on": [
+            {
+              "ref": [
+                "Order",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "ORDER"
+        }
+      },
+      "@cds.persistence.name": "CHASSIS_FILES"
+    },
+    "chassis.FilesArchive": {
+      "kind": "entity",
+      "@cds.persistence.journal": true,
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 36,
+          "@cds.persistence.name": "ID"
+        },
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "CREATEDAT"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "CREATEDBY"
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "MODIFIEDAT"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "MODIFIEDBY"
+        },
+        "materialSaved": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "MATERIALSAVED"
+        },
+        "timesProcessed": {
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "TIMESPROCESSED"
+        },
+        "divisionCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "DIVISIONCD"
+        },
+        "chassisNo": {
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "CHASSISNO"
+        },
+        "vinMfgCd": {
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "VINMFGCD"
+        },
+        "vinModelCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINMODELCD"
+        },
+        "vinAxleCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINAXLECD"
+        },
+        "vinEngineCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINENGINECD"
+        },
+        "vinGVWRCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINGVWRCD"
+        },
+        "vinUnuseCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINUNUSECD"
+        },
+        "vinCheckDigitCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINCHECKDIGITCD"
+        },
+        "vinYrCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "VINYRCD"
+        },
+        "pltCd": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "PLTCD"
+        },
+        "engineSerNo": {
+          "type": "cds.String",
+          "length": 9,
+          "@cds.persistence.name": "ENGINESERNO"
+        },
+        "vehActlWgt": {
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "VEHACTLWGT"
+        },
+        "DTPONumber": {
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "DTPONUMBER"
+        },
+        "orderAddDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ORDERADDDT"
+        },
+        "tentSchedDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "TENTSCHEDDT"
+        },
+        "firmSchedDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "FIRMSCHEDDT"
+        },
+        "frameSchedDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "FRAMESCHEDDT"
+        },
+        "cabSchedDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "CABSCHEDDT"
+        },
+        "actlDlvryDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ACTLDLVRYDT"
+        },
+        "reqDelDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "REQDELDT"
+        },
+        "frameLnSeqNo": {
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "FRAMELNSEQNO"
+        },
+        "cabLnSeqNo": {
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "CABLNSEQNO"
+        },
+        "opsStatus": {
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "OPSSTATUS"
+        },
+        "chsStatus": {
+          "type": "cds.String",
+          "length": 2,
+          "@cds.persistence.name": "CHSSTATUS"
+        },
+        "destBusName": {
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "DESTBUSNAME"
+        },
+        "destCntctName": {
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "DESTCNTCTNAME"
+        },
+        "destAddrLn1": {
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "DESTADDRLN1"
+        },
+        "destAddrLn2": {
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "DESTADDRLN2"
+        },
+        "destCity": {
+          "type": "cds.String",
+          "length": 20,
+          "@cds.persistence.name": "DESTCITY"
+        },
+        "destSt": {
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "DESTST"
+        },
+        "destZipCd": {
+          "type": "cds.String",
+          "length": 10,
+          "@cds.persistence.name": "DESTZIPCD"
+        },
+        "destCntctPhoneNo": {
+          "type": "cds.String",
+          "length": 21,
+          "@cds.persistence.name": "DESTCNTCTPHONENO"
+        },
+        "destCntry": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "DESTCNTRY"
+        },
+        "preBillDt": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "PREBILLDT"
+        },
+        "streamNo": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "STREAMNO"
+        },
+        "lineNo": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "LINENO"
+        },
+        "salesOrderSaved": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "SALESORDERSAVED"
+        },
+        "archiveVersion": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "ARCHIVEVERSION"
+        },
+        "isDelta": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": true
+          },
+          "@cds.persistence.name": "ISDELTA"
+        },
+        "businessError": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "BUSINESSERROR"
+        },
+        "materialReturn_TYPE": {
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "MATERIALRETURN_TYPE"
+        },
+        "materialReturn_ID": {
+          "type": "cds.String",
+          "length": 20,
+          "@cds.persistence.name": "MATERIALRETURN_ID"
+        },
+        "materialReturn_NUMBER": {
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "MATERIALRETURN_NUMBER"
+        },
+        "materialReturn_MESSAGE": {
+          "type": "cds.String",
+          "length": 220,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE"
+        },
+        "materialReturn_LOG_NO": {
+          "type": "cds.String",
+          "length": 20,
+          "@cds.persistence.name": "MATERIALRETURN_LOG_NO"
+        },
+        "materialReturn_LOG_MSG_NO": {
+          "type": "cds.String",
+          "length": 6,
+          "@cds.persistence.name": "MATERIALRETURN_LOG_MSG_NO"
+        },
+        "materialReturn_MESSAGE_V1": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE_V1"
+        },
+        "materialReturn_MESSAGE_V2": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE_V2"
+        },
+        "materialReturn_MESSAGE_V3": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE_V3"
+        },
+        "materialReturn_MESSAGE_V4": {
+          "type": "cds.String",
+          "length": 50,
+          "@cds.persistence.name": "MATERIALRETURN_MESSAGE_V4"
+        },
+        "materialReturn_PARAMETER": {
+          "type": "cds.String",
+          "length": 32,
+          "@cds.persistence.name": "MATERIALRETURN_PARAMETER"
+        },
+        "materialReturn_ROW": {
+          "type": "cds.Integer",
+          "@cds.persistence.name": "MATERIALRETURN_ROW"
+        },
+        "materialReturn_FIELD": {
+          "type": "cds.String",
+          "length": 30,
+          "@cds.persistence.name": "MATERIALRETURN_FIELD"
+        },
+        "materialReturn_SYSTEM": {
+          "type": "cds.String",
+          "length": 10,
+          "@cds.persistence.name": "MATERIALRETURN_SYSTEM"
+        },
+        "salesOrderReturns": {
+          "type": "cds.LargeString",
+          "@cds.persistence.name": "SALESORDERRETURNS"
+        },
+        "Division": {
+          "type": "cds.Association",
+          "target": "map.Divisions",
+          "on": [
+            {
+              "ref": [
+                "Division",
+                "divisionCd"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "divisionCd"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "DIVISION"
+        },
+        "Order": {
+          "type": "cds.Association",
+          "target": "chassis.Orders",
+          "on": [
+            {
+              "ref": [
+                "Order",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "ORDER"
+        }
+      },
+      "@cds.persistence.name": "CHASSIS_FILESARCHIVE"
+    },
+    "order.msg.Orders": {
+      "kind": "entity",
+      "@cds.persistence.journal": true,
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 36,
+          "@cds.persistence.name": "ID"
+        },
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "CREATEDAT"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "CREATEDBY"
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "MODIFIEDAT"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "MODIFIEDBY"
+        },
+        "action": {
+          "@title": "{i18n>action}",
+          "type": "cds.String",
+          "length": 6,
+          "@cds.persistence.name": "ACTION"
+        },
+        "actualDeliveryDt": {
+          "@title": "{i18n>actualDeliveryDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ACTUALDELIVERYDT"
+        },
+        "allocationDt": {
+          "@title": "{i18n>allocationDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ALLOCATIONDT"
+        },
+        "auxTransCd": {
+          "@title": "{i18n>auxTransCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "AUXTRANSCD"
+        },
+        "billingBlockCd": {
+          "@title": "{i18n>billingBlockCd}",
+          "type": "cds.String",
+          "length": 2,
+          "@cds.persistence.name": "BILLINGBLOCKCD"
+        },
+        "bodyHgt": {
+          "@title": "{i18n>bodyHgt}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "BODYHGT"
+        },
+        "bodyLadenCpcty": {
+          "@title": "{i18n>bodyLadenCpcty}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "BODYLADENCPCTY"
+        },
+        "bodyLgth": {
+          "@title": "{i18n>bodyLgth}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "BODYLGTH"
+        },
+        "bodyType": {
+          "@title": "{i18n>bodyType}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "BODYTYPE"
+        },
+        "bumperLength": {
+          "@title": "{i18n>bumperLength}",
+          "type": "cds.Decimal",
+          "precision": 4,
+          "scale": 1,
+          "@cds.persistence.name": "BUMPERLENGTH"
+        },
+        "cabAxleDimeension": {
+          "@title": "{i18n>cabAxleDimeension}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "CABAXLEDIMEENSION"
+        },
+        "cabEOFDimeension": {
+          "@title": "{i18n>cabEOFDimeension}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "CABEOFDIMEENSION"
+        },
+        "cabLineSequenceNo": {
+          "@title": "{i18n>cabLineSequenceNo}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "CABLINESEQUENCENO"
+        },
+        "cabScheduleDt": {
+          "@title": "{i18n>cabScheduleDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "CABSCHEDULEDT"
+        },
+        "cabType": {
+          "@title": "{i18n>cabType}",
+          "type": "cds.String",
+          "length": 70,
+          "@cds.persistence.name": "CABTYPE"
+        },
+        "cabWidth": {
+          "@title": "{i18n>cabWidth}",
+          "type": "cds.String",
+          "length": 70,
+          "@cds.persistence.name": "CABWIDTH"
+        },
+        "cancellationReplacement": {
+          "@title": "{i18n>cancellationReplacement}",
+          "type": "cds.String",
+          "length": 20,
+          "@cds.persistence.name": "CANCELLATIONREPLACEMENT"
+        },
+        "CARAmt": {
+          "@title": "{i18n>CARAmt}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "CARAMT"
+        },
+        "CARNumber": {
+          "@title": "{i18n>CARNumber}",
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "CARNUMBER"
+        },
+        "CARPct": {
+          "@title": "{i18n>CARPct}",
+          "@Measures.Unit": "%",
+          "type": "cds.Decimal",
+          "precision": 4,
+          "scale": 2,
+          "@cds.persistence.name": "CARPCT"
+        },
+        "changeOrderDtTm": {
+          "@title": "{i18n>changeOrderDtTm}",
+          "type": "cds.UTCDateTime",
+          "@cds.persistence.name": "CHANGEORDERDTTM"
+        },
+        "changeOrderNo": {
+          "@title": "{i18n>changeOrderNo}",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "CHANGEORDERNO"
+        },
+        "chasHwyPct": {
+          "@title": "{i18n>chasHwyPct}",
+          "@Measures.Unit": "%",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "CHASHWYPCT"
+        },
+        "chassisNo": {
+          "@title": "{i18n>chassisNo}",
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "CHASSISNO"
+        },
+        "chassisPrevNo": {
+          "@title": "{i18n>chassisPrevNo}",
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "CHASSISPREVNO"
+        },
+        "chassisStatusComment": {
+          "@title": "{i18n>chassisStatusComment}",
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "CHASSISSTATUSCOMMENT"
+        },
+        "chassisSystemStatus": {
+          "@title": "{i18n>chassisSystemStatus}",
+          "type": "cds.String",
+          "length": 2,
+          "@cds.persistence.name": "CHASSISSYSTEMSTATUS"
+        },
+        "chasMetricCustmryInd": {
+          "@title": "{i18n>chasMetricCustmryInd}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "CHASMETRICCUSTMRYIND"
+        },
+        "chasOpsClassBPct": {
+          "@title": "{i18n>chasOpsClassBPct}",
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "CHASOPSCLASSBPCT"
+        },
+        "chasOpsClassCPct": {
+          "@title": "{i18n>chasOpsClassCPct}",
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "CHASOPSCLASSCPCT"
+        },
+        "chasOpsClassDPct": {
+          "@title": "{i18n>chasOpsClassDPct}",
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "CHASOPSCLASSDPCT"
+        },
+        "chngOrdChrg": {
+          "@title": "{i18n>chngOrdChrg}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "CHNGORDCHRG"
+        },
+        "class": {
+          "@title": "{i18n>class}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "CLASS"
+        },
+        "comdtyHaulID": {
+          "@title": "{i18n>comdtyHaulID}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "COMDTYHAULID"
+        },
+        "cornerRadius": {
+          "@title": "{i18n>cornerRadius}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "CORNERRADIUS"
+        },
+        "costModelCd": {
+          "@title": "{i18n>costModelCd}",
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "COSTMODELCD"
+        },
+        "createTimestamp": {
+          "@title": "{i18n>createTimestamp}",
+          "type": "cds.UTCTimestamp",
+          "@cds.persistence.name": "CREATETIMESTAMP"
+        },
+        "credInDtTm": {
+          "@title": "{i18n>credInDtTm}",
+          "type": "cds.UTCDateTime",
+          "@cds.persistence.name": "CREDINDTTM"
+        },
+        "credOutDtTm": {
+          "@title": "{i18n>credOutDtTm}",
+          "type": "cds.UTCDateTime",
+          "@cds.persistence.name": "CREDOUTDTTM"
+        },
+        "ctrlnAxle": {
+          "@title": "{i18n>ctrlnAxle}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "CTRLNAXLE"
+        },
+        "cuPoNo": {
+          "@title": "{i18n>cuPoNo}",
+          "type": "cds.String",
+          "length": 22,
+          "@cds.persistence.name": "CUPONO"
+        },
+        "currency": {
+          "@title": "{i18n>currency}",
+          "@Common.IsCurrency": true,
+          "type": "cds.String",
+          "length": 5,
+          "@cds.persistence.name": "CURRENCY"
+        },
+        "current": {
+          "@title": "{i18n>current}",
+          "type": "cds.Boolean",
+          "@cds.persistence.name": "CURRENT"
+        },
+        "custNo": {
+          "@title": "{i18n>custNo}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "CUSTNO"
+        },
+        "customerNm": {
+          "@title": "{i18n>customerNm}",
+          "type": "cds.String",
+          "length": 30,
+          "@cds.persistence.name": "CUSTOMERNM"
+        },
+        "customerStockCd": {
+          "@title": "{i18n>customerStockCd}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "CUSTOMERSTOCKCD"
+        },
+        "dealerCd": {
+          "@title": "{i18n>dealerCd}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "DEALERCD"
+        },
+        "dealerOwnerGrp": {
+          "@title": "{i18n>dealerOwnerGrp}",
+          "type": "cds.String",
+          "length": 10,
+          "@cds.persistence.name": "DEALEROWNERGRP"
+        },
+        "defaultClass": {
+          "@title": "{i18n>defaultClass}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "DEFAULTCLASS"
+        },
+        "deleteItems": {
+          "type": "cds.LargeString",
+          "@cds.persistence.name": "DELETEITEMS"
+        },
+        "division": {
+          "@title": "{i18n>division}",
+          "type": "cds.String",
+          "length": 2,
+          "@cds.persistence.name": "DIVISION"
+        },
+        "divisionCd": {
+          "@title": "{i18n>divisionCd}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "DIVISIONCD"
+        },
+        "dlrBasePriceAmt": {
+          "@title": "{i18n>dlrBasePriceAmt}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "DLRBASEPRICEAMT"
+        },
+        "dlrPoPresentId": {
+          "@title": "{i18n>dlrPoPresentId}",
+          "type": "cds.String",
+          "length": 22,
+          "@cds.persistence.name": "DLRPOPRESENTID"
+        },
+        "DTPONumber": {
+          "@title": "{i18n>DTPONumber}",
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "DTPONUMBER"
+        },
+        "endingChassis": {
+          "@title": "{i18n>endingChassis}",
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "ENDINGCHASSIS"
+        },
+        "engineCd": {
+          "@title": "{i18n>engineCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "ENGINECD"
+        },
+        "engineClassCd": {
+          "@title": "{i18n>engineClassCd}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "ENGINECLASSCD"
+        },
+        "engineType": {
+          "@title": "{i18n>engineType}",
+          "type": "cds.String",
+          "length": 40,
+          "@cds.persistence.name": "ENGINETYPE"
+        },
+        "estimatedDeliveryDt": {
+          "@title": "{i18n>estimatedDeliveryDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ESTIMATEDDELIVERYDT"
+        },
+        "exchangeRateAmt": {
+          "@title": "{i18n>exchangeRateAmt}",
+          "type": "cds.Decimal",
+          "precision": 7,
+          "scale": 2,
+          "@cds.persistence.name": "EXCHANGERATEAMT"
+        },
+        "FETInd": {
+          "@title": "{i18n>FETInd}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "FETIND"
+        },
+        "FETIndUnitType": {
+          "@title": "{i18n>FETIndUnitType}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "FETINDUNITTYPE"
+        },
+        "FETGSTCd": {
+          "@title": "{i18n>FETGSTCd}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "FETGSTCD"
+        },
+        "FET": {
+          "@title": "{i18n>FET}",
+          "type": "cds.String",
+          "length": 6,
+          "@cds.persistence.name": "FET"
+        },
+        "FETExemptAmt": {
+          "@title": "{i18n>FETExemptAmt}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "FETEXEMPTAMT"
+        },
+        "fifthWheelCd": {
+          "@title": "{i18n>fifthWheelCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "FIFTHWHEELCD"
+        },
+        "firmScheduleDt": {
+          "@title": "{i18n>firmScheduleDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "FIRMSCHEDULEDT"
+        },
+        "fleetGap": {
+          "type": "cds.Boolean",
+          "@cds.persistence.name": "FLEETGAP"
+        },
+        "fleetOrder": {
+          "@title": "{i18n>fleetOrder}",
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "FLEETORDER"
+        },
+        "fleetQty": {
+          "@title": "{i18n>fleetQty}",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "FLEETQTY"
+        },
+        "frameCd": {
+          "@title": "{i18n>frameCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "FRAMECD"
+        },
+        "frameLineSequenceNo": {
+          "@title": "{i18n>frameLineSequenceNo}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "FRAMELINESEQUENCENO"
+        },
+        "frameScheduleDt": {
+          "@title": "{i18n>frameScheduleDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "FRAMESCHEDULEDT"
+        },
+        "frgtRateAmt": {
+          "@title": "{i18n>frgtRateAmt}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "FRGTRATEAMT"
+        },
+        "frontAxleBOCDimeension": {
+          "@title": "{i18n>frontAxleBOCDimeension}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "FRONTAXLEBOCDIMEENSION"
+        },
+        "frontAxleCd": {
+          "@title": "{i18n>frontAxleCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "FRONTAXLECD"
+        },
+        "frontAxleLoad": {
+          "@title": "{i18n>frontAxleLoad}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "FRONTAXLELOAD"
+        },
+        "gawrFirstRear": {
+          "@title": "{i18n>gawrFirstRear}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "GAWRFIRSTREAR"
+        },
+        "gawrFront": {
+          "@title": "{i18n>gawrFront}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "GAWRFRONT"
+        },
+        "gawrRear": {
+          "@title": "{i18n>gawrRear}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "GAWRREAR"
+        },
+        "gawrSecRear": {
+          "@title": "{i18n>gawrSecRear}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "GAWRSECREAR"
+        },
+        "gcw": {
+          "@title": "{i18n>gcw}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "GCW"
+        },
+        "gvwr": {
+          "@title": "{i18n>gvwr}",
+          "@Measures.Unit": {
+            "=": "weightUnit"
+          },
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "GVWR"
+        },
+        "gvwrLbs": {
+          "@title": "{i18n>gvwrLbs}",
+          "@Measures.Unit": "LB",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "GVWRLBS"
+        },
+        "gvwrTemp": {
+          "@title": "{i18n>gvwrTemp}",
+          "@Measures.Unit": "LB",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "GVWRTEMP"
+        },
+        "hasFifthWheel": {
+          "@title": "{i18n>hasFifthWheel}",
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "HASFIFTHWHEEL"
+        },
+        "hasPusher": {
+          "@title": "{i18n>hasPusher}",
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "HASPUSHER"
+        },
+        "intendSvcClass": {
+          "@title": "{i18n>intendSvcClass}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "INTENDSVCCLASS"
+        },
+        "interCompDisc": {
+          "@title": "{i18n>interCompDisc}",
+          "type": "cds.Decimal",
+          "precision": 3,
+          "scale": 1,
+          "@cds.persistence.name": "INTERCOMPDISC"
+        },
+        "interDivDisc": {
+          "@title": "{i18n>interDivDisc}",
+          "type": "cds.Decimal",
+          "precision": 3,
+          "scale": 1,
+          "@cds.persistence.name": "INTERDIVDISC"
+        },
+        "invcTermDays": {
+          "@title": "{i18n>invcTermDays}",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "INVCTERMDAYS"
+        },
+        "kingPinSet": {
+          "@title": "{i18n>kingPinSet}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "KINGPINSET"
+        },
+        "listPrice": {
+          "@title": "{i18n>listPrice}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "LISTPRICE"
+        },
+        "mainTransCd": {
+          "@title": "{i18n>mainTransCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "MAINTRANSCD"
+        },
+        "marketingClass": {
+          "@title": "{i18n>marketingClass}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "MARKETINGCLASS"
+        },
+        "marketingFee": {
+          "@title": "{i18n>fee}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "MARKETINGFEE"
+        },
+        "material": {
+          "@title": "{i18n>material}",
+          "type": "cds.String",
+          "length": 40,
+          "@cds.persistence.name": "MATERIAL"
+        },
+        "maxGradePct": {
+          "@title": "{i18n>maxGradePct}",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "MAXGRADEPCT"
+        },
+        "messageType": {
+          "@title": "{i18n>messageType}",
+          "type": "cds.String",
+          "length": 15,
+          "@cds.persistence.name": "MESSAGETYPE"
+        },
+        "modelCd": {
+          "@title": "{i18n>modelCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "MODELCD"
+        },
+        "noTrlrAxle": {
+          "@title": "{i18n>noTrlrAxle}",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "NOTRLRAXLE"
+        },
+        "operAreaDesc": {
+          "@title": "{i18n>operAreaDesc}",
+          "type": "cds.String",
+          "length": 20,
+          "@cds.persistence.name": "OPERAREADESC"
+        },
+        "operAreaHgt": {
+          "@title": "{i18n>operAreaHgt}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "OPERAREAHGT"
+        },
+        "operAreaLgth": {
+          "@title": "{i18n>operAreaLgth}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "OPERAREALGTH"
+        },
+        "operAreaWidth": {
+          "@title": "{i18n>operAreaWidth}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "OPERAREAWIDTH"
+        },
+        "orderAddDt": {
+          "@title": "{i18n>orderAddDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ORDERADDDT"
+        },
+        "orderCancelDt": {
+          "@title": "{i18n>orderCancelDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ORDERCANCELDT"
+        },
+        "orderCriticality": {
+          "@title": "{i18n>orderCriticality}",
+          "@Core.Computed": true,
+          "virtual": true,
+          "type": "cds.Integer"
+        },
+        "orderReceivedDt": {
+          "@title": "{i18n>orderReceivedDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "ORDERRECEIVEDDT"
+        },
+        "orderSaved": {
+          "@title": "{i18n>orderSaved}",
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "@cds.persistence.name": "ORDERSAVED"
+        },
+        "orderStatus": {
+          "@title": "{i18n>orderStatus}",
+          "@Core.Computed": true,
+          "virtual": true,
+          "type": "cds.String",
+          "length": 20
+        },
+        "orderType": {
+          "@title": "{i18n>orderType}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "ORDERTYPE"
+        },
+        "plantCd": {
+          "@title": "{i18n>plantCd}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "PLANTCD"
+        },
+        "plant": {
+          "@title": "{i18n>plant}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "PLANT"
+        },
+        "priceEffectiveDt": {
+          "@title": "{i18n>priceEffectiveDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "PRICEEFFECTIVEDT"
+        },
+        "priceProtAmt": {
+          "@title": "{i18n>priceProtAmt}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "PRICEPROTAMT"
+        },
+        "procesingStatusCd": {
+          "@title": "{i18n>procesingStatusCd}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "PROCESINGSTATUSCD"
+        },
+        "prodConvChrg": {
+          "@title": "{i18n>prodConvChrg}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "PRODCONVCHRG"
+        },
+        "productType": {
+          "@title": "{i18n>productType}",
+          "type": "cds.String",
+          "length": 20,
+          "@cds.persistence.name": "PRODUCTTYPE"
+        },
+        "promoAmt": {
+          "@title": "{i18n>promoAmt}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "PROMOAMT"
+        },
+        "promoCodes": {
+          "@title": "{i18n>promoCodes}",
+          "type": "cds.String",
+          "length": 200,
+          "@cds.persistence.name": "PROMOCODES"
+        },
+        "promoProgCd": {
+          "@title": "{i18n>promoProgCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "PROMOPROGCD"
+        },
+        "promoProgDesc": {
+          "@title": "{i18n>promoProgDesc}",
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "PROMOPROGDESC"
+        },
+        "promoProgPct": {
+          "@title": "{i18n>promoProgPct}",
+          "@Measures.Unit": "%",
+          "type": "cds.Decimal",
+          "precision": 6,
+          "scale": 4,
+          "@cds.persistence.name": "PROMOPROGPCT"
+        },
+        "rearAxleCd": {
+          "@title": "{i18n>rearAxleCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "REARAXLECD"
+        },
+        "rearAxleLoad": {
+          "@title": "{i18n>rearAxleLoad}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "REARAXLELOAD"
+        },
+        "rearAxleRatio": {
+          "@title": "{i18n>rearAxleRatio}",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "REARAXLERATIO"
+        },
+        "rearAxleRatioCd": {
+          "@title": "{i18n>rearAxleRatioCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "REARAXLERATIOCD"
+        },
+        "releaseWriter": {
+          "@title": "{i18n>releaseWriter}",
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "RELEASEWRITER"
+        },
+        "requestedDeliveryDt": {
+          "@title": "{i18n>requestedDeliveryDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "REQUESTEDDELIVERYDT"
+        },
+        "salesDocType": {
+          "@title": "{i18n>salesDocType}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "SALESDOCTYPE"
+        },
+        "s4StatusCode": {
+          "@title": "{i18n>s4StatusCode}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "S4STATUSCODE"
+        },
+        "salesOrder": {
+          "@title": "{i18n>salesOrder}",
+          "type": "cds.String",
+          "length": 10,
+          "@cds.persistence.name": "SALESORDER"
+        },
+        "salesOrg": {
+          "@title": "{i18n>salesOrg}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "SALESORG"
+        },
+        "shippingDestination": {
+          "@title": "{i18n>shippingDestination}",
+          "type": "cds.String",
+          "length": 30,
+          "@cds.persistence.name": "SHIPPINGDESTINATION"
+        },
+        "soldToCountry": {
+          "@title": "{i18n>soldToCountry}",
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "SOLDTOCOUNTRY"
+        },
+        "spclRqmntCd1": {
+          "@title": "{i18n>spclRqmntCd1}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "SPCLRQMNTCD1"
+        },
+        "spclRqmntCd2": {
+          "@title": "{i18n>spclRqmntCd2}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "SPCLRQMNTCD2"
+        },
+        "spclRqmntCd3": {
+          "@title": "{i18n>spclRqmntCd3}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "SPCLRQMNTCD3"
+        },
+        "spclRqmntCd4": {
+          "@title": "{i18n>spclRqmntCd4}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "SPCLRQMNTCD4"
+        },
+        "startingChassis": {
+          "@title": "{i18n>startingChassis}",
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "STARTINGCHASSIS"
+        },
+        "stateProvinceCd": {
+          "@title": "{i18n>stateProvinceCd}",
+          "type": "cds.String",
+          "length": 2,
+          "@cds.persistence.name": "STATEPROVINCECD"
+        },
+        "statusCode": {
+          "@title": "{i18n>statusCode}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "STATUSCODE"
+        },
+        "std_des": {
+          "@title": "{i18n>std_des}",
+          "type": "cds.String",
+          "length": 200,
+          "@cds.persistence.name": "STD_DES"
+        },
+        "stdDlrDiscPct": {
+          "@title": "{i18n>stdDlrDiscPct}",
+          "@Measures.Unit": "%",
+          "type": "cds.Decimal",
+          "precision": 3,
+          "scale": 1,
+          "@cds.persistence.name": "STDDLRDISCPCT"
+        },
+        "surchargesNSTD": {
+          "@title": "{i18n>surchargesNSTD}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "SURCHARGESNSTD"
+        },
+        "surchargesZH00": {
+          "@title": "{i18n>surchargesZH00}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "SURCHARGESZH00"
+        },
+        "surchargesZISF": {
+          "@title": "{i18n>surchargesZISF}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "SURCHARGESZISF"
+        },
+        "surchargesZMAD": {
+          "@title": "{i18n>surchargesZMAD}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "SURCHARGESZMAD"
+        },
+        "suspensionCd": {
+          "@title": "{i18n>suspensionCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "SUSPENSIONCD"
+        },
+        "tentativeScheduleDt": {
+          "@title": "{i18n>tentativeScheduleDt}",
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "TENTATIVESCHEDULEDT"
+        },
+        "timesProcessed": {
+          "@title": "{i18n>timesProcessed}",
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "TIMESPROCESSED"
+        },
+        "tireFET": {
+          "@title": "{i18n>tireFET}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 3,
+          "@cds.persistence.name": "TIREFET"
+        },
+        "tireRollRadius": {
+          "@title": "{i18n>tireRollRadius}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "TIREROLLRADIUS"
+        },
+        "trlrHgt": {
+          "@title": "{i18n>trlrHgt}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "TRLRHGT"
+        },
+        "trlrLgth": {
+          "@title": "{i18n>trlrLgth}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "TRLRLGTH"
+        },
+        "trlrType": {
+          "@title": "{i18n>trlrType}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "TRLRTYPE"
+        },
+        "unitTypeCd": {
+          "@title": "{i18n>unitTypeCd}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "UNITTYPECD"
+        },
+        "warrOptAmt": {
+          "@title": "{i18n>warrOptAmt}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "WARROPTAMT"
+        },
+        "warrReplOptCd": {
+          "@title": "{i18n>warrReplOptCd}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "WARRREPLOPTCD"
+        },
+        "warrReplOptDesc": {
+          "@title": "{i18n>warrReplOptDesc}",
+          "type": "cds.String",
+          "length": 91,
+          "@cds.persistence.name": "WARRREPLOPTDESC"
+        },
+        "weight": {
+          "@title": "{i18n>weight}",
+          "@Measures.Unit": {
+            "=": "weightUnit"
+          },
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          },
+          "@cds.persistence.name": "WEIGHT"
+        },
+        "weightUnit": {
+          "@title": "{i18n>weightUnit}",
+          "@Common.IsUnit": true,
+          "type": "cds.String",
+          "length": 3,
+          "@cds.persistence.name": "WEIGHTUNIT"
+        },
+        "wheelbase": {
+          "@title": "{i18n>wheelbase}",
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 3,
+          "@cds.persistence.name": "WHEELBASE"
+        },
+        "Chassis": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "order.msg.Chassis",
+          "on": [
+            {
+              "ref": [
+                "Chassis",
+                "order_ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "CHASSIS"
+        },
+        "Options": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "order.msg.Options",
+          "on": [
+            {
+              "ref": [
+                "Options",
+                "order_ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "OPTIONS"
+        },
+        "Narratives": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "order.msg.Narratives",
+          "on": [
+            {
+              "ref": [
+                "Narratives",
+                "order_ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "NARRATIVES"
+        },
+        "Splits": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "order.msg.Orders",
+          "on": [
+            {
+              "ref": [
+                "Splits",
+                "splitOrder_ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "SPLITS"
+        },
+        "splitOrder": {
+          "@title": "{i18n>splitOrder}",
+          "type": "cds.Association",
+          "target": "order.msg.Orders",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ],
+              "as": "ID",
+              "$generatedFieldName": "splitOrder_ID"
+            }
+          ],
+          "on": [
+            {
+              "ref": [
+                "splitOrder",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "splitOrder_ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "SPLITORDER"
+        },
+        "splitOrder_ID": {
+          "type": "cds.String",
+          "length": 36,
+          "@odata.foreignKey4": "splitOrder",
+          "@cds.persistence.name": "SPLITORDER_ID"
+        },
+        "OlderMessages": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "order.msg.Orders",
+          "on": [
+            {
+              "ref": [
+                "OlderMessages",
+                "newerMessage_ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "OLDERMESSAGES"
+        },
+        "newerMessage": {
+          "@title": "{i18n>newerMessage}",
+          "type": "cds.Association",
+          "target": "order.msg.Orders",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ],
+              "as": "ID",
+              "$generatedFieldName": "newerMessage_ID"
+            }
+          ],
+          "on": [
+            {
+              "ref": [
+                "newerMessage",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "newerMessage_ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "NEWERMESSAGE"
+        },
+        "newerMessage_ID": {
+          "type": "cds.String",
+          "length": 36,
+          "@odata.foreignKey4": "newerMessage",
+          "@cds.persistence.name": "NEWERMESSAGE_ID"
+        }
+      },
+      "@cds.persistence.name": "ORDER_MSG_ORDERS"
+    },
+    "order.msg.Chassis": {
+      "kind": "entity",
+      "@cds.persistence.journal": true,
+      "elements": {
+        "order": {
+          "type": "cds.Association",
+          "target": "order.msg.Orders",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ],
+              "as": "ID",
+              "$generatedFieldName": "order_ID"
+            }
+          ],
+          "on": [
+            {
+              "ref": [
+                "order",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "order_ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "ORDER"
+        },
+        "order_ID": {
+          "type": "cds.String",
+          "length": 36,
+          "@odata.foreignKey4": "order",
+          "key": true,
+          "@cds.persistence.name": "ORDER_ID"
+        },
+        "chassisNo": {
+          "@title": "{i18n>chassisNo}",
+          "key": true,
+          "type": "cds.String",
+          "length": 8,
+          "@cds.persistence.name": "CHASSISNO"
+        },
+        "salesOrder": {
+          "@Core.Computed": true,
+          "virtual": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "salesOrderItem": {
+          "type": "cds.String",
+          "length": 6,
+          "@cds.persistence.name": "SALESORDERITEM"
+        },
+        "material": {
+          "type": "cds.String",
+          "length": 40,
+          "@cds.persistence.name": "MATERIAL"
+        },
+        "current": {
+          "type": "cds.Boolean",
+          "@cds.persistence.name": "CURRENT"
+        },
+        "billingDate": {
+          "type": "cds.LocalDate",
+          "@cds.persistence.name": "BILLINGDATE"
+        },
+        "invoiceBlockStatus": {
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "INVOICEBLOCKSTATUS"
+        },
+        "updateIndicator": {
+          "@Core.Computed": true,
+          "virtual": true,
+          "type": "cds.String",
+          "length": 1
+        },
+        "materialClass": {
+          "@Core.Computed": true,
+          "virtual": true,
+          "type": "cds.LargeString"
+        }
+      },
+      "@cds.persistence.name": "ORDER_MSG_CHASSIS"
+    },
+    "order.msg.Narratives": {
+      "kind": "entity",
+      "@cds.persistence.journal": true,
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 36,
+          "@cds.persistence.name": "ID"
+        },
+        "order": {
+          "type": "cds.Association",
+          "target": "order.msg.Orders",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ],
+              "as": "ID",
+              "$generatedFieldName": "order_ID"
+            }
+          ],
+          "on": [
+            {
+              "ref": [
+                "order",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "order_ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "ORDER"
+        },
+        "order_ID": {
+          "type": "cds.String",
+          "length": 36,
+          "@odata.foreignKey4": "order",
+          "@cds.persistence.name": "ORDER_ID"
+        },
+        "approvalCd": {
+          "@title": "{i18n>approvalCd}",
+          "type": "cds.String",
+          "length": 1,
+          "@cds.persistence.name": "APPROVALCD"
+        },
+        "cd": {
+          "@title": "{i18n>cd}",
+          "type": "cds.String",
+          "length": 4,
+          "@cds.persistence.name": "CD"
+        },
+        "text": {
+          "@title": "{i18n>narrativeText}",
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "TEXT"
+        },
+        "current": {
+          "type": "cds.Boolean",
+          "@cds.persistence.name": "CURRENT"
+        }
+      },
+      "@cds.persistence.name": "ORDER_MSG_NARRATIVES"
+    },
+    "order.msg.Options": {
+      "kind": "entity",
+      "@cds.persistence.journal": true,
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 36,
+          "@cds.persistence.name": "ID"
+        },
+        "order": {
+          "type": "cds.Association",
+          "target": "order.msg.Orders",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ],
+              "as": "ID",
+              "$generatedFieldName": "order_ID"
+            }
+          ],
+          "on": [
+            {
+              "ref": [
+                "order",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "order_ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "ORDER"
+        },
+        "order_ID": {
+          "type": "cds.String",
+          "length": 36,
+          "@odata.foreignKey4": "order",
+          "@cds.persistence.name": "ORDER_ID"
+        },
+        "status": {
+          "@title": "{i18n>status}",
+          "type": "cds.String",
+          "length": 6,
+          "@cds.persistence.name": "STATUS"
+        },
+        "text": {
+          "@title": "{i18n>optionText}",
+          "type": "cds.String",
+          "length": 7,
+          "@cds.persistence.name": "TEXT"
+        },
+        "rangeNameText": {
+          "@title": "{i18n>rangeNameText}",
+          "type": "cds.String",
+          "length": 300,
+          "@cds.persistence.name": "RANGENAMETEXT"
+        },
+        "rangeNameDesc": {
+          "@title": "{i18n>rangeNameDesc}",
+          "type": "cds.String",
+          "length": 450,
+          "@cds.persistence.name": "RANGENAMEDESC"
+        },
+        "specialRangeNameText": {
+          "@title": "{i18n>specialRangeNameText}",
+          "type": "cds.String",
+          "length": 300,
+          "@cds.persistence.name": "SPECIALRANGENAMETEXT"
+        },
+        "specialRangeNameDesc": {
+          "@title": "{i18n>specialRangeNameDesc}",
+          "type": "cds.String",
+          "length": 450,
+          "@cds.persistence.name": "SPECIALRANGENAMEDESC"
+        },
+        "list_price_amt": {
+          "@title": "{i18n>listPrice}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "LIST_PRICE_AMT"
+        },
+        "wgt_diff_qty": {
+          "@title": "{i18n>weight}",
+          "@Measures.Unit": {
+            "=": "order.weightUnit"
+          },
+          "type": "cds.Integer",
+          "@cds.persistence.name": "WGT_DIFF_QTY"
+        },
+        "publicationStatus": {
+          "@title": "{i18n>pubicationStatus}",
+          "type": "cds.String",
+          "length": 2,
+          "@cds.persistence.name": "PUBLICATIONSTATUS"
+        },
+        "FETExempt": {
+          "@title": "{i18n>FETExempt}",
+          "type": "cds.Boolean",
+          "@cds.persistence.name": "FETEXEMPT"
+        },
+        "TPN": {
+          "@title": "{i18n>TPN}",
+          "type": "cds.String",
+          "length": 200,
+          "@cds.persistence.name": "TPN"
+        },
+        "TQ": {
+          "@title": "{i18n>TQ}",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "TQ"
+        },
+        "tireFET": {
+          "@title": "{i18n>tireFET}",
+          "@Measures.ISOCurrency": "USD",
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 3,
+          "@cds.persistence.name": "TIREFET"
+        },
+        "axleWeight": {
+          "@title": "{i18n>axleWeight}",
+          "@Measures.Unit": "LB",
+          "type": "cds.Integer",
+          "@cds.persistence.name": "AXLEWEIGHT"
+        },
+        "current": {
+          "type": "cds.Boolean",
+          "@cds.persistence.name": "CURRENT"
+        },
+        "Ranges": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "order.msg.Ranges",
+          "on": [
+            {
+              "ref": [
+                "Ranges",
+                "option_ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "RANGES"
+        },
+        "Option": {
+          "type": "cds.Association",
+          "target": "order.msg.Option",
+          "on": [
+            {
+              "ref": [
+                "Option",
+                "option_ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "OPTION"
+        },
+        "Notes": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "order.msg.OptionsNotes",
+          "on": [
+            {
+              "ref": [
+                "Notes",
+                "option_ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "NOTES"
+        }
+      },
+      "@cds.persistence.name": "ORDER_MSG_OPTIONS"
+    },
+    "order.msg.Ranges": {
+      "kind": "entity",
+      "@cds.persistence.journal": true,
+      "elements": {
+        "option": {
+          "type": "cds.Association",
+          "target": "order.msg.Options",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ],
+              "as": "ID",
+              "$generatedFieldName": "option_ID"
+            }
+          ],
+          "on": [
+            {
+              "ref": [
+                "option",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "option_ID"
+              ]
+            }
+          ],
+          "@cds.persistence.name": "OPTION"
+        },
+        "option_ID": {
+          "type": "cds.String",
+          "length": 36,
+          "@odata.foreignKey4": "option",
+          "key": true,
+          "@cds.persistence.name": "OPTION_ID"
+        },
+        "rangeNameText": {
+          "@title": "{i18n>rangeNameText}",
+          "key": true,
+          "type": "cds.String",
+          "length": 30,
+          "@cds.persistence.name": "RANGENAMETEXT"
+        },
+        "rangeNameDesc": {
+          "@title": "{i18n>rangeNameDesc}",
+          "type": "cds.String",
+          "length": 45,
+          "@cds.persistence.name": "RANGENAMEDESC"
+        },
+        "current": {
+          "type": "cds.Boolean",
+          "@cds.persistence.name": "CURRENT"
+        }
+      },
+      "@cds.persistence.name": "ORDER_MSG_RANGES"
+    }
+  },
+  "meta": {
+    "creator": "CDS Compiler v3.7.2",
+    "build": "CDS Build v6.6.1"
+  },
+  "$version": "2.0"
+}

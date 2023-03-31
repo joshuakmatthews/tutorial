@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="MDMaintService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="CostModels" EntityType="MDMaintService.CostModels">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="CostModels"/>
+                </EntitySet>
+                <EntitySet Name="DefaultDiscount" EntityType="MDMaintService.DefaultDiscount">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="DefaultDiscount"/>
+                </EntitySet>
+                <EntitySet Name="SpecialRanges" EntityType="MDMaintService.SpecialRanges">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="SpecialRanges"/>
+                </EntitySet>
+                <EntitySet Name="MarketingFees" EntityType="MDMaintService.MarketingFees">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="MarketingFees"/>
+                </EntitySet>
+                <EntitySet Name="Reserves" EntityType="MDMaintService.Reserves">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Reserves"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="CostModels">
+                <Key>
+                    <PropertyRef Name="divisionCd"/>
+                    <PropertyRef Name="costModelCd"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="divisionCd" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="costModelCd" Type="Edm.String" MaxLength="8" Nullable="false"/>
+                <Property Name="class" Type="Edm.String" MaxLength="1"/>
+                <Property Name="cabType" Type="Edm.String" MaxLength="70"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="MDMaintService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="MDMaintService.CostModels"/>
+            </EntityType>
+            <EntityType Name="DefaultDiscount">
+                <Key>
+                    <PropertyRef Name="divisionCd"/>
+                    <PropertyRef Name="effectiveDt"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="divisionCd" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="effectiveDt" Type="Edm.Date" Nullable="false"/>
+                <Property Name="discPct" Type="Edm.Decimal" Scale="1" Precision="3"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="MDMaintService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="MDMaintService.DefaultDiscount"/>
+            </EntityType>
+            <EntityType Name="SpecialRanges">
+                <Key>
+                    <PropertyRef Name="divisionCd"/>
+                    <PropertyRef Name="rangeNameText"/>
+                    <PropertyRef Name="rangeSeqNo"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="divisionCd" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="rangeNameText" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <Property Name="rangeSeqNo" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="rangeNameDesc" Type="Edm.String" MaxLength="45"/>
+                <Property Name="rangeSeqEffDate" Type="Edm.Date"/>
+                <Property Name="fromValue" Type="Edm.String" MaxLength="7"/>
+                <Property Name="toValue" Type="Edm.String" MaxLength="7"/>
+                <Property Name="lastModDate" Type="Edm.Date"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="MDMaintService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="MDMaintService.SpecialRanges"/>
+            </EntityType>
+            <EntityType Name="MarketingFees">
+                <Key>
+                    <PropertyRef Name="divisionCd"/>
+                    <PropertyRef Name="class"/>
+                    <PropertyRef Name="effectiveDt"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="divisionCd" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="class" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="effectiveDt" Type="Edm.Date" Nullable="false"/>
+                <Property Name="fee" Type="Edm.Int32"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="MDMaintService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="MDMaintService.MarketingFees"/>
+            </EntityType>
+            <EntityType Name="Reserves">
+                <Key>
+                    <PropertyRef Name="divisionCd"/>
+                    <PropertyRef Name="reserveType"/>
+                    <PropertyRef Name="engineType"/>
+                    <PropertyRef Name="class"/>
+                    <PropertyRef Name="salesModelFamily"/>
+                    <PropertyRef Name="country"/>
+                    <PropertyRef Name="typeOfSale"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="divisionCd" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="reserveType" Type="Edm.String" MaxLength="25" Nullable="false"/>
+                <Property Name="engineType" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="class" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="salesModelFamily" Type="Edm.String" MaxLength="20" Nullable="false"/>
+                <Property Name="country" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="typeOfSale" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="rate" Type="Edm.Decimal" Scale="2" Precision="17"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="MDMaintService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="MDMaintService.Reserves"/>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.CostModels"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="MDMaintService.CostModels"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.DefaultDiscount"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="MDMaintService.DefaultDiscount"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.SpecialRanges"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="MDMaintService.SpecialRanges"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.MarketingFees"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="MDMaintService.MarketingFees"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.Reserves"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="MDMaintService.Reserves"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.CostModels"/>
+                <ReturnType Type="MDMaintService.CostModels"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.DefaultDiscount"/>
+                <ReturnType Type="MDMaintService.DefaultDiscount"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.SpecialRanges"/>
+                <ReturnType Type="MDMaintService.SpecialRanges"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.MarketingFees"/>
+                <ReturnType Type="MDMaintService.MarketingFees"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.Reserves"/>
+                <ReturnType Type="MDMaintService.Reserves"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.CostModels"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="MDMaintService.CostModels"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.DefaultDiscount"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="MDMaintService.DefaultDiscount"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.SpecialRanges"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="MDMaintService.SpecialRanges"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.MarketingFees"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="MDMaintService.MarketingFees"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MDMaintService.Reserves"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="MDMaintService.Reserves"/>
+            </Action>
+            <Annotations Target="MDMaintService.EntityContainer/CostModels">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="MDMaintService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="MDMaintService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="MDMaintService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="MDMaintService.CostModels/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                </Annotations>
+                <Annotations Target="MDMaintService.CostModels/createdBy">
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                        </Annotations>
+                        <Annotations Target="MDMaintService.CostModels/modifiedAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                            </Annotations>
+                            <Annotations Target="MDMaintService.CostModels/modifiedBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                    </Annotations>
+                                    <Annotations Target="MDMaintService.CostModels/divisionCd">
+                                        <Annotation Term="Common.Label" String="{i18n>divisionCd}"/>
+                                        </Annotations>
+                                        <Annotations Target="MDMaintService.CostModels/costModelCd">
+                                            <Annotation Term="Common.Label" String="{i18n>costModelCd}"/>
+                                            </Annotations>
+                                            <Annotations Target="MDMaintService.CostModels/class">
+                                                <Annotation Term="Common.Label" String="{i18n>class}"/>
+                                                </Annotations>
+                                                <Annotations Target="MDMaintService.CostModels/cabType">
+                                                    <Annotation Term="Common.Label" String="{i18n>cabType}"/>
+                                                    </Annotations>
+                                                    <Annotations Target="MDMaintService.CostModels/IsActiveEntity">
+                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                    </Annotations>
+                                                    <Annotations Target="MDMaintService.CostModels/HasActiveEntity">
+                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                    </Annotations>
+                                                    <Annotations Target="MDMaintService.CostModels/HasDraftEntity">
+                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                    </Annotations>
+                                                    <Annotations Target="MDMaintService.CostModels/DraftAdministrativeData">
+                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                    </Annotations>
+                                                    <Annotations Target="MDMaintService.EntityContainer/DefaultDiscount">
+                                                        <Annotation Term="Common.DraftRoot">
+                                                            <Record Type="Common.DraftRootType">
+                                                                <PropertyValue Property="ActivationAction" String="MDMaintService.draftActivate"/>
+                                                                <PropertyValue Property="EditAction" String="MDMaintService.draftEdit"/>
+                                                                <PropertyValue Property="PreparationAction" String="MDMaintService.draftPrepare"/>
+                                                            </Record>
+                                                        </Annotation>
+                                                    </Annotations>
+                                                    <Annotations Target="MDMaintService.DefaultDiscount/createdAt">
+                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                        </Annotations>
+                                                        <Annotations Target="MDMaintService.DefaultDiscount/createdBy">
+                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                </Annotations>
+                                                                <Annotations Target="MDMaintService.DefaultDiscount/modifiedAt">
+                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                    </Annotations>
+                                                                    <Annotations Target="MDMaintService.DefaultDiscount/modifiedBy">
+                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                            </Annotations>
+                                                                            <Annotations Target="MDMaintService.DefaultDiscount/divisionCd">
+                                                                                <Annotation Term="Common.Label" String="{i18n>divisionCd}"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="MDMaintService.DefaultDiscount/effectiveDt">
+                                                                                    <Annotation Term="Common.Label" String="{i18n>effectiveDt}"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MDMaintService.DefaultDiscount/discPct">
+                                                                                        <Annotation Term="Common.Label" String="{i18n>discPct}"/>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="MDMaintService.DefaultDiscount/IsActiveEntity">
+                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="MDMaintService.DefaultDiscount/HasActiveEntity">
+                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="MDMaintService.DefaultDiscount/HasDraftEntity">
+                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="MDMaintService.DefaultDiscount/DraftAdministrativeData">
+                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="MDMaintService.EntityContainer/SpecialRanges">
+                                                                                            <Annotation Term="Common.DraftRoot">
+                                                                                                <Record Type="Common.DraftRootType">
+                                                                                                    <PropertyValue Property="ActivationAction" String="MDMaintService.draftActivate"/>
+                                                                                                    <PropertyValue Property="EditAction" String="MDMaintService.draftEdit"/>
+                                                                                                    <PropertyValue Property="PreparationAction" String="MDMaintService.draftPrepare"/>
+                                                                                                </Record>
+                                                                                            </Annotation>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="MDMaintService.SpecialRanges/divisionCd">
+                                                                                            <Annotation Term="Common.Label" String="{i18n>divisionCd}"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="MDMaintService.SpecialRanges/rangeNameText">
+                                                                                                <Annotation Term="Common.Label" String="{i18n>rangeNameText}"/>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="MDMaintService.SpecialRanges/rangeSeqNo">
+                                                                                                    <Annotation Term="Common.Label" String="{i18n>rangeSeqNo}"/>
+                                                                                                    </Annotations>
+                                                                                                    <Annotations Target="MDMaintService.SpecialRanges/rangeNameDesc">
+                                                                                                        <Annotation Term="Common.Label" String="{i18n>rangeNameDesc}"/>
+                                                                                                        </Annotations>
+                                                                                                        <Annotations Target="MDMaintService.SpecialRanges/rangeSeqEffDate">
+                                                                                                            <Annotation Term="Common.Label" String="{i18n>effectiveDt}"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="MDMaintService.SpecialRanges/fromValue">
+                                                                                                                <Annotation Term="Common.Label" String="{i18n>fromValue}"/>
+                                                                                                                </Annotations>
+                                                                                                                <Annotations Target="MDMaintService.SpecialRanges/toValue">
+                                                                                                                    <Annotation Term="Common.Label" String="{i18n>toValue}"/>
+                                                                                                                    </Annotations>
+                                                                                                                    <Annotations Target="MDMaintService.SpecialRanges/lastModDate">
+                                                                                                                        <Annotation Term="Common.Label" String="{i18n>lostModDate}"/>
+                                                                                                                        </Annotations>
+                                                                                                                        <Annotations Target="MDMaintService.SpecialRanges/createdAt">
+                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                            <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                            </Annotations>
+                                                                                                                            <Annotations Target="MDMaintService.SpecialRanges/createdBy">
+                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="MDMaintService.SpecialRanges/modifiedAt">
+                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="MDMaintService.SpecialRanges/modifiedBy">
+                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="MDMaintService.SpecialRanges/IsActiveEntity">
+                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="MDMaintService.SpecialRanges/HasActiveEntity">
+                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="MDMaintService.SpecialRanges/HasDraftEntity">
+                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="MDMaintService.SpecialRanges/DraftAdministrativeData">
+                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="MDMaintService.EntityContainer/MarketingFees">
+                                                                                                                                                    <Annotation Term="Common.DraftRoot">
+                                                                                                                                                        <Record Type="Common.DraftRootType">
+                                                                                                                                                            <PropertyValue Property="ActivationAction" String="MDMaintService.draftActivate"/>
+                                                                                                                                                            <PropertyValue Property="EditAction" String="MDMaintService.draftEdit"/>
+                                                                                                                                                            <PropertyValue Property="PreparationAction" String="MDMaintService.draftPrepare"/>
+                                                                                                                                                        </Record>
+                                                                                                                                                    </Annotation>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="MDMaintService.MarketingFees/createdAt">
+                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="MDMaintService.MarketingFees/createdBy">
+                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                            </Annotations>
+                                                                                                                                                            <Annotations Target="MDMaintService.MarketingFees/modifiedAt">
+                                                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                </Annotations>
+                                                                                                                                                                <Annotations Target="MDMaintService.MarketingFees/modifiedBy">
+                                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                        </Annotations>
+                                                                                                                                                                        <Annotations Target="MDMaintService.MarketingFees/divisionCd">
+                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>divisionCd}"/>
+                                                                                                                                                                            </Annotations>
+                                                                                                                                                                            <Annotations Target="MDMaintService.MarketingFees/class">
+                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>class}"/>
+                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                <Annotations Target="MDMaintService.MarketingFees/effectiveDt">
+                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>effectiveDt}"/>
+                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                    <Annotations Target="MDMaintService.MarketingFees/fee">
+                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>fee}"/>
+                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                        <Annotations Target="MDMaintService.MarketingFees/IsActiveEntity">
+                                                                                                                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                        <Annotations Target="MDMaintService.MarketingFees/HasActiveEntity">
+                                                                                                                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                        <Annotations Target="MDMaintService.MarketingFees/HasDraftEntity">
+                                                                                                                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                        <Annotations Target="MDMaintService.MarketingFees/DraftAdministrativeData">
+                                                                                                                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                        <Annotations Target="MDMaintService.EntityContainer/Reserves">
+                                                                                                                                                                                            <Annotation Term="Common.DraftRoot">
+                                                                                                                                                                                                <Record Type="Common.DraftRootType">
+                                                                                                                                                                                                    <PropertyValue Property="ActivationAction" String="MDMaintService.draftActivate"/>
+                                                                                                                                                                                                    <PropertyValue Property="EditAction" String="MDMaintService.draftEdit"/>
+                                                                                                                                                                                                    <PropertyValue Property="PreparationAction" String="MDMaintService.draftPrepare"/>
+                                                                                                                                                                                                </Record>
+                                                                                                                                                                                            </Annotation>
+                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                        <Annotations Target="MDMaintService.Reserves/createdAt">
+                                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                            <Annotations Target="MDMaintService.Reserves/createdBy">
+                                                                                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                    <Annotations Target="MDMaintService.Reserves/modifiedAt">
+                                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                        <Annotations Target="MDMaintService.Reserves/modifiedBy">
+                                                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                <Annotations Target="MDMaintService.Reserves/divisionCd">
+                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>divisionCd}"/>
+                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                    <Annotations Target="MDMaintService.Reserves/reserveType">
+                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>reserveType}"/>
+                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                        <Annotations Target="MDMaintService.Reserves/engineType">
+                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>engineType}"/>
+                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                            <Annotations Target="MDMaintService.Reserves/class">
+                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>class}"/>
+                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                <Annotations Target="MDMaintService.Reserves/salesModelFamily">
+                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>salesModelFamily}"/>
+                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                    <Annotations Target="MDMaintService.Reserves/country">
+                                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>country}"/>
+                                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                                        <Annotations Target="MDMaintService.Reserves/typeOfSale">
+                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>typeOfSale}"/>
+                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                            <Annotations Target="MDMaintService.Reserves/rate">
+                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>rate}"/>
+                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                <Annotations Target="MDMaintService.Reserves/IsActiveEntity">
+                                                                                                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                <Annotations Target="MDMaintService.Reserves/HasActiveEntity">
+                                                                                                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                <Annotations Target="MDMaintService.Reserves/HasDraftEntity">
+                                                                                                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                <Annotations Target="MDMaintService.Reserves/DraftAdministrativeData">
+                                                                                                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                <Annotations Target="MDMaintService.DraftAdministrativeData">
+                                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                    <Annotations Target="MDMaintService.DraftAdministrativeData/DraftUUID">
+                                                                                                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+                                                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                                                        <Annotations Target="MDMaintService.DraftAdministrativeData/CreationDateTime">
+                                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                            <Annotations Target="MDMaintService.DraftAdministrativeData/CreatedByUser">
+                                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+                                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                                <Annotations Target="MDMaintService.DraftAdministrativeData/DraftIsCreatedByMe">
+                                                                                                                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+                                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                                    <Annotations Target="MDMaintService.DraftAdministrativeData/LastChangeDateTime">
+                                                                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+                                                                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                                                                        <Annotations Target="MDMaintService.DraftAdministrativeData/LastChangedByUser">
+                                                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+                                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                                            <Annotations Target="MDMaintService.DraftAdministrativeData/InProcessByUser">
+                                                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+                                                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                                                <Annotations Target="MDMaintService.DraftAdministrativeData/DraftIsProcessedByMe">
+                                                                                                                                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+                                                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                                                </Schema>
+                                                                                                                                                                                                                                                                            </edmx:DataServices>
+                                                                                                                                                                                                                                                                        </edmx:Edmx>

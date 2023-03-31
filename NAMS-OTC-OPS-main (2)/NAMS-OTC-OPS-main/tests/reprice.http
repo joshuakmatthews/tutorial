@@ -1,0 +1,99 @@
+### Get current and non-current messages
+GET http://localhost:4004/manage/MsgOrders?$select=ID,current,orderSaved,timesProcessed,createdAt,modifiedAt,newerMessage_ID&$filter=divisionCd eq 'K' and chassisNo eq '155754' and DTPONumber eq '10049235'
+
+### Get the current message
+GET http://localhost:4004/manage/MsgOrders?$select=ID&$filter=divisionCd eq 'K' and chassisNo eq '155754' and DTPONumber eq '10049235' and current eq true
+
+### Reprice it
+POST http://localhost:4004/reprice/RepriceMismatches
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "ids": [
+		"9f588216-f0d9-409c-9db3-96b073da3887"
+    ]
+}
+
+### GIVEN
+### THEN it should
+POST http://localhost:4004/reprice/GetMismatches
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "P"
+}
+
+### GIVEN
+### THEN it should reprice 1000 KW orders
+POST http://localhost:4004/reprice/RepriceMismatches
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "ids": [
+		"1953fc17-466a-4108-af88-a2443d6491a6",
+		"0e3f0dc4-7526-4ab0-bba1-628bcfd52d2a",
+		"55016188-ba0f-4b2c-b9b2-27fc5e5bb88e",
+		"c1f6a127-200c-4c84-ba2b-53f909c0db0d",
+		"6211ba8f-9887-48a0-a850-b135502e48c3",
+		"c3ee008d-6d25-4b41-9023-a702496d8bd0",
+		"af11de0f-be50-4501-885e-fa0a9e5a77d7",
+		"d55f7abc-0d64-4262-b695-e2385e9d9124",
+		"c49bcb37-1f40-4eab-8749-95c555e93195",
+		"9372c203-3b71-429e-8a14-f5b5b45d7eff"
+    ]
+}
+
+### GIVEN no whereClause
+### THEN it should throw an error
+POST http://localhost:4004/reprice/RepriceByWhere
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "top": 1000,
+    "skip": 0
+}
+
+### GIVEN top = 1000, skip = 1000
+### THEN it should return header sap-messages[0].message = "No more data"
+POST http://localhost:4004/reprice/RepriceByWhere
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "whereClause": "{\"OpenOrder\": \"Y\", \"and\": {\"OrganizationDivision\": \"KW\", \"and\": {\"CreationDate\": { \"between\": \"2022-09-01\", \"and\": \"2022-09-30\" }}}}",
+    "top": 1000,
+    "skip": 1000
+}
+
+### GIVEN OpenOrder = Y, OrganizationDivision = KW, CreationDate between 9/1/22 and 9/30/22
+### THEN it should return response body.ordersFound = 42
+POST http://localhost:4004/reprice/RepriceByWhere
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "whereClause": "{\"OpenOrder\": \"Y\", \"and\": {\"OrganizationDivision\": \"KW\", \"and\": {\"CreationDate\": { \"between\": \"2022-09-01\", \"and\": \"2022-09-30\" }}}}",
+    "top": 1000,
+    "skip": 0
+}
+
+### Reprice one order -- OLD SELECT OPTIONS STYLE - DO NOT USE
+POST http://localhost:4004/reprice/RepriceByWhere
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "selections" : [
+        { "field": "OrganizationDivision", "selOps": [ { "compOp": "=", "value": "PB" }] },
+        { "field": "PurchaseOrderByCustomer", "selOps": [ { "compOp": "=", "value": "10147933" }] },
+        { "field": "SalesOrder", "selOps": [ { "compOp": "=", "value": "53475" }] }
+    ]
+}
+
+### Reprice a group of orders -- OLD SELECT OPTIONS STYLE - DO NOT USE
+POST http://localhost:4004/reprice/RepriceByWhere
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "selections" : [
+        { "field": "OrganizationDivision", "selOps": [ { "compOp": "=", "value": "PB" }] },
+        { "field": "CreationDate", "selOps": [ { "compOp": "between", "value": "2022-09-01", "highValue": "2022-10-08" }] }
+    ]
+}

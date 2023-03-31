@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="MapService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Divisions" EntityType="MapService.Divisions">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Divisions"/>
+                </EntitySet>
+                <EntitySet Name="SalesDocTypes" EntityType="MapService.SalesDocTypes">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="SalesDocTypes"/>
+                </EntitySet>
+                <EntitySet Name="Plants" EntityType="MapService.Plants">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Plants"/>
+                </EntitySet>
+                <EntitySet Name="BaseModel" EntityType="MapService.BaseModel">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="BaseModel"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Divisions">
+                <Key>
+                    <PropertyRef Name="divisionCd"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="divisionCd" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="spart" Type="Edm.String" MaxLength="2"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="MapService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="MapService.Divisions"/>
+            </EntityType>
+            <EntityType Name="SalesDocTypes">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="seq" Type="Edm.Int32"/>
+                <Property Name="divisionCd" Type="Edm.String" MaxLength="2"/>
+                <Property Name="isWarrRepl" Type="Edm.Boolean" DefaultValue="false"/>
+                <Property Name="dealerOwnerGrp" Type="Edm.String" MaxLength="10"/>
+                <Property Name="dealerCd" Type="Edm.String" MaxLength="4"/>
+                <Property Name="salesDocType" Type="Edm.String" MaxLength="4"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="MapService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="MapService.SalesDocTypes"/>
+            </EntityType>
+            <EntityType Name="Plants">
+                <Key>
+                    <PropertyRef Name="divisionCd"/>
+                    <PropertyRef Name="plantCd"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="divisionCd" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="plantCd" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="USPlant" Type="Edm.String" MaxLength="4"/>
+                <Property Name="CAPlant" Type="Edm.String" MaxLength="4"/>
+                <Property Name="FETPlant" Type="Edm.String" MaxLength="4"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="MapService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="MapService.Plants"/>
+            </EntityType>
+            <EntityType Name="BaseModel">
+                <Key>
+                    <PropertyRef Name="divisionCd"/>
+                    <PropertyRef Name="baseModelCd"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="divisionCd" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="baseModelCd" Type="Edm.String" MaxLength="7" Nullable="false"/>
+                <Property Name="salesModelFamily" Type="Edm.String" MaxLength="20"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="MapService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="MapService.BaseModel"/>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.Divisions"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="MapService.Divisions"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.SalesDocTypes"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="MapService.SalesDocTypes"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.Plants"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="MapService.Plants"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.BaseModel"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="MapService.BaseModel"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.Divisions"/>
+                <ReturnType Type="MapService.Divisions"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.SalesDocTypes"/>
+                <ReturnType Type="MapService.SalesDocTypes"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.Plants"/>
+                <ReturnType Type="MapService.Plants"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.BaseModel"/>
+                <ReturnType Type="MapService.BaseModel"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.Divisions"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="MapService.Divisions"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.SalesDocTypes"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="MapService.SalesDocTypes"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.Plants"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="MapService.Plants"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="MapService.BaseModel"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="MapService.BaseModel"/>
+            </Action>
+            <Annotations Target="MapService.EntityContainer/Divisions">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="MapService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="MapService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="MapService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="MapService.Divisions/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                </Annotations>
+                <Annotations Target="MapService.Divisions/createdBy">
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                        </Annotations>
+                        <Annotations Target="MapService.Divisions/modifiedAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                            </Annotations>
+                            <Annotations Target="MapService.Divisions/modifiedBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                    </Annotations>
+                                    <Annotations Target="MapService.Divisions/divisionCd">
+                                        <Annotation Term="Common.Label" String="{i18n>divisionCd}"/>
+                                        </Annotations>
+                                        <Annotations Target="MapService.Divisions/spart">
+                                            <Annotation Term="Common.Label" String="{i18n>division}"/>
+                                            </Annotations>
+                                            <Annotations Target="MapService.Divisions/IsActiveEntity">
+                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                            </Annotations>
+                                            <Annotations Target="MapService.Divisions/HasActiveEntity">
+                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                            </Annotations>
+                                            <Annotations Target="MapService.Divisions/HasDraftEntity">
+                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                            </Annotations>
+                                            <Annotations Target="MapService.Divisions/DraftAdministrativeData">
+                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                            </Annotations>
+                                            <Annotations Target="MapService.EntityContainer/SalesDocTypes">
+                                                <Annotation Term="Common.DraftRoot">
+                                                    <Record Type="Common.DraftRootType">
+                                                        <PropertyValue Property="ActivationAction" String="MapService.draftActivate"/>
+                                                        <PropertyValue Property="EditAction" String="MapService.draftEdit"/>
+                                                        <PropertyValue Property="PreparationAction" String="MapService.draftPrepare"/>
+                                                    </Record>
+                                                </Annotation>
+                                            </Annotations>
+                                            <Annotations Target="MapService.SalesDocTypes/createdAt">
+                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                </Annotations>
+                                                <Annotations Target="MapService.SalesDocTypes/createdBy">
+                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                        </Annotations>
+                                                        <Annotations Target="MapService.SalesDocTypes/modifiedAt">
+                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                            </Annotations>
+                                                            <Annotations Target="MapService.SalesDocTypes/modifiedBy">
+                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                    </Annotations>
+                                                                    <Annotations Target="MapService.SalesDocTypes/seq">
+                                                                        <Annotation Term="Common.Label" String="{i18n>seq}"/>
+                                                                        </Annotations>
+                                                                        <Annotations Target="MapService.SalesDocTypes/divisionCd">
+                                                                            <Annotation Term="Common.Label" String="{i18n>divisionCd}"/>
+                                                                            </Annotations>
+                                                                            <Annotations Target="MapService.SalesDocTypes/isWarrRepl">
+                                                                                <Annotation Term="Common.Label" String="{i18n>isWarrRepl}"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="MapService.SalesDocTypes/dealerOwnerGrp">
+                                                                                    <Annotation Term="Common.Label" String="{i18n>dealerOwnerGrp}"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MapService.SalesDocTypes/dealerCd">
+                                                                                        <Annotation Term="Common.Label" String="{i18n>dealerCd}"/>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="MapService.SalesDocTypes/salesDocType">
+                                                                                            <Annotation Term="Common.Label" String="{i18n>salesDocType}"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="MapService.SalesDocTypes/IsActiveEntity">
+                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="MapService.SalesDocTypes/HasActiveEntity">
+                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="MapService.SalesDocTypes/HasDraftEntity">
+                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="MapService.SalesDocTypes/DraftAdministrativeData">
+                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="MapService.EntityContainer/Plants">
+                                                                                                <Annotation Term="Common.DraftRoot">
+                                                                                                    <Record Type="Common.DraftRootType">
+                                                                                                        <PropertyValue Property="ActivationAction" String="MapService.draftActivate"/>
+                                                                                                        <PropertyValue Property="EditAction" String="MapService.draftEdit"/>
+                                                                                                        <PropertyValue Property="PreparationAction" String="MapService.draftPrepare"/>
+                                                                                                    </Record>
+                                                                                                </Annotation>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="MapService.Plants/createdAt">
+                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="MapService.Plants/createdBy">
+                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                        </Annotations>
+                                                                                                        <Annotations Target="MapService.Plants/modifiedAt">
+                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="MapService.Plants/modifiedBy">
+                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                    </Annotations>
+                                                                                                                    <Annotations Target="MapService.Plants/divisionCd">
+                                                                                                                        <Annotation Term="Common.Label" String="{i18n>divisionCd}"/>
+                                                                                                                        </Annotations>
+                                                                                                                        <Annotations Target="MapService.Plants/plantCd">
+                                                                                                                            <Annotation Term="Common.Label" String="{i18n>plantCd}"/>
+                                                                                                                            </Annotations>
+                                                                                                                            <Annotations Target="MapService.Plants/USPlant">
+                                                                                                                                <Annotation Term="Common.Label" String="{i18n>USPlant}"/>
+                                                                                                                                </Annotations>
+                                                                                                                                <Annotations Target="MapService.Plants/CAPlant">
+                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>CAPlant}"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="MapService.Plants/FETPlant">
+                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>FETPlant}"/>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="MapService.Plants/IsActiveEntity">
+                                                                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="MapService.Plants/HasActiveEntity">
+                                                                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="MapService.Plants/HasDraftEntity">
+                                                                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="MapService.Plants/DraftAdministrativeData">
+                                                                                                                                            <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="MapService.EntityContainer/BaseModel">
+                                                                                                                                            <Annotation Term="Common.DraftRoot">
+                                                                                                                                                <Record Type="Common.DraftRootType">
+                                                                                                                                                    <PropertyValue Property="ActivationAction" String="MapService.draftActivate"/>
+                                                                                                                                                    <PropertyValue Property="EditAction" String="MapService.draftEdit"/>
+                                                                                                                                                    <PropertyValue Property="PreparationAction" String="MapService.draftPrepare"/>
+                                                                                                                                                </Record>
+                                                                                                                                            </Annotation>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="MapService.BaseModel/createdAt">
+                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                            </Annotations>
+                                                                                                                                            <Annotations Target="MapService.BaseModel/createdBy">
+                                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="MapService.BaseModel/modifiedAt">
+                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                        </Annotations>
+                                                                                                                                                        <Annotations Target="MapService.BaseModel/modifiedBy">
+                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                </Annotations>
+                                                                                                                                                                <Annotations Target="MapService.BaseModel/IsActiveEntity">
+                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                </Annotations>
+                                                                                                                                                                <Annotations Target="MapService.BaseModel/HasActiveEntity">
+                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                </Annotations>
+                                                                                                                                                                <Annotations Target="MapService.BaseModel/HasDraftEntity">
+                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                </Annotations>
+                                                                                                                                                                <Annotations Target="MapService.BaseModel/DraftAdministrativeData">
+                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                </Annotations>
+                                                                                                                                                                <Annotations Target="MapService.DraftAdministrativeData">
+                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+                                                                                                                                                                    </Annotations>
+                                                                                                                                                                    <Annotations Target="MapService.DraftAdministrativeData/DraftUUID">
+                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+                                                                                                                                                                        </Annotations>
+                                                                                                                                                                        <Annotations Target="MapService.DraftAdministrativeData/CreationDateTime">
+                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+                                                                                                                                                                            </Annotations>
+                                                                                                                                                                            <Annotations Target="MapService.DraftAdministrativeData/CreatedByUser">
+                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                <Annotations Target="MapService.DraftAdministrativeData/DraftIsCreatedByMe">
+                                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                    <Annotations Target="MapService.DraftAdministrativeData/LastChangeDateTime">
+                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                        <Annotations Target="MapService.DraftAdministrativeData/LastChangedByUser">
+                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                            <Annotations Target="MapService.DraftAdministrativeData/InProcessByUser">
+                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                <Annotations Target="MapService.DraftAdministrativeData/DraftIsProcessedByMe">
+                                                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                </Schema>
+                                                                                                                                                                                            </edmx:DataServices>
+                                                                                                                                                                                        </edmx:Edmx>

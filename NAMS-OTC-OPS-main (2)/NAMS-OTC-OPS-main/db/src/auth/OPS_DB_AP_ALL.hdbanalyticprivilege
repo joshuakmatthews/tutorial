@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Privilege:analyticPrivilege xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="OPS_DB_AP_ALL" privilegeType="SQL_ANALYTIC_PRIVILEGE" schemaVersion="1.1">
+    <descriptions defaultDescription="All"/>
+    <securedModels>    
+      <modelUri>CV_CHASSIS_FILES</modelUri>
+      <modelUri>CV_CHASSIS_ORDERS</modelUri>
+      <modelUri>CV_OPS_RECON</modelUri>
+      <modelUri>CV_TRUCK_ORDERS</modelUri>
+      <modelUri>CV_DIM_SALES_OPTION</modelUri>
+    </securedModels>
+    <whereSql>1=1</whereSql>
+</Privilege:analyticPrivilege>

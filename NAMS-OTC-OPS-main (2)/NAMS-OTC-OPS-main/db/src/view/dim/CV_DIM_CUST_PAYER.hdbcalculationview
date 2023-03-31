@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_CUST_PAYER" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Payer"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="CV_DIM_CUSTOMER">
+    <resourceUri>CV_DIM_CUSTOMER</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+
+<logicalModel id="CV_DIM_CUSTOMER">
+  <attributes>
+    <attribute id="PAYER" order="1" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="PAYER_NAME_1">
+      <descriptions defaultDescription="Payer"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CUSTOMER"/>
+    </attribute>
+    <attribute id="PAYER_NAME_1" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Name"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="NAME_1"/>
+    </attribute>
+    <attribute id="PAYER_NAME_2" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Name 2"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="NAME_2"/>
+    </attribute>
+    <attribute id="PAYER_NAME_3" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Name 3"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="NAME_3"/>
+    </attribute>
+    <attribute id="PAYER_STREET" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Street and House Number"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="STREET"/>
+    </attribute>
+    <attribute id="PAYER_STREET_2" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Street 2"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="STREET_2"/>
+    </attribute>
+    <attribute id="PAYER_STREET_4" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Street 4"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="STREET_4"/>
+    </attribute>
+    <attribute id="PAYER_CITY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer City"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CITY"/>
+    </attribute>
+    <attribute id="PAYER_REGION" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Region (State, Province, County)"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="REGION"/>
+    </attribute>
+    <attribute id="PAYER_POSTAL_CODE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Postal Code"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="POSTAL_CODE"/>
+    </attribute>
+    <attribute id="PAYER_COUNTRY" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Country Key"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="COUNTRY"/>
+    </attribute>
+    <attribute id="PAYER_PHONE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer First telephone number"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="PHONE"/>
+    </attribute>
+    <attribute id="PAYER_SEARCH_TERM_1" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Search Term 1"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="SEARCH_TERM_1"/>
+    </attribute>
+    <attribute id="PAYER_SEARCH_TERM_2" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Search Term 2"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="SEARCH_TERM_2"/>
+    </attribute>
+    <attribute id="PAYER_MATCHCODE_NAME_1" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Name 1 Matchcode"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="MATCHCODE_NAME_1"/>
+    </attribute>
+    <attribute id="PAYER_MATCHCODE_NAME_2" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Name 2 Matchcode"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="MATCHCODE_NAME_2"/>
+    </attribute>
+    <attribute id="PAYER_MATCHCODE_STREET" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Street Matchcode"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="MATCHCODE_STREET"/>
+    </attribute>
+    <attribute id="PAYER_MATCHCODE_CITY" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer City Matchcode"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="MATCHCODE_CITY"/>
+    </attribute>
+    <attribute id="PAYER_GROUP_KEY" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Group key"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="GROUP_KEY"/>
+    </attribute>
+    <attribute id="PAYER_ACCOUNT_GROUP" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Customer Account Group"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="ACCOUNT_GROUP"/>
+    </attribute>
+    <attribute id="PAYER_VENDOR_NUMBER" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Account Number of Vendor or Creditor"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="VENDOR_NUMBER"/>
+    </attribute>
+    <attribute id="PAYER_LANGUAGE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Language Key"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="LANGUAGE"/>
+    </attribute>
+    <attribute id="PAYER_TAX_NUMBER_1" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Tax Number 1"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TAX_NUMBER_1"/>
+    </attribute>
+    <attribute id="PAYER_TAX_NUMBER_2" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Tax Number 2"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TAX_NUMBER_2"/>
+    </attribute>
+    <attribute id="PAYER_TAX_NUMBER_3" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Tax Number 3"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TAX_NUMBER_3"/>
+    </attribute>
+    <attribute id="PAYER_TAX_JURISDICTION" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Tax Jurisdiction"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TAX_JURISDICTION"/>
+    </attribute>
+    <attribute id="PAYER_CREATED_ON" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Created On"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CREATED_ON"/>
+    </attribute>
+    <attribute id="PAYER_CREATED_BY" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Name of Person who Created the Object"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CREATED_BY"/>
+    </attribute>
+    <attribute id="PAYER_CHANGED_ON" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Changed On"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CHANGED_ON"/>
+    </attribute>
+    <attribute id="PAYER_TIME_ZONE" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Address time zone"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TIME_ZONE"/>
+    </attribute>
+    <attribute id="PAYER_EMAIL_ADDRESS" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer E-Mail Address"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="EMAIL_ADDRESS"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

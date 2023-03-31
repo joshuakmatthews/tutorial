@@ -1,0 +1,4 @@
+[
+  "src/view/dim/CV_SRM_CONTRACT_MAX_LINE.hdbcalculationview",
+  "src/gen/SRMContractsService.MaxLine.hdbview"
+]

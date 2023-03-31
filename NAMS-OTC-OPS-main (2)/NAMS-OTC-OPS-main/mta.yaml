@@ -1,0 +1,397 @@
+_schema-version: "3.2"
+ID: ops
+description: OPS Orders
+version: 1.11.43
+
+modules:
+# ---------------- DATABASE DEPLOYER MODULE ------------------
+- name: ops-db-deployer
+# ------------------------------------------------------------
+  type: hdb
+  path: gen/db
+  requires:
+  - name: ops-uaa
+  - name: ops-db
+    properties:
+      TARGET_CONTAINER: ~{hdi-service-name}
+  - name: oms-db-grantor
+    group: SERVICE_REPLACEMENTS
+    properties:
+      key: logical-oms-grantor
+      service: ~{oms-grantor-service}
+  - name: slts4hc-schema
+  - name: sltsrmhc-schema
+  parameters:
+    buildpack: nodejs_buildpack
+    disk-quota: 1024M
+    memory: 256M
+    
+# --------------------- SERVER MODULE ------------------------
+- name: ops-srv
+# ------------------------------------------------------------
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: ops-uaa
+  - name: job-scheduler
+  - name: ops-db
+  - name: ops-conn
+  - name: ops-dest
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    disk-quota: 1024M
+    memory: 4096M
+    
+# ----------- HTML5 APP REPOSITORY APP FIORI MODULE ----------
+#  do the build of the SAP Fiori application. Each build result is a ZIP file that contains optimized UI resources and a ZIP file manifest-bundle.zip with the manifest.json and the i18n files. The latter is required by the SAP Launchpad service
+- name: ops-fiori
+# ------------------------------------------------------------
+  type: html5
+  path: app/fiori
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+    
+# ----------- HTML5 APP REPOSITORY DEPLOYER MODULE -----------
+# deploys the ZIP files from the opsordermsgs.zip to the SAP HTML5 Application Repository service, where it can be accessed by the SAP Launchpad service using the previously added destinations.
+- name: ops-ui-deployer
+# ------------------------------------------------------------
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: ops-html5repo
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: gen/app
+    requires:
+    - artifacts:
+      - fiori-content.zip
+      name: ops-fiori
+      target-path: gen/app
+    - artifacts:
+      - costmodels.zip
+      name: costmodels
+      target-path: gen/app/
+    - artifacts:
+      - marketingfees.zip
+      name: marketingfees
+      target-path: gen/app/
+    - artifacts:
+      - specialranges.zip
+      name: specialranges
+      target-path: gen/app/
+    - artifacts:
+      - reserves.zip
+      name: reserves
+      target-path: gen/app/
+    - artifacts:
+      - mapsalesdoctypes.zip
+      name: mapsalesdoctypes
+      target-path: gen/app/
+    - artifacts:
+      - mapdivisions.zip
+      name: mapdivisions
+      target-path: gen/app/
+    - artifacts:
+      - mapplants.zip
+      name: mapplants
+      target-path: gen/app/
+    - artifacts:
+      - opsrecon.zip
+      name: opsrecon
+      target-path: gen/app/
+    - artifacts:
+      - defaultdiscount.zip
+      name: defaultdiscount
+      target-path: gen/app/
+    - artifacts:
+      - mapbasemodel.zip
+      name: mapbasemodel
+      target-path: gen/app/
+      
+# ----- HTML5 APP REPOSITORY DESTINATION CONTENT MODULE ------
+- name: ops-dest-content
+# ------------------------------------------------------------
+  type: com.sap.application.content
+  requires:
+  - name: ops-uaa
+    parameters:
+      service-key:
+        name: ops-uaa-sk
+  - name: ops-dest
+    parameters:
+      content-target: true
+  - name: ops-html5repo
+    parameters:
+      service-key:
+        name: ops-html5repo-sk
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Authentication: OAuth2UserTokenExchange
+          Name: ops-service-ops-uaa
+          ServiceInstanceName: ops-uaa
+          ServiceKeyName: ops-uaa-sk
+          sap.cloud.service: ops-service
+        - Name: ops-service-ops-html5repo
+          ServiceInstanceName: ops-html5repo
+          ServiceKeyName: ops-html5repo-sk
+          sap.cloud.service: ops-service
+        existing_destinations_policy: update
+  build-parameters:
+    no-source: true
+    
+# ----------- HTML5 APP REPOSITORY APP COST-MODELS MODULE ----------
+- name: costmodels
+# ------------------------------------------------------------
+  type: html5
+  path: app/cost-models
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+    
+# ----------- HTML5 APP REPOSITORY APP MARKETING-FEES MODULE ----------
+- name: marketingfees
+# ------------------------------------------------------------
+  type: html5
+  path: app/marketing-fees
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+    
+# ----------- HTML5 APP REPOSITORY APP SPECIAL-RANGES MODULE ----------
+- name: specialranges
+# ------------------------------------------------------------
+  type: html5
+  path: app/special-ranges
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+    
+# ----------- HTML5 APP REPOSITORY APP RESERVES MODULE ----------
+- name: reserves
+# ------------------------------------------------------------
+  type: html5
+  path: app/reserves
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+    
+# ---- HTML5 APP REPOSITORY APP MAP SALES DOC TYPES MODULE ---
+- name: mapsalesdoctypes
+# ------------------------------------------------------------
+  type: html5
+  path: app/map-sales-doc-types
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+    
+# ------- HTML5 APP REPOSITORY APP MAP DIVISIONS MODULE ------
+- name: mapdivisions
+# ------------------------------------------------------------
+  type: html5
+  path: app/map-divisions
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+    
+# -------- HTML5 APP REPOSITORY APP MAP PLANTS MODULE --------
+- name: mapplants
+# ------------------------------------------------------------
+  type: html5
+  path: app/map-plants
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+# -------- HTML5 APP REPOSITORY APP OPS RECON MODULE --------
+- name: opsrecon
+# ------------------------------------------------------------
+  type: html5
+  path: app/ops-recon
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+# ----- HTML5 APP REPOSITORY APP DEFAULT DISCOUNT MODULE -----
+- name: defaultdiscount
+# ------------------------------------------------------------
+  type: html5
+  path: app/default-discount
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+# ------ HTML5 APP REPOSITORY APP MAP BASE MODEL MODULE ------
+- name: mapbasemodel
+# ------------------------------------------------------------
+  type: html5
+  path: app/map-base-model
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+resources:
+# ----------------------- UAA SERVICE ------------------------
+- name: ops-uaa
+# ------------------------------------------------------------
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+    
+# -------------------- DESTINATION SERVICE -------------------
+- name: ops-dest
+# ------------------------------------------------------------
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Name: ui5
+            Authentication: NoAuthentication
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          - Name: ops-srv-api
+            Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+            HTML5.Timeout: 300000
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-plan: lite
+  requires:
+  - name: srv-api
+  - name: ops-conn
+
+# ------------------- CONNECTIVITY SERVICE -------------------
+# Required to connect to on-prem systems via cloud connector
+- name: ops-conn
+# ------------------------------------------------------------
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-plan: lite
+
+# ----------- HTML5 APP REPOSITORY HOSTING SERVICE -----------
+- name: ops-html5repo
+# ------------------------------------------------------------
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+
+# ------------------- HDI CONTAINER SERVICE ------------------
+- name: ops-db
+# ------------------------------------------------------------
+  type: com.sap.xs.hdi-container
+  parameters:
+    config:
+      schema: ops
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-service-name: ${service-name}
+
+# ----------------- REMOTE OMS HDI CONTAINER -----------------
+- name: oms-db-grantor
+# ------------------------------------------------------------
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: oms-db
+  properties:
+    oms-grantor-service: ${service-name}
+    
+# ------------------ REMOTE SLTS4HC SCHEMA -------------------
+- name: slts4hc-schema
+# ------------------------------------------------------------
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: slts4hc-schema
+
+# ------------------ REMOTE SLTSRMHC SCHEMA ------------------
+- name: sltsrmhc-schema
+# ------------------------------------------------------------
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: sltsrmhc-schema
+
+# ------------------ JOB SCHEDULER SERVICE -------------------
+- name: job-scheduler
+# ------------------------------------------------------------
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: job-scheduler
+  properties:
+    job-scheduler-service: ${service-name}
+    
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+  
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production
+    - npx rimraf gen/db/src/gen/data
+    - npx rimraf gen/db/src/gen/csv

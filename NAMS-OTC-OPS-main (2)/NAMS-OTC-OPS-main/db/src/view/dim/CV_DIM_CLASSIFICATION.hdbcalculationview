@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_CLASSIFICATION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Classification"/>
+<localVariables>
+  <variable id="IP_CLASS_TYPE" parameter="true">
+    <descriptions defaultDescription="Class Type"/>
+    <variableProperties datatype="NVARCHAR" length="3" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::AUSP">
+    <resourceUri>slts4hc::AUSP</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::CABN">
+    <resourceUri>slts4hc::CABN</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="OBJECT_KEY"/>
+      <viewAttribute id="ATINN"/>
+      <viewAttribute id="MAFID"/>
+      <viewAttribute id="KLART"/>
+      <viewAttribute id="ADZHL"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="DATE_VALUE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::AUSP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_KEY" source="OBJEK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="ATWRT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_VALUE" source="DATE_FROM"/>
+    </input>
+    <filter>&quot;MAFID&quot;='O' and &quot;KLART&quot;='$$IP_CLASS_TYPE$$' and &quot;ADZHL&quot;='0000'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ATINN"/>
+      <viewAttribute id="ADZHL"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+      <viewAttribute id="ATEIN"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::CABN">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHARACTERISTIC_NAME" source="ATNAM"/>
+    </input>
+    <filter>&quot;ADZHL&quot;='0000' and &quot;ATEIN&quot;='X'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="OBJECT_KEY"/>
+      <viewAttribute id="VALUE"/>
+      <viewAttribute id="DATE_VALUE"/>
+      <viewAttribute id="CHARACTERISTIC_NAME"/>
+      <viewAttribute hidden="true" id="JOIN$ATINN$ATINN"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_KEY" source="OBJECT_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_VALUE" source="DATE_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ATINN$ATINN" source="ATINN"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHARACTERISTIC_NAME" source="CHARACTERISTIC_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ATINN$ATINN" source="ATINN"/>
+    </input>
+    <joinAttribute name="JOIN$ATINN$ATINN"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="OBJECT_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Object Key"/>
+      <keyMapping columnObjectName="Join_1" columnName="OBJECT_KEY"/>
+    </attribute>
+    <attribute id="VALUE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Value"/>
+      <keyMapping columnObjectName="Join_1" columnName="VALUE"/>
+    </attribute>
+    <attribute id="DATE_VALUE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Date Value"/>
+      <keyMapping columnObjectName="Join_1" columnName="DATE_VALUE"/>
+    </attribute>
+    <attribute id="CHARACTERISTIC_NAME" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Characteristic Name"/>
+      <keyMapping columnObjectName="Join_1" columnName="CHARACTERISTIC_NAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

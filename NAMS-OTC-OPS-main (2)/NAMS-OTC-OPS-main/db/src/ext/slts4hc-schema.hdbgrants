@@ -1,0 +1,14 @@
+{
+  "slts4hc-schema": {
+    "object_owner": {
+      "roles": [
+        "slts4hc::ZR_S1_ALL_ITD0_OO#"
+      ]
+    },
+    "application_user": {
+      "roles": [
+        "slts4hc::ZR_S1_ALL_ITD0_RT"
+      ]
+    }
+  }
+}

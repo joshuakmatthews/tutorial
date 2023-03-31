@@ -1,0 +1,1203 @@
+### Marketing fee
+POST http://localhost:4004/manage/MsgOrders
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "action": null,
+    "actualDeliveryDt": "2022-01-19",
+    "allocationDt": null,
+    "auxTransCd": null,
+    "bodyHgt": 3048,
+    "bodyLadenCpcty": 1814.4,
+    "bodyLgth": 7010.4,
+    "bodyType": "0095090",
+    "bumperLength": 0,
+    "cabAxleDimeension": 6858,
+    "cabEOFDimeension": 8686.8,
+    "cabLineSequenceNo": null,
+    "cabScheduleDt": "2021-11-24",
+    "CARAmt": null,
+    "CARNumber": "01583273",
+    "CARPct": 14.6,
+    "changeOrderDtTm": "2021-10-26T08:49:53Z",
+    "changeOrderNo": 28,
+    "chasHwyPct": 40,
+    "chassisNo": "174087",
+    "chassisPrevNo": "459073",
+    "chassisStatusComment": null,
+    "chassisSystemStatus": "FC",
+    "chasMetricCustmryInd": "C",
+    "chasOpsClassBPct": null,
+    "chasOpsClassCPct": null,
+    "chasOpsClassDPct": null,
+    "chngOrdChrg": 400,
+    "comdtyHaulID": null,
+    "cornerRadius": 0,
+    "costModelCd": "T8NS",
+    "createTimestamp": "2022-03-30T15:53:24.000Z",
+    "credInDtTm": "2021-09-14T15:52:58Z",
+    "credOutDtTm": null,
+    "ctrlnAxle": 0,
+    "cuPoNo": null,
+    "custNo": null,
+    "customerNm": "OBEID KNEISH TRADING",
+    "customerStockCd": "C",
+    "dealerCd": "P034",
+    "divisionCd": "K",
+    "dlrBasePriceAmt": 148154,
+    "dlrPoPresentId": "PGSQ3037FINAL",
+    "DTPONumber": "10054395",
+    "endingChassis": "174088",
+    "engineCd": "0122603",
+    "engineClassCd": "5",
+    "estimatedDeliveryDt": "2021-12-07",
+    "exchangeRateAmt": 100,
+    "FETInd": "N",
+    "FETGSTCd": "F",
+    "FET": "000000",
+    "fifthWheelCd": null,
+    "firmScheduleDt": "2021-11-29",
+    "fleetQty": 2,
+    "frameCd": "6057680",
+    "frameLineSequenceNo": null,
+    "frameScheduleDt": "2021-11-29",
+    "frontAxleBOCDimeension": 2032,
+    "frontAxleCd": "2537003",
+    "frontAxleLoad": 9979.2,
+    "gawrFirstRear": 0,
+    "gawrFront": 9979.2,
+    "gawrRear": 0,
+    "gawrSecRear": 0,
+    "gcw": 9979.2,
+    "gvwr": 9979.2,
+    "intendSvcClass": null,
+    "interCompDisc": 99.8,
+    "interDivDisc": 99.8,
+    "invcTermDays": 30,
+    "kingPinSet": 0,
+    "mainTransCd": "2050004",
+    "maxGradePct": 6,
+    "messageType": "UpdateNAMSOrder",
+    "modelCd": "0000800",
+    "noTrlrAxle": 0,
+    "operAreaDesc": null,
+    "operAreaHgt": 4.11,
+    "operAreaLgth": 22.86,
+    "operAreaWidth": 2.59,
+    "orderAddDt": "2021-09-14",
+    "orderCancelDt": null,
+    "orderReceivedDt": "2021-08-11",
+    "orderType": "O",
+    "plantCd": "R",
+    "priceEffectiveDt": "2021-04-01",
+    "procesingStatusCd": "INVS",
+    "prodConvChrg": 0,
+    "promoProgCd": "0000000",
+    "promoProgPct": 0,
+    "rearAxleCd": "3120005",
+    "rearAxleLoad": 0,
+    "rearAxleRatio": 0,
+    "rearAxleRatioCd": "3220000",
+    "releaseWriter": "RNH",
+    "requestedDeliveryDt": "2021-11-01",
+    "shippingDestination": "SEE INSTRUCTIONS",
+    "spclRqmntCd1": "0098030",
+    "spclRqmntCd2": null,
+    "spclRqmntCd3": null,
+    "spclRqmntCd4": null,
+    "startingChassis": "174087",
+    "stateProvinceCd": "XX",
+    "statusCode": null,
+    "stdDlrDiscPct": 73,
+    "suspensionCd": "3726000",
+    "tentativeScheduleDt": "2021-11-29",
+    "tireRollRadius": null,
+    "trlrHgt": 0,
+    "trlrLgth": 0,
+    "trlrType": null,
+    "unitTypeCd": "3",
+    "wheelbase": 8890,
+    "Options": [
+        {
+            "status": "Ok",
+            "text": "9510765"
+        },
+        {
+            "status": "Ok",
+            "text": "2765001"
+        },
+        {
+            "status": "Ok",
+            "text": "6390001"
+        },
+        {
+            "status": "Ok",
+            "text": "6742009"
+        },
+        {
+            "status": "Ok",
+            "text": "8800271"
+        },
+        {
+            "status": "Ok",
+            "text": "8800373"
+        },
+        {
+            "status": "Ok",
+            "text": "8869005"
+        },
+        {
+            "status": "Ok",
+            "text": "6391205"
+        },
+        {
+            "status": "Ok",
+            "text": "0070066"
+        },
+        {
+            "status": "Ok",
+            "text": "2900024"
+        },
+        {
+            "status": "Ok",
+            "text": "8490110"
+        },
+        {
+            "status": "Ok",
+            "text": "1000007"
+        },
+        {
+            "status": "Ok",
+            "text": "1812157"
+        },
+        {
+            "status": "Ok",
+            "text": "6319051"
+        },
+        {
+            "status": "Ok",
+            "text": "6409901"
+        },
+        {
+            "status": "Ok",
+            "text": "6390083"
+        },
+        {
+            "status": "Ok",
+            "text": "1000180"
+        },
+        {
+            "status": "Ok",
+            "text": "0095090"
+        },
+        {
+            "status": "Ok",
+            "text": "0098030"
+        },
+        {
+            "status": "Ok",
+            "text": "2893882"
+        },
+        {
+            "status": "Ok",
+            "text": "6397001"
+        },
+        {
+            "status": "Ok",
+            "text": "8871438"
+        },
+        {
+            "status": "Ok",
+            "text": "8890353"
+        },
+        {
+            "status": "Ok",
+            "text": "9010702"
+        },
+        {
+            "status": "Ok",
+            "text": "8832115"
+        },
+        {
+            "status": "Ok",
+            "text": "8343304"
+        },
+        {
+            "status": "Ok",
+            "text": "9409852"
+        },
+        {
+            "status": "Ok",
+            "text": "1022015"
+        },
+        {
+            "status": "Ok",
+            "text": "2867022"
+        },
+        {
+            "status": "Ok",
+            "text": "7214150"
+        },
+        {
+            "status": "Ok",
+            "text": "7216150"
+        },
+        {
+            "status": "Ok",
+            "text": "8331100"
+        },
+        {
+            "status": "Ok",
+            "text": "8890134"
+        },
+        {
+            "status": "Ok",
+            "text": "9462005"
+        },
+        {
+            "status": "Ok",
+            "text": "4017217"
+        },
+        {
+            "status": "Ok",
+            "text": "6301437"
+        },
+        {
+            "status": "Ok",
+            "text": "7821300"
+        },
+        {
+            "status": "Ok",
+            "text": "8410091"
+        },
+        {
+            "status": "Ok",
+            "text": "6141615"
+        },
+        {
+            "status": "Ok",
+            "text": "6324025"
+        },
+        {
+            "status": "Ok",
+            "text": "6490086"
+        },
+        {
+            "status": "Ok",
+            "text": "6490416"
+        },
+        {
+            "status": "Ok",
+            "text": "8090123"
+        },
+        {
+            "status": "Ok",
+            "text": "8282004"
+        },
+        {
+            "status": "Ok",
+            "text": "8480090"
+        },
+        {
+            "status": "Ok",
+            "text": "8879200"
+        },
+        {
+            "status": "Ok",
+            "text": "6057680"
+        },
+        {
+            "status": "Ok",
+            "text": "6405102"
+        },
+        {
+            "status": "Ok",
+            "text": "8291102"
+        },
+        {
+            "status": "Ok",
+            "text": "8700168"
+        },
+        {
+            "status": "Ok",
+            "text": "2900616"
+        },
+        {
+            "status": "Ok",
+            "text": "8879590"
+        },
+        {
+            "status": "Ok",
+            "text": "9150210"
+        },
+        {
+            "status": "Ok",
+            "text": "6421050"
+        },
+        {
+            "status": "Ok",
+            "text": "8866100"
+        },
+        {
+            "status": "Ok",
+            "text": "9491831"
+        },
+        {
+            "status": "Ok",
+            "text": "5299988"
+        },
+        {
+            "status": "Ok",
+            "text": "9940044"
+        },
+        {
+            "status": "Ok",
+            "text": "9965510"
+        },
+        {
+            "status": "Ok",
+            "text": "1324377"
+        },
+        {
+            "status": "Ok",
+            "text": "0122603"
+        },
+        {
+            "status": "Ok",
+            "text": "1252106"
+        },
+        {
+            "status": "Ok",
+            "text": "5042311"
+        },
+        {
+            "status": "Ok",
+            "text": "9944820"
+        },
+        {
+            "status": "Ok",
+            "text": "2537003"
+        },
+        {
+            "status": "Ok",
+            "text": "6390110"
+        },
+        {
+            "status": "Ok",
+            "text": "7889245"
+        },
+        {
+            "status": "Ok",
+            "text": "8108010"
+        },
+        {
+            "status": "Ok",
+            "text": "8201200"
+        },
+        {
+            "status": "Ok",
+            "text": "8800400"
+        },
+        {
+            "status": "Ok",
+            "text": "8800401"
+        },
+        {
+            "status": "Ok",
+            "text": "8890105"
+        },
+        {
+            "status": "Ok",
+            "text": "9026200"
+        },
+        {
+            "status": "Ok",
+            "text": "9090039"
+        },
+        {
+            "status": "Ok",
+            "text": "9090115"
+        },
+        {
+            "status": "Ok",
+            "text": "6451099"
+        },
+        {
+            "status": "Ok",
+            "text": "7722064"
+        },
+        {
+            "status": "Ok",
+            "text": "1836106"
+        },
+        {
+            "status": "Ok",
+            "text": "8205123"
+        },
+        {
+            "status": "Ok",
+            "text": "4900008"
+        },
+        {
+            "status": "Ok",
+            "text": "2702022"
+        },
+        {
+            "status": "Ok",
+            "text": "3830145"
+        },
+        {
+            "status": "Ok",
+            "text": "9210329"
+        },
+        {
+            "status": "Ok",
+            "text": "9210345"
+        },
+        {
+            "status": "Ok",
+            "text": "9491720"
+        },
+        {
+            "status": "Ok",
+            "text": "0093101"
+        },
+        {
+            "status": "Ok",
+            "text": "9490003"
+        },
+        {
+            "status": "Ok",
+            "text": "9800001"
+        },
+        {
+            "status": "Ok",
+            "text": "9212000"
+        },
+        {
+            "status": "Ok",
+            "text": "1000891"
+        },
+        {
+            "status": "Ok",
+            "text": "5853906"
+        },
+        {
+            "status": "Ok",
+            "text": "6390091"
+        },
+        {
+            "status": "Ok",
+            "text": "6721128"
+        },
+        {
+            "status": "Ok",
+            "text": "6723008"
+        },
+        {
+            "status": "Ok",
+            "text": "7930150"
+        },
+        {
+            "status": "Ok",
+            "text": "7940150"
+        },
+        {
+            "status": "Ok",
+            "text": "0072000"
+        },
+        {
+            "status": "Ok",
+            "text": "8205098"
+        },
+        {
+            "status": "Ok",
+            "text": "8222115"
+        },
+        {
+            "status": "Ok",
+            "text": "8240620"
+        },
+        {
+            "status": "Ok",
+            "text": "5900008"
+        },
+        {
+            "status": "Ok",
+            "text": "7889204"
+        },
+        {
+            "status": "Ok",
+            "text": "0091110"
+        },
+        {
+            "status": "Ok",
+            "text": "1000151"
+        },
+        {
+            "status": "Ok",
+            "text": "7889604"
+        },
+        {
+            "status": "Ok",
+            "text": "9200002"
+        },
+        {
+            "status": "Ok",
+            "text": "9700000"
+        },
+        {
+            "status": "Ok",
+            "text": "9960006"
+        },
+        {
+            "status": "Ok",
+            "text": "9999944"
+        },
+        {
+            "status": "Ok",
+            "text": "9481022"
+        },
+        {
+            "status": "Ok",
+            "text": "9290207"
+        },
+        {
+            "status": "Ok",
+            "text": "2050004"
+        },
+        {
+            "status": "Ok",
+            "text": "2250000"
+        },
+        {
+            "status": "Ok",
+            "text": "2401000"
+        },
+        {
+            "status": "Ok",
+            "text": "8288999"
+        },
+        {
+            "status": "Ok",
+            "text": "3220000"
+        },
+        {
+            "status": "Ok",
+            "text": "3334000"
+        },
+        {
+            "status": "Ok",
+            "text": "3392000"
+        },
+        {
+            "status": "Ok",
+            "text": "3483000"
+        },
+        {
+            "status": "Ok",
+            "text": "4299988"
+        },
+        {
+            "status": "Ok",
+            "text": "6090999"
+        },
+        {
+            "status": "Ok",
+            "text": "3500031"
+        },
+        {
+            "status": "Ok",
+            "text": "0000800"
+        },
+        {
+            "status": "Ok",
+            "text": "0090000"
+        },
+        {
+            "status": "Ok",
+            "text": "1821210"
+        },
+        {
+            "status": "Ok",
+            "text": "1900300"
+        },
+        {
+            "status": "Ok",
+            "text": "9140020"
+        },
+        {
+            "status": "Ok",
+            "text": "1292736"
+        },
+        {
+            "status": "Ok",
+            "text": "3726000"
+        },
+        {
+            "status": "Ok",
+            "text": "2410151"
+        },
+        {
+            "status": "Ok",
+            "text": "2621078"
+        },
+        {
+            "status": "Ok",
+            "text": "2690035"
+        },
+        {
+            "status": "Ok",
+            "text": "2750001"
+        },
+        {
+            "status": "Ok",
+            "text": "2899336"
+        },
+        {
+            "status": "Ok",
+            "text": "3120005"
+        },
+        {
+            "status": "Ok",
+            "text": "3401000"
+        },
+        {
+            "status": "Ok",
+            "text": "3460000"
+        },
+        {
+            "status": "Ok",
+            "text": "6144615"
+        },
+        {
+            "status": "Ok",
+            "text": "8049001"
+        },
+        {
+            "status": "Ok",
+            "text": "8201013"
+        },
+        {
+            "status": "Ok",
+            "text": "8282009"
+        },
+        {
+            "status": "Ok",
+            "text": "8700186"
+        },
+        {
+            "status": "Ok",
+            "text": "8841411"
+        },
+        {
+            "status": "Ok",
+            "text": "8850300"
+        },
+        {
+            "status": "Ok",
+            "text": "9030010"
+        },
+        {
+            "status": "Ok",
+            "text": "9108001"
+        },
+        {
+            "status": "Ok",
+            "text": "1105220"
+        },
+        {
+            "status": "Ok",
+            "text": "2741970"
+        },
+        {
+            "status": "Ok",
+            "text": "9943014"
+        },
+        {
+            "status": "Ok",
+            "text": "9943051"
+        },
+        {
+            "status": "Ok",
+            "text": "9090049"
+        },
+        {
+            "status": "Ok",
+            "text": "9101218"
+        },
+        {
+            "status": "Ok",
+            "text": "1002060"
+        },
+        {
+            "status": "Ok",
+            "text": "1127985"
+        },
+        {
+            "status": "Ok",
+            "text": "1900082"
+        },
+        {
+            "status": "Ok",
+            "text": "3495500"
+        }
+    ],
+    "Narratives": [
+        {
+            "approvalCd": "A",
+            "cd": "9998",
+            "text": "NAME: GARY CARMICHAEL   PH:"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9996",
+            "text": "SALESPERSON ID: OSCAR RUIZ"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9994",
+            "text": "EMAIL: GARY.CARMICHAEL@PACCAR.COM"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9995",
+            "text": "CELL PHONE:"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9801",
+            "text": "0090300 NON-ROLLING GLIDER NON-SLEEPER"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9601",
+            "text": "PROD CHASSIS RELATED TO SERV AXLE:   628043"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9802",
+            "text": "1000007 THIS CHASSIS IS A POWERED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0910",
+            "text": "P11  NO....ENGINE PROTECTION SHTDWN"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9805",
+            "text": "1252106 1252106  EXH: RH UNDER SING EGP"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9999",
+            "text": "RNH 10/07/21 OC015"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9600",
+            "text": "ICOH-16RH 9/14/21"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0912",
+            "text": "P14  65....MAX VEHICLE SPEED IN TOP GEA"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0904",
+            "text": "P04  NO....AUTO ENGINE BRAKE IN CRUISE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0902",
+            "text": "P02  YES...CRUISE CONTROL AUTO RESUME"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9720",
+            "text": "FRAME       N0620EA         WABASH RED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9702",
+            "text": "A -         L0620EY         RED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0922",
+            "text": "P33  NO....IDLE SHTDWN OVERRIDE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0920",
+            "text": "P32  5.....IDLE SHTDWN TIME"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9806",
+            "text": "1252106 MTD CAB ACCESS  ASSY DUAL SIDE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9807",
+            "text": "1252106 OF CA"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9808",
+            "text": "1292799 TAILPIPE: DUAL   36\" CHROME CUR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9809",
+            "text": "2050004 POWER GLIDER DELET STD TRANSMIS"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9810",
+            "text": "2250000 POWERED GLIDER: DELETE STD CLUT"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9811",
+            "text": "2250000 POWERED GLIDER: DELETE STD"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9812",
+            "text": "2250000 CLUTCH"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9813",
+            "text": "2401000 POWERED GLIDER: DELETE STD"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9814",
+            "text": "2401000 DRIVELINE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9815",
+            "text": "3120005 AXLE      POWERED GLIDER W/O"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "6490",
+            "text": "CFL C/M:LOCATE PER CUSTOMER DIRECTION"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9816",
+            "text": "3120005 REAR TANDEM"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9817",
+            "text": "3220000 POWERED GLIDER: DELETE REAR AXL"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9818",
+            "text": "3220000 3220000  POWERED GLIDER: DELETE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9819",
+            "text": "3220000 REAR AXLE RATIO"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9820",
+            "text": "3334000 POWERED GLIDER: DELETE STD BRK"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9821",
+            "text": "3334000         POWERED GLIDER W/O REAR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9822",
+            "text": "3334000 AXLES"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "6491",
+            "text": "CFL C/M:(WITHIN KW ENGINEERING"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9823",
+            "text": "3392000 POWERED GLIDER: DELETE STD CAST"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9824",
+            "text": "3392000 DRUM    POWERED GLIDER W/O REAR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9997",
+            "text": "DEALER CONTACT"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9803",
+            "text": "1000007 GLIDER"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9770",
+            "text": "BUMPER      N0620EA         WABASH RED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9804",
+            "text": "1252106 EXH: RH UNDER SING EGP MTD CAB"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9602",
+            "text": "OK TO BUILD 9/20 CD"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9825",
+            "text": "3392000 AXLES"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9826",
+            "text": "3401000 POWERED GLIDER: DELETE STD HUB"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "6492",
+            "text": "CFL C/M:GUIDELINES)"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9827",
+            "text": "3401000         POWERED GLIDER W/O REAR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9828",
+            "text": "3401000 AXLES"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0914",
+            "text": "P19  65....MAX CRUISE CONTROL SPEED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0916",
+            "text": "P26  1400..MAX PTO SPEED"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9829",
+            "text": "3460000 POWERED GLIDER: DELETE STD"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9830",
+            "text": "3460000 SLACK ADJUST POWERED GLIDER W/O"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9831",
+            "text": "3460000 REAR AXLES"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9832",
+            "text": "3483000 POWERED GLIDER: DELETE STD"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9833",
+            "text": "3483000 SPRING BRKS  POWERED GLIDER W/O"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9834",
+            "text": "3483000 REAR AXLES"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0906",
+            "text": "P06  YES...GEAR DOWN PROTECTION"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0918",
+            "text": "P10  YES...IDLE SHTDWN"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9835",
+            "text": "3500031 POWERED GLIDER: DELETE STD I/A"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9836",
+            "text": "3500031 D/L      POWERED GLIDER W/O"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9837",
+            "text": "3500031 REAR AXLES"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9838",
+            "text": "3726000 POWERED GLIDER: DELETE STD SUSP"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9839",
+            "text": "3726000         POWERED GLIDER W/O REAR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9850",
+            "text": "8288999 DOOR LABEL: \"ASSEMBLED IN THE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9840",
+            "text": "3726000 AXLES"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9490",
+            "text": "9491720 775284-M5T0X5"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9860",
+            "text": "3120005  POWERED GLIDER: DELETE STD RR AXLE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9863",
+            "text": "FRAME GUIDELINES APPLN ENGR REVIEW REQD"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9859",
+            "text": "2460099 NO TRANSMISSION COOLER"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9855",
+            "text": "9491831 9491831  WIRING HARNESSES AND"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9856",
+            "text": "9491831 AIR PIPING INSTALLED IN THE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9857",
+            "text": "9491831 GLIDER CHA"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9841",
+            "text": "5853999 DELETE POWDER COATED WHEELS NOT"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9842",
+            "text": "5853999 needed"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9843",
+            "text": "6721128 POWER GLIDER: DELETE RR MUDFLAP"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9844",
+            "text": "6721128 ARMS    POWERED GLIDER W/O REAR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9845",
+            "text": "6721128 AXLES"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9846",
+            "text": "6723008 POWER GLIDER:DELETE RR MUDFLAP"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9847",
+            "text": "6723008 6723008  POWER GLIDER:DELETE RR"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9848",
+            "text": "6723008 MUDFLAP SHIELDS THAT ARE STD ON"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9849",
+            "text": "6723008 BASE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9851",
+            "text": "8288999 USA\""
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9861",
+            "text": "4299988 POWERED GLIDER: DELETE STD RR TIRES"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9862",
+            "text": "5853999 DELETE POWDER COATED WHEELS NOT NEEDE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0130",
+            "text": "WITH CUMMINS PART #3102962"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9852",
+            "text": "9140262 CAB/FRAME AIR PIPING AND ELEC."
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9853",
+            "text": "9140262 LINES    INSTALLED IN CHASSIS"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9854",
+            "text": "9140262 FOR XXX\" WHEELBASE"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "0120",
+            "text": "NEED TO SUBSTITUTE STD ALLISON FLYWHEEL"
+        },
+        {
+            "approvalCd": "A",
+            "cd": "9858",
+            "text": "1292799 TAILPIPE: DUAL 36\" CHROME CUR"
+        }
+    ]
+}

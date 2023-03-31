@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_CUSTOMER" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300">
+<descriptions defaultDescription="Customer"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::KNA1">
+    <resourceUri>slts4hc::KNA1</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::ADRC">
+    <resourceUri>slts4hc::ADRC</resourceUri>
+  </DataSource>
+  <DataSource id="CV_DIM_CUSTOMER_CLASSIFICATION">
+    <resourceUri>CV_DIM_CUSTOMER_CLASSIFICATION</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::ADR6">
+    <resourceUri>slts4hc::ADR6</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="KNA1">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="COUNTRY"/>
+      <viewAttribute id="NAME_1"/>
+      <viewAttribute id="NAME_2"/>
+      <viewAttribute id="CITY"/>
+      <viewAttribute id="POSTAL_CODE"/>
+      <viewAttribute id="REGION"/>
+      <viewAttribute id="STREET"/>
+      <viewAttribute id="PHONE"/>
+      <viewAttribute id="ADRNR"/>
+      <viewAttribute id="ERDAT"/>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="GROUP_KEY"/>
+      <viewAttribute id="ACCOUNT_GROUP"/>
+      <viewAttribute id="VENDOR_NUMBER"/>
+      <viewAttribute id="NAME_3"/>
+      <viewAttribute id="LANGUAGE"/>
+      <viewAttribute id="TAX_NUMBER_1"/>
+      <viewAttribute id="TAX_NUMBER_2"/>
+      <viewAttribute id="TAX_JURISDICTION"/>
+      <viewAttribute id="TAX_NUMBER_3"/>
+      <viewAttribute id="UPDAT"/>
+      <viewAttribute id="UPTIM"/>
+    
+      <viewAttribute id="MATCHCODE_NAME_1"/>
+      <viewAttribute id="MATCHCODE_CITY"/>
+      <viewAttribute id="SEARCH_TERM_1"/>
+      <viewAttribute id="MATCHCODE_NAME_2"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CREATED_ON" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;ERDAT&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CHANGED_ON" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(CONCAT(&quot;UPDAT&quot;, &quot;UPTIM&quot;))</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="slts4hc::KNA1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER" source="KUNNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="LAND1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_2" source="NAME2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="ORT01"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTAL_CODE" source="PSTLZ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGIO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STRAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PHONE" source="TELF1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY" source="ERNAM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_KEY" source="KONZS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACCOUNT_GROUP" source="KTOKD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VENDOR_NUMBER" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_3" source="NAME3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="SPRAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_1" source="STCD1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_2" source="STCD2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_JURISDICTION" source="TXJCD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_3" source="STCD3"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_NAME_1" source="MCOD1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_CITY" source="MCOD3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEARCH_TERM_1" source="SORTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_NAME_2" source="MCOD2"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ADRC" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ADDRNUMBER"/>
+      <viewAttribute id="DATE_FROM"/>
+      <viewAttribute id="NATION"/>
+      <viewAttribute id="STREET_2"/>
+      <viewAttribute id="STREET_4"/>
+      <viewAttribute id="SEARCH_TERM_2"/>
+      <viewAttribute id="MATCHCODE_STREET"/>
+      <viewAttribute id="TIME_ZONE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::ADRC">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_2" source="STR_SUPPL1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_4" source="STR_SUPPL3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEARCH_TERM_2" source="SORT2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_STREET" source="MC_STREET"/>
+    </input>
+    <filter>&quot;DATE_FROM&quot;='00010101' and &quot;NATION&quot;=''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Characteristics">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="FLOORING_SOURCE"/>
+    
+      <viewAttribute id="DISTRICT_SALES_MANAGER"/>
+      <viewAttribute id="SALES_MANAGER"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CV_DIM_CUSTOMER_CLASSIFICATION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ADR6" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ADDRNUMBER"/>
+      <viewAttribute id="PERSNUMBER"/>
+      <viewAttribute id="DATE_FROM"/>
+      <viewAttribute id="FLGDEFAULT"/>
+      <viewAttribute id="EMAIL_ADDRESS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::ADR6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_ADDRESS" source="SMTP_ADDR"/>
+    </input>
+    <filter>&quot;PERSNUMBER&quot;='' and &quot;DATE_FROM&quot;='00010101' and &quot;FLGDEFAULT&quot;='X'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_ADRC" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="COUNTRY"/>
+      <viewAttribute id="NAME_1"/>
+      <viewAttribute id="NAME_2"/>
+      <viewAttribute id="CITY"/>
+      <viewAttribute id="POSTAL_CODE"/>
+      <viewAttribute id="REGION"/>
+      <viewAttribute id="STREET"/>
+      <viewAttribute id="PHONE"/>
+      <viewAttribute id="ADRNR"/>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="GROUP_KEY"/>
+      <viewAttribute id="ACCOUNT_GROUP"/>
+      <viewAttribute id="VENDOR_NUMBER"/>
+      <viewAttribute id="NAME_3"/>
+      <viewAttribute id="LANGUAGE"/>
+      <viewAttribute id="TAX_NUMBER_1"/>
+      <viewAttribute id="TAX_NUMBER_2"/>
+      <viewAttribute id="TAX_JURISDICTION"/>
+      <viewAttribute id="TAX_NUMBER_3"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CHANGED_ON"/>
+      <viewAttribute id="STREET_2"/>
+      <viewAttribute id="STREET_4"/>
+      <viewAttribute id="SEARCH_TERM_2"/>
+      <viewAttribute id="MATCHCODE_STREET"/>
+      <viewAttribute id="TIME_ZONE"/>
+    
+      <viewAttribute id="MATCHCODE_NAME_1"/>
+      <viewAttribute id="MATCHCODE_CITY"/>
+      <viewAttribute id="SEARCH_TERM_1"/>
+      <viewAttribute id="MATCHCODE_NAME_2"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="KNA1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER" source="CUSTOMER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_1" source="NAME_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_2" source="NAME_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTAL_CODE" source="POSTAL_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PHONE" source="PHONE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADRNR" source="ADRNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY" source="CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_KEY" source="GROUP_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACCOUNT_GROUP" source="ACCOUNT_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VENDOR_NUMBER" source="VENDOR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_3" source="NAME_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_1" source="TAX_NUMBER_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_2" source="TAX_NUMBER_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_JURISDICTION" source="TAX_JURISDICTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_3" source="TAX_NUMBER_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGED_ON" source="CHANGED_ON"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_NAME_1" source="MATCHCODE_NAME_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_CITY" source="MATCHCODE_CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEARCH_TERM_1" source="SEARCH_TERM_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_NAME_2" source="MATCHCODE_NAME_2"/>
+    </input>
+    <input node="ADRC">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_2" source="STREET_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_4" source="STREET_4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEARCH_TERM_2" source="SEARCH_TERM_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_STREET" source="MATCHCODE_STREET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME_ZONE" source="TIME_ZONE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADRNR" source="ADDRNUMBER"/>
+    </input>
+    <joinAttribute name="ADRNR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_ADR6" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="COUNTRY"/>
+      <viewAttribute id="NAME_1"/>
+      <viewAttribute id="NAME_2"/>
+      <viewAttribute id="CITY"/>
+      <viewAttribute id="POSTAL_CODE"/>
+      <viewAttribute id="REGION"/>
+      <viewAttribute id="STREET"/>
+      <viewAttribute id="PHONE"/>
+      <viewAttribute id="ADRNR"/>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="GROUP_KEY"/>
+      <viewAttribute id="ACCOUNT_GROUP"/>
+      <viewAttribute id="VENDOR_NUMBER"/>
+      <viewAttribute id="NAME_3"/>
+      <viewAttribute id="LANGUAGE"/>
+      <viewAttribute id="TAX_NUMBER_1"/>
+      <viewAttribute id="TAX_NUMBER_2"/>
+      <viewAttribute id="TAX_JURISDICTION"/>
+      <viewAttribute id="TAX_NUMBER_3"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CHANGED_ON"/>
+      <viewAttribute id="STREET_2"/>
+      <viewAttribute id="STREET_4"/>
+      <viewAttribute id="SEARCH_TERM_2"/>
+      <viewAttribute id="MATCHCODE_STREET"/>
+      <viewAttribute id="TIME_ZONE"/>
+      <viewAttribute id="EMAIL_ADDRESS"/>
+    
+      <viewAttribute id="MATCHCODE_NAME_1"/>
+      <viewAttribute id="MATCHCODE_CITY"/>
+      <viewAttribute id="SEARCH_TERM_1"/>
+      <viewAttribute id="MATCHCODE_NAME_2"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="J_ADRC">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER" source="CUSTOMER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_1" source="NAME_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_2" source="NAME_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTAL_CODE" source="POSTAL_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PHONE" source="PHONE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADRNR" source="ADRNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY" source="CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_KEY" source="GROUP_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACCOUNT_GROUP" source="ACCOUNT_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VENDOR_NUMBER" source="VENDOR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_3" source="NAME_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_1" source="TAX_NUMBER_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_2" source="TAX_NUMBER_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_JURISDICTION" source="TAX_JURISDICTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_3" source="TAX_NUMBER_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGED_ON" source="CHANGED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_2" source="STREET_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_4" source="STREET_4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEARCH_TERM_2" source="SEARCH_TERM_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_STREET" source="MATCHCODE_STREET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME_ZONE" source="TIME_ZONE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_NAME_1" source="MATCHCODE_NAME_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_CITY" source="MATCHCODE_CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEARCH_TERM_1" source="SEARCH_TERM_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_NAME_2" source="MATCHCODE_NAME_2"/>
+    </input>
+    <input node="ADR6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_ADDRESS" source="EMAIL_ADDRESS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADRNR" source="ADDRNUMBER"/>
+    </input>
+    <joinAttribute name="ADRNR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_Characteristics" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="CUSTOMER"/>
+      <viewAttribute id="COUNTRY"/>
+      <viewAttribute id="NAME_1"/>
+      <viewAttribute id="NAME_2"/>
+      <viewAttribute id="CITY"/>
+      <viewAttribute id="POSTAL_CODE"/>
+      <viewAttribute id="REGION"/>
+      <viewAttribute id="STREET"/>
+      <viewAttribute id="PHONE"/>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="GROUP_KEY"/>
+      <viewAttribute id="ACCOUNT_GROUP"/>
+      <viewAttribute id="VENDOR_NUMBER"/>
+      <viewAttribute id="NAME_3"/>
+      <viewAttribute id="LANGUAGE"/>
+      <viewAttribute id="TAX_NUMBER_1"/>
+      <viewAttribute id="TAX_NUMBER_2"/>
+      <viewAttribute id="TAX_JURISDICTION"/>
+      <viewAttribute id="TAX_NUMBER_3"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CHANGED_ON"/>
+      <viewAttribute id="STREET_2"/>
+      <viewAttribute id="STREET_4"/>
+      <viewAttribute id="SEARCH_TERM_2"/>
+      <viewAttribute id="MATCHCODE_STREET"/>
+      <viewAttribute id="TIME_ZONE"/>
+      <viewAttribute id="EMAIL_ADDRESS"/>
+      <viewAttribute id="FLOORING_SOURCE"/>
+      <viewAttribute id="DISTRICT_SALES_MANAGER"/>
+      <viewAttribute id="SALES_MANAGER"/>
+    
+      <viewAttribute id="MATCHCODE_NAME_1"/>
+      <viewAttribute id="MATCHCODE_CITY"/>
+      <viewAttribute id="SEARCH_TERM_1"/>
+      <viewAttribute id="MATCHCODE_NAME_2"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="J_ADR6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER" source="CUSTOMER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_1" source="NAME_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_2" source="NAME_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTAL_CODE" source="POSTAL_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PHONE" source="PHONE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY" source="CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_KEY" source="GROUP_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACCOUNT_GROUP" source="ACCOUNT_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VENDOR_NUMBER" source="VENDOR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_3" source="NAME_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_1" source="TAX_NUMBER_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_2" source="TAX_NUMBER_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_JURISDICTION" source="TAX_JURISDICTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_NUMBER_3" source="TAX_NUMBER_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGED_ON" source="CHANGED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_2" source="STREET_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_4" source="STREET_4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEARCH_TERM_2" source="SEARCH_TERM_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_STREET" source="MATCHCODE_STREET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME_ZONE" source="TIME_ZONE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_ADDRESS" source="EMAIL_ADDRESS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_NAME_1" source="MATCHCODE_NAME_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_CITY" source="MATCHCODE_CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEARCH_TERM_1" source="SEARCH_TERM_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCHCODE_NAME_2" source="MATCHCODE_NAME_2"/>
+    </input>
+    <input node="Characteristics">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_MANAGER" source="SALES_MANAGER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRICT_SALES_MANAGER" source="DISTRICT_SALES_MANAGER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLOORING_SOURCE" source="FLOORING_SOURCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMER" source="CUSTOMER"/>
+    </input>
+    <joinAttribute name="CUSTOMER"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="J_Characteristics">
+  <attributes>
+    <attribute id="CUSTOMER" order="1" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="NAME_1">
+      <descriptions defaultDescription="Customer Number"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="CUSTOMER"/>
+    </attribute>
+    <attribute id="NAME_1" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Name 1"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="NAME_1"/>
+    </attribute>
+    <attribute id="NAME_2" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Name 2"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="NAME_2"/>
+    </attribute>
+    <attribute id="NAME_3" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Name 3"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="NAME_3"/>
+    </attribute>
+    <attribute id="STREET" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Street and House Number"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="STREET"/>
+    </attribute>
+    <attribute id="STREET_2" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Street 2"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="STREET_2"/>
+    </attribute>
+    <attribute id="STREET_4" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Street 4"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="STREET_4"/>
+    </attribute>
+    <attribute id="CITY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="City"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="CITY"/>
+    </attribute>
+    <attribute id="REGION" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Region (State, Province, County)"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="REGION"/>
+    </attribute>
+    <attribute id="POSTAL_CODE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Postal Code"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="POSTAL_CODE"/>
+    </attribute>
+    <attribute id="COUNTRY" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Country Key"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="COUNTRY"/>
+    </attribute>
+    <attribute id="PHONE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="First telephone number"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="PHONE"/>
+    </attribute>
+    <attribute id="SEARCH_TERM_1" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Search Term 1"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="SEARCH_TERM_1"/>
+    </attribute>
+    <attribute id="SEARCH_TERM_2" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Search Term 2"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="SEARCH_TERM_2"/>
+    </attribute>
+    <attribute id="MATCHCODE_NAME_1" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Name 1 Matchcode"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="MATCHCODE_NAME_1"/>
+    </attribute>
+    <attribute id="MATCHCODE_NAME_2" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Name 2 Matchcode"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="MATCHCODE_NAME_2"/>
+    </attribute>
+    <attribute id="MATCHCODE_STREET" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Street Matchcode"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="MATCHCODE_STREET"/>
+    </attribute>
+    <attribute id="MATCHCODE_CITY" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="City Matchcode"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="MATCHCODE_CITY"/>
+    </attribute>
+    <attribute id="GROUP_KEY" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Group key"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="GROUP_KEY"/>
+    </attribute>
+    <attribute id="ACCOUNT_GROUP" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Customer Account Group"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="ACCOUNT_GROUP"/>
+    </attribute>
+    <attribute id="VENDOR_NUMBER" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Account Number of Vendor or Creditor"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="VENDOR_NUMBER"/>
+    </attribute>
+    <attribute id="LANGUAGE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Language Key"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="LANGUAGE"/>
+    </attribute>
+    <attribute id="TAX_NUMBER_1" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Tax Number 1"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="TAX_NUMBER_1"/>
+    </attribute>
+    <attribute id="TAX_NUMBER_2" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Tax Number 2"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="TAX_NUMBER_2"/>
+    </attribute>
+    <attribute id="TAX_NUMBER_3" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Tax Number 3"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="TAX_NUMBER_3"/>
+    </attribute>
+    <attribute id="TAX_JURISDICTION" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Tax Jurisdiction"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="TAX_JURISDICTION"/>
+    </attribute>
+    <attribute id="CREATED_ON" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Created On"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="CREATED_ON"/>
+    </attribute>
+    <attribute id="CREATED_BY" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Name of Person who Created the Object"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="CREATED_BY"/>
+    </attribute>
+    <attribute id="CHANGED_ON" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Changed On"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="CHANGED_ON"/>
+    </attribute>
+    <attribute id="TIME_ZONE" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Address time zone"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="TIME_ZONE"/>
+    </attribute>
+    <attribute id="EMAIL_ADDRESS" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="E-Mail Address"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="EMAIL_ADDRESS"/>
+    </attribute>
+    <attribute id="SALES_MANAGER" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Manager"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="SALES_MANAGER"/>
+    </attribute>
+    <attribute id="DISTRICT_SALES_MANAGER" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="District Sales Manager"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="DISTRICT_SALES_MANAGER"/>
+    </attribute>
+    <attribute id="FLOORING_SOURCE" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Flooring Source"/>
+      <keyMapping columnObjectName="J_Characteristics" columnName="FLOORING_SOURCE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="422" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="KNA1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="641"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ADRC" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="641"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Characteristics" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="489" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="ADR6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="384" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_ADRC" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118" y="500"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="KNA1" modelObjectNameSpace="J_ADRC" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="202"/>
+    </shape>
+    <shape modelObjectName="ADRC" modelObjectNameSpace="J_ADRC" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="205"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_ADR6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="145" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_ADRC" modelObjectNameSpace="J_ADR6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="205"/>
+    </shape>
+    <shape modelObjectName="ADR6" modelObjectNameSpace="J_ADR6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="178"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_Characteristics" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="422" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_ADR6" modelObjectNameSpace="J_Characteristics" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="205"/>
+    </shape>
+    <shape modelObjectName="Characteristics" modelObjectNameSpace="J_Characteristics" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="240"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

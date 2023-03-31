@@ -1,0 +1,39 @@
+name: 'checkmarx-scan-new'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  checkmarx:
+    runs-on:
+      group: checkmarx-runners-demo
+      labels: checkmarx
+      
+    permissions:
+     contents: 'read'
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build checkmarx image
+        run: |
+          apt update -qq && apt-get install git -y > /dev/null
+          mkdir _tmp && cd _tmp
+          git clone https://github.com/checkmarx-ts/checkmarx-cxflow-github-action
+          cd checkmarx-cxflow-github-action
+          JAVA_LINE=`tail -n 1 entrypoint.sh`
+          cat > entrypoint.sh<< EOF
+          #!/bin/sh
+          wget http://pki.paccar.com/paccarxca16n01_PACCARTrustRoot.crt -O "Root.crt"
+          keytool -trustcacerts -importcert -alias TLS1 -file "Root.crt" -keystore "/etc/ssl/certs/java/cacerts" -storepass 'changeit' -noprompt
+          rm Root.crt
+          $JAVA_LINE
+          EOF      
+      - name: Checkmarx CxFlow Action
+        uses: ./_tmp/checkmarx-cxflow-github-action
+        with:
+          project: NAMS-OTC-OPS
+          team: "/CxServer/SP/ITD/SAP"
+          checkmarx_url: ${{ secrets.CHECKMARX_URL }}
+          checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
+          checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}
+          checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_CUST_SOLD_TO" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Sold-to"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="CV_DIM_CUSTOMER">
+    <resourceUri>CV_DIM_CUSTOMER</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+
+<logicalModel id="CV_DIM_CUSTOMER">
+  <attributes>
+    <attribute id="SOLD_TO" order="1" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="SOLD_TO_NAME_1">
+      <descriptions defaultDescription="Sold-to"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CUSTOMER"/>
+    </attribute>
+    <attribute id="SOLD_TO_NAME_1" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Name"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="NAME_1"/>
+    </attribute>
+    <attribute id="SOLD_TO_NAME_2" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Name 2"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="NAME_2"/>
+    </attribute>
+    <attribute id="SOLD_TO_NAME_3" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Name 3"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="NAME_3"/>
+    </attribute>
+    <attribute id="SOLD_TO_STREET" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Street and House Number"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="STREET"/>
+    </attribute>
+    <attribute id="SOLD_TO_STREET_2" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Street 2"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="STREET_2"/>
+    </attribute>
+    <attribute id="SOLD_TO_STREET_4" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Street 4"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="STREET_4"/>
+    </attribute>
+    <attribute id="SOLD_TO_CITY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to City"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CITY"/>
+    </attribute>
+    <attribute id="SOLD_TO_REGION" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Region (State, Province, County)"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="REGION"/>
+    </attribute>
+    <attribute id="SOLD_TO_POSTAL_CODE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Postal Code"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="POSTAL_CODE"/>
+    </attribute>
+    <attribute id="SOLD_TO_COUNTRY" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Country Key"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="COUNTRY"/>
+    </attribute>
+    <attribute id="SOLD_TO_PHONE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to First telephone number"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="PHONE"/>
+    </attribute>
+    <attribute id="SOLD_TO_SEARCH_TERM_1" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Search Term 1"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="SEARCH_TERM_1"/>
+    </attribute>
+    <attribute id="SOLD_TO_SEARCH_TERM_2" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Search Term 2"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="SEARCH_TERM_2"/>
+    </attribute>
+    <attribute id="SOLD_TO_MATCHCODE_NAME_1" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Name 1 Matchcode"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="MATCHCODE_NAME_1"/>
+    </attribute>
+    <attribute id="SOLD_TO_MATCHCODE_NAME_2" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Name 2 Matchcode"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="MATCHCODE_NAME_2"/>
+    </attribute>
+    <attribute id="SOLD_TO_MATCHCODE_STREET" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Street Matchcode"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="MATCHCODE_STREET"/>
+    </attribute>
+    <attribute id="SOLD_TO_MATCHCODE_CITY" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to City Matchcode"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="MATCHCODE_CITY"/>
+    </attribute>
+    <attribute id="SOLD_TO_GROUP_KEY" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Group key"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="GROUP_KEY"/>
+    </attribute>
+    <attribute id="SOLD_TO_ACCOUNT_GROUP" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Customer Account Group"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="ACCOUNT_GROUP"/>
+    </attribute>
+    <attribute id="SOLD_TO_VENDOR_NUMBER" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Account Number of Vendor or Creditor"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="VENDOR_NUMBER"/>
+    </attribute>
+    <attribute id="SOLD_TO_LANGUAGE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Language Key"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="LANGUAGE"/>
+    </attribute>
+    <attribute id="SOLD_TO_TAX_NUMBER_1" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Tax Number 1"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TAX_NUMBER_1"/>
+    </attribute>
+    <attribute id="SOLD_TO_TAX_NUMBER_2" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Tax Number 2"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TAX_NUMBER_2"/>
+    </attribute>
+    <attribute id="SOLD_TO_TAX_NUMBER_3" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Tax Number 3"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TAX_NUMBER_3"/>
+    </attribute>
+    <attribute id="SOLD_TO_TAX_JURISDICTION" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Tax Jurisdiction"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TAX_JURISDICTION"/>
+    </attribute>
+    <attribute id="SOLD_TO_CREATED_ON" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Created On"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CREATED_ON"/>
+    </attribute>
+    <attribute id="SOLD_TO_CREATED_BY" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Name of Person who Created the Object"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CREATED_BY"/>
+    </attribute>
+    <attribute id="SOLD_TO_CHANGED_ON" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Changed On"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="CHANGED_ON"/>
+    </attribute>
+    <attribute id="SOLD_TO_TIME_ZONE" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to Address time zone"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="TIME_ZONE"/>
+    </attribute>
+    <attribute id="SOLD_TO_EMAIL_ADDRESS" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sold-to E-Mail Address"/>
+      <keyMapping columnObjectName="CV_DIM_CUSTOMER" columnName="EMAIL_ADDRESS"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

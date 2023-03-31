@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_SRM_DOCUMENT_ITEM" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="SRM Document Items"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="sltsrmhc::CRMD_ORDERADM_I">
+    <resourceUri>sltsrmhc::CRMD_ORDERADM_I</resourceUri>
+  </DataSource>
+  <DataSource id="sltsrmhc::BBP_PDIGP">
+    <resourceUri>sltsrmhc::BBP_PDIGP</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Item">
+    <viewAttributes>
+      <viewAttribute id="ITEM_GUID"/>
+      <viewAttribute id="HEAD_GUID"/>
+      <viewAttribute id="ORDERED_PROD"/>
+      <viewAttribute id="NUMBER_INT"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sltsrmhc::CRMD_ORDERADM_I">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_GUID" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HEAD_GUID" source="HEADER"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Items" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+    
+    
+      <viewAttribute id="ITEM_GUID"/>
+      <viewAttribute id="HEAD_GUID"/>
+      <viewAttribute id="ORDERED_PROD"/>
+      <viewAttribute id="NUMBER_INT"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Item">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_GUID" source="ITEM_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORDERED_PROD" source="ORDERED_PROD"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="HEAD_GUID" source="HEAD_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER_INT" source="NUMBER_INT"/>
+    </input>
+    <input node="Item_Ext">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_GUID" source="ITEM_GUID"/>
+    </input>
+    <joinAttribute name="ITEM_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Item_Ext" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ITEM_GUID"/>
+      <viewAttribute id="DEL_IND"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sltsrmhc::BBP_PDIGP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_GUID" source="GUID"/>
+    </input>
+    <filter>&quot;DEL_IND&quot; = ''</filter>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Items">
+  <attributes>
+    <attribute id="ITEM_GUID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Item GUID"/>
+      <keyMapping columnObjectName="Items" columnName="ITEM_GUID"/>
+    </attribute>
+    <attribute id="HEAD_GUID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Header GUID"/>
+      <keyMapping columnObjectName="Items" columnName="HEAD_GUID"/>
+    </attribute>
+    <attribute id="ORDERED_PROD" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Ordered Product"/>
+      <keyMapping columnObjectName="Items" columnName="ORDERED_PROD"/>
+    </attribute>
+    <attribute id="NUMBER_INT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Item Number"/>
+      <keyMapping columnObjectName="Items" columnName="NUMBER_INT"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Item" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Items" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Item" modelObjectNameSpace="Items" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Item_Ext" modelObjectNameSpace="Items" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="229"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Item_Ext" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>

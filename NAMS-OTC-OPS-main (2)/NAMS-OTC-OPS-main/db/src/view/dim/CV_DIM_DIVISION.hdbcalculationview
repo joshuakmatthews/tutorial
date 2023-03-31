@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_DIM_DIVISION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="true">
+<descriptions defaultDescription="Division"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::TSPA">
+    <resourceUri>slts4hc::TSPA</resourceUri>
+  </DataSource>
+  <DataSource id="slts4hc::TSPAT">
+    <resourceUri>slts4hc::TSPAT</resourceUri>
+  </DataSource>
+  <DataSource id="MAP_DIVISIONS">
+    <resourceUri>MAP_DIVISIONS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="DIVISION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::TSPA">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="SPART"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="LANGUAGE"/>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="DIVISION_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::TSPAT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="SPRAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="SPART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION_NAME" source="VTEXT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="DIVISION"/>
+    
+      <viewAttribute id="OPS_DIVISION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="MAP_DIVISIONS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="SPART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_DIVISION" source="DIVISIONCD"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="OPS_DIVISION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_DIVISION" source="OPS_DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    </input>
+    <joinAttribute name="DIVISION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" joinType="textTable" languageColumn="LANGUAGE">
+    <viewAttributes>
+      <viewAttribute id="DIVISION"/>
+      <viewAttribute id="OPS_DIVISION"/>
+    
+      <viewAttribute id="DIVISION_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPS_DIVISION" source="OPS_DIVISION"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION_NAME" source="DIVISION_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIVISION" source="DIVISION"/>
+    </input>
+    <joinAttribute name="DIVISION"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_2">
+  <attributes>
+    <attribute id="DIVISION" order="1" descriptionColumnName="DIVISION_NAME" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Division"/>
+      <keyMapping columnObjectName="Join_2" columnName="DIVISION"/>
+    </attribute>
+    <attribute id="OPS_DIVISION" order="2" descriptionColumnName="DIVISION_NAME" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPS Division"/>
+      <keyMapping columnObjectName="Join_2" columnName="OPS_DIVISION"/>
+    </attribute>
+    <attribute id="DIVISION_NAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Division Name"/>
+      <keyMapping columnObjectName="Join_2" columnName="DIVISION_NAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="328" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="395" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="163"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="328" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="163"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="172"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

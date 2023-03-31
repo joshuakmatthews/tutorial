@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_SALES_ORDER_PARTNERS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Sales Order Partners"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="slts4hc::VBPA">
+    <resourceUri>slts4hc::VBPA</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="POSNR"/>
+      <viewAttribute id="PARVW"/>
+      <viewAttribute id="KUNNR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="slts4hc::VBPA">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="VBELN"/>
+    </input>
+    <filter>&quot;POSNR&quot;='000000' AND &quot;PARVW&quot; IN('1A','1B','RG','WE')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DealerOwnerGroup" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="PARVW"/>
+      <viewAttribute id="DEALER_OWNER_GROUP"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_OWNER_GROUP" source="KUNNR"/>
+    </input>
+    <filter>&quot;PARVW&quot;='1A'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DealerContractCode" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="PARVW"/>
+      <viewAttribute id="DEALER_CONTRACT_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_CONTRACT_CODE" source="KUNNR"/>
+    </input>
+    <filter>&quot;PARVW&quot;='1B'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Payer" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="PARVW"/>
+      <viewAttribute id="PAYER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER" source="KUNNR"/>
+    </input>
+    <filter>&quot;PARVW&quot;='RG'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ShipTo" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="PARVW"/>
+      <viewAttribute id="SHIP_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIP_TO" source="KUNNR"/>
+    </input>
+    <filter>&quot;PARVW&quot;='RG'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DEALER_OWNER_GROUP"/>
+      <viewAttribute id="DEALER_CONTRACT_CODE"/>
+      <viewAttribute id="PAYER"/>
+      <viewAttribute id="SHIP_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="DealerOwnerGroup" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_OWNER_GROUP" source="DEALER_OWNER_GROUP"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DEALER_CONTRACT_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PAYER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SHIP_TO" null="true" value=""/>
+    </input>
+    <input node="DealerContractCode" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DEALER_OWNER_GROUP" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEALER_CONTRACT_CODE" source="DEALER_CONTRACT_CODE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PAYER" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SHIP_TO" null="true" value=""/>
+    </input>
+    <input node="Payer" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DEALER_OWNER_GROUP" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DEALER_CONTRACT_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER" source="PAYER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SHIP_TO" null="true" value=""/>
+    </input>
+    <input node="ShipTo" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALES_ORDER" source="SALES_ORDER"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DEALER_OWNER_GROUP" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DEALER_CONTRACT_CODE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PAYER" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHIP_TO" source="SHIP_TO"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="SALES_ORDER"/>
+      <viewAttribute id="DEALER_OWNER_GROUP" aggregationType="max"/>
+      <viewAttribute id="DEALER_CONTRACT_CODE" aggregationType="max"/>
+      <viewAttribute id="PAYER" aggregationType="max"/>
+      <viewAttribute id="SHIP_TO" aggregationType="max"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_1"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Aggregation_1">
+  <attributes>
+    <attribute id="SALES_ORDER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales and Distribution Document Number"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="SALES_ORDER"/>
+    </attribute>
+    <attribute id="DEALER_OWNER_GROUP" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Customer Number"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="DEALER_OWNER_GROUP"/>
+    </attribute>
+    <attribute id="DEALER_CONTRACT_CODE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Customer Number"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="DEALER_CONTRACT_CODE"/>
+    </attribute>
+    <attribute id="PAYER" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Customer Number"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="PAYER"/>
+    </attribute>
+    <attribute id="SHIP_TO" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Customer Number"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="SHIP_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="498.1057117978569" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="318.0000000000001" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="DealerOwnerGroup" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512.0000000000001" y="531.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="DealerContractCode" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="722.0000000000001" y="531.9999976158142"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Payer" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.0000000000001" y="531.9999976158142"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ShipTo" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000006" y="531.9999976158142"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="460.5487507083798" y="341.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="460.5487507083798" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,343 @@
+{
+    "xsappname": "ops",
+    "tenant-mode": "dedicated",
+    "description": "Security profile of called application",
+    "scopes": [
+      {
+        "name": "$XSAPPNAME.Admin",
+        "description": "Admin"
+      },
+      {
+        "name": "$XSAPPNAME.job-scheduler",
+        "description": "Job Scheduler",
+        "grant-as-authority-to-apps": ["$XSSERVICENAME(job-scheduler)"]
+      },
+      {
+        "name": "$XSAPPNAME.MapDivisions_READ",
+        "description": "Map Divisions Reader"
+      },
+      {
+        "name": "$XSAPPNAME.MapDivisions_WRITE",
+        "description": "Map Divisions Writer"
+      },
+      {
+        "name": "$XSAPPNAME.MapSalesDocTypes_READ",
+        "description": "Map Sales Doc Types Reader"
+      },
+      {
+        "name": "$XSAPPNAME.MapSalesDocTypes_WRITE",
+        "description": "Map Sales Doc Types Writer"
+      },
+      {
+        "name": "$XSAPPNAME.MapPlants_READ",
+        "description": "Map Plants Reader"
+      },
+      {
+        "name": "$XSAPPNAME.MapPlants_WRITE",
+        "description": "Map Plants Writer"
+      },
+      {
+        "name": "$XSAPPNAME.MapBaseModel_READ",
+        "description": "Map Base Model Reader"
+      },
+      {
+        "name": "$XSAPPNAME.MapBaseModel_WRITE",
+        "description": "Map Base Model Writer"
+      },
+      {
+        "name": "$XSAPPNAME.MDCostModels_READ",
+        "description": "Master Data Cost Models Reader"
+      },
+      {
+        "name": "$XSAPPNAME.MDCostModels_WRITE",
+        "description": "Master Data Cost Models Writer"
+      },
+      {
+        "name": "$XSAPPNAME.MDDefaultDiscount_READ",
+        "description": "Master Data Default Discount Reader"
+      },
+      {
+        "name": "$XSAPPNAME.MDDefaultDiscount_WRITE",
+        "description": "Master Data Default Discount Writer"
+      },
+      {
+        "name": "$XSAPPNAME.MDSpecialRanges_READ",
+        "description": "Master Data Special Ranges Reader"
+      },
+      {
+        "name": "$XSAPPNAME.MDSpecialRanges_WRITE",
+        "description": "Master Data Special Ranges Writer"
+      },
+      {
+        "name": "$XSAPPNAME.MDMarketingFees_READ",
+        "description": "Master Data Marketing Fees Reader"
+      },
+      {
+        "name": "$XSAPPNAME.MDMarketingFees_WRITE",
+        "description": "Master Data Marketing Fees Writer"
+      },
+      {
+        "name": "$XSAPPNAME.MDReserves_READ",
+        "description": "Master Data Reserves Reader"
+      },
+      {
+        "name": "$XSAPPNAME.MDReserves_WRITE",
+        "description": "Master Data Reserves Writer"
+      },
+      {
+        "name": "$XSAPPNAME.OPSRecon_READ",
+        "description": "OPS Recon Reader"
+      },
+      {
+        "name": "$XSAPPNAME.ChassisMessages_READ",
+        "description": "Chassis Messages Reader"
+      },
+      {
+        "name": "$XSAPPNAME.ChassisMessages_WRITE",
+        "description": "Chassis Messages Writer"
+      },
+      {
+        "name": "$XSAPPNAME.Reader",
+        "description": "Reader"
+      },
+      {
+        "name": "$XSAPPNAME.Writer",
+        "description": "Writer"
+      },
+      {
+        "name": "uaa.user",
+        "description": "UAA"
+      }
+    ],
+    "attributes": [
+      {
+        "name": "Division",
+        "description": "OPS Division Code (F,K,P)",
+        "valueType": "s",
+        "valueRequired": false
+      },
+      {
+        "name": "S4Division",
+        "description": "S4 Division Code (KW,PB)",
+        "valueType": "s",
+        "valueRequired": false
+      },
+      {
+        "name": "Supplier",
+        "description": "Supplier Code",
+        "valueType": "s",
+        "valueRequired": false
+      }
+    ],
+    "role-templates": [
+      {
+        "name": "Admin",
+        "description": "Admin",
+        "scope-references": [
+          "$XSAPPNAME.Admin"
+        ],
+        "attribute-references": []
+      },
+      {
+        "name": "job-scheduler",
+        "description": "Job Scheduler",
+        "scope-references": [
+          "$XSAPPNAME.job-scheduler"
+        ],
+        "attribute-references": []
+      },
+      {
+        "name": "MapDivisions_READ",
+        "description": "Map Divisions Reader",
+        "scope-references": [
+          "$XSAPPNAME.MapDivisions_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MapDivisions_WRITE",
+        "description": "Map Divisions Writer",
+        "scope-references": [
+          "$XSAPPNAME.MapDivisions_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MapSalesDocTypes_READ",
+        "description": "Map Sales Doc Types Reader",
+        "scope-references": [
+          "$XSAPPNAME.MapSalesDocTypes_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MapSalesDocTypes_WRITE",
+        "description": "Map Sales Doc Types Writer",
+        "scope-references": [
+          "$XSAPPNAME.MapSalesDocTypes_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MapPlants_READ",
+        "description": "Map Plants Reader",
+        "scope-references": [
+          "$XSAPPNAME.MapPlants_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MapPlants_WRITE",
+        "description": "Map Plants Writer",
+        "scope-references": [
+          "$XSAPPNAME.MapPlants_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MapBaseModel_READ",
+        "description": "Map Base Model Reader",
+        "scope-references": [
+          "$XSAPPNAME.MapBaseModel_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MapBaseModel_WRITE",
+        "description": "Map Base Model Writer",
+        "scope-references": [
+          "$XSAPPNAME.MapBaseModel_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDCostModels_READ",
+        "description": "Master Data Cost Models Reader",
+        "scope-references": [
+          "$XSAPPNAME.MDCostModels_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDCostModels_WRITE",
+        "description": "Master Data Cost Models Writer",
+        "scope-references": [
+          "$XSAPPNAME.MDCostModels_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDDefaultDiscount_READ",
+        "description": "Master Data Default Discount Reader",
+        "scope-references": [
+          "$XSAPPNAME.MDDefaultDiscount_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDDefaultDiscount_WRITE",
+        "description": "Master Data Default Discount Writer",
+        "scope-references": [
+          "$XSAPPNAME.MDDefaultDiscount_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDSpecialRanges_READ",
+        "description": "Master Data Special Ranges Reader",
+        "scope-references": [
+          "$XSAPPNAME.MDSpecialRanges_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDSpecialRanges_WRITE",
+        "description": "Master Data Special Ranges Writer",
+        "scope-references": [
+          "$XSAPPNAME.MDSpecialRanges_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDMarketingFees_READ",
+        "description": "Master Data Marketing Fees Reader",
+        "scope-references": [
+          "$XSAPPNAME.MDMarketingFees_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDMarketingFees_WRITE",
+        "description": "Master Data Marketing Fees Writer",
+        "scope-references": [
+          "$XSAPPNAME.MDMarketingFees_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDReserves_READ",
+        "description": "Master Data Reserves Reader",
+        "scope-references": [
+          "$XSAPPNAME.MDReserves_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "MDReserves_WRITE",
+        "description": "Master Data Reserves Writer",
+        "scope-references": [
+          "$XSAPPNAME.MDReserves_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "OPSRecon_READ",
+        "description": "OPS Recon Reader",
+        "scope-references": [
+          "$XSAPPNAME.OPSRecon_READ"
+        ],
+        "attribute-references": ["S4Division"]
+      },
+      {
+        "name": "ChassisMessages_READ",
+        "description": "Chassis Messages Reader",
+        "scope-references": [
+          "$XSAPPNAME.ChassisMessages_READ"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "ChassisMessages_WRITE",
+        "description": "Chassis Messages Writer",
+        "scope-references": [
+          "$XSAPPNAME.ChassisMessages_WRITE"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "Reader",
+        "description": "Reader",
+        "scope-references": [
+          "$XSAPPNAME.Reader"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "Writer",
+        "description": "Writer",
+        "scope-references": [
+          "$XSAPPNAME.Writer"
+        ],
+        "attribute-references": ["Division"]
+      },
+      {
+        "name": "Token_Exchange",
+        "description": "UAA",
+        "scope-references": ["uaa.user"]
+      }
+    ],
+    "oauth2-configuration": {
+      "token-validity": 3600
+    }
+  }
+  

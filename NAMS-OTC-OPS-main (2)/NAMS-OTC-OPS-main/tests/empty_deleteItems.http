@@ -1,0 +1,11 @@
+### By ID
+GET http://localhost:4004/manage/MsgOrders(a37b193f-144f-4bcf-984c-d3f8ca6f4c29)?$expand=splitOrder,Chassis
+Content-Type: application/json;IEEE754Compatible=true
+
+### Filter
+GET http://localhost:4004/manage/MsgOrders?$expand=splitOrder,Chassis&$top=10&$filter=salesOrder eq '0000061893'
+Content-Type: application/json;IEEE754Compatible=true
+
+### Top 10 like CPI
+GET http://localhost:4004/manage/MsgOrders?$expand=splitOrder,Chassis&$top=10&$filter=divisionCd eq 'P' and orderType eq 'O' and current eq true and orderSaved eq false&$orderby=createTimestamp
+Content-Type: application/json;IEEE754Compatible=true

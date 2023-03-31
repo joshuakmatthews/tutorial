@@ -1,0 +1,58 @@
+### Split of unprocessed, generated split that has deleteItems that need to carry over
+### Scenario:
+### - New fleet order (no salesOrder) that is not saved yet
+### - Split end of fleet order - deleteItems will be OK, computed from order_msg_chassis
+### - Split-of-split - deleteItems will NOT be OK because it's computed from order_msg_chassis of split, not fleet + split
+###
+### So here's the first split
+POST http://localhost:4004/manage/MsgOrders
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "action": "Split",
+    "divisionCd": "K",
+    "DTPONumber": "10082084",
+    "chassisNo": "977117",
+    "startingChassis": "977117",
+    "endingChassis": "977117",
+    "changeOrderNo": 6,
+    "createTimestamp": "2023-02-15T16:00:17.979000Z",
+    "messageType": "UpdateNAMSOrder",
+    "orderAddDt": "2022-10-19",
+    "orderType": "O"
+}
+###
+### And here's the split-of-split
+POST http://localhost:4004/manage/MsgOrders
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "action": "Split",
+    "divisionCd": "K",
+    "DTPONumber": "10082084",
+    "chassisNo": "977116",
+    "startingChassis": "977116",
+    "endingChassis": "977116",
+    "changeOrderNo": 6,
+    "createTimestamp": "2023-02-15T16:00:17.979000Z",
+    "messageType": "UpdateNAMSOrder",
+    "orderAddDt": "2022-10-19",
+    "orderType": "O"
+}
+
+### Split
+POST http://localhost:4004/manage/MsgOrders
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "action": "Split",
+    "divisionCd": "P",
+    "chassisNo": "115520",
+    "orderType": "O",
+    "startingChassis": "115520",
+    "endingChassis": "115520",
+    "DTPONumber": "10044172",
+    "orderAddDt": "2022-03-02",
+    "changeOrderNo": 22,
+    "createTimestamp": "2023-02-08T10:57:28.525368Z"
+}

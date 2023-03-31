@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_SRM_CONTRACT_HEAD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="300" endUserView="false">
+<descriptions defaultDescription="Contract Header"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="sltsrmhc::CRMD_ORDERADM_H">
+    <resourceUri>sltsrmhc::CRMD_ORDERADM_H</resourceUri>
+  </DataSource>
+  <DataSource id="sltsrmhc::BBP_PDHGP">
+    <resourceUri>sltsrmhc::BBP_PDHGP</resourceUri>
+  </DataSource>
+  <DataSource id="sltsrmhc::CRM_JEST">
+    <resourceUri>sltsrmhc::CRM_JEST</resourceUri>
+  </DataSource>
+  <DataSource id="Deleted_Closed$$$$sltsrmhc::CRM_JEST$$">
+    <resourceUri>sltsrmhc::CRM_JEST</resourceUri>
+  </DataSource>
+  <DataSource id="sltsrmhc::CRMD_LINK">
+    <resourceUri>sltsrmhc::CRMD_LINK</resourceUri>
+  </DataSource>
+  <DataSource id="Head_to_Org_Link$$$$sltsrmhc::CRMD_LINK$$">
+    <resourceUri>sltsrmhc::CRMD_LINK</resourceUri>
+  </DataSource>
+  <DataSource id="sltsrmhc::BBP_PDORG">
+    <resourceUri>sltsrmhc::BBP_PDORG</resourceUri>
+  </DataSource>
+  <DataSource id="sltsrmhc::CRMD_PARTNER">
+    <resourceUri>sltsrmhc::CRMD_PARTNER</resourceUri>
+  </DataSource>
+  <DataSource id="sltsrmhc::BUT000">
+    <resourceUri>sltsrmhc::BUT000</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Contract" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="CONTRACT_ID"/>
+      <viewAttribute id="TEMPLATE_TYPE"/>
+      <viewAttribute id="OBJECT_TYPE"/>
+      <viewAttribute id="ARCHIVING_FLAG"/>
+      <viewAttribute id="DESCRIPTION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sltsrmhc::CRMD_ORDERADM_H">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="GUID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_ID" source="OBJECT_ID"/>
+    </input>
+    <filter>&quot;TEMPLATE_TYPE&quot;= '' and
+&quot;OBJECT_TYPE&quot; = 'BUS2000113' and
+&quot;ARCHIVING_FLAG&quot; = ''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Extension" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="VPER_START"/>
+      <viewAttribute id="VPER_END"/>
+      <viewAttribute id="DOC_CLOSED"/>
+      <viewAttribute id="VERSION_TYPE"/></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CONTRACT_VALID_FROM" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;VPER_START&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CONTRACT_VALID_TO" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;VPER_END&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="sltsrmhc::BBP_PDHGP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="GUID"/>
+    </input>
+    <filter>&quot;DOC_CLOSED&quot; = '' or
+&quot;VERSION_TYPE&quot; = ''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Contract_Ext" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="CONTRACT"/>
+      <viewAttribute id="DESCRIPTION"/>
+    
+      <viewAttribute id="CONTRACT_VALID_FROM"/>
+    
+      <viewAttribute id="CONTRACT_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Released_Contract">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT" source="CONTRACT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+    </input>
+    <input node="Extension">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_VALID_FROM" source="CONTRACT_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_VALID_TO" source="CONTRACT_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+    </input>
+    <joinAttribute name="CONTRACT_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Released_Contract" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="CONTRACT"/>
+    
+      <viewAttribute id="DESCRIPTION"/>
+    
+      <viewAttribute id="TEMPLATE_TYPE"/>
+      <viewAttribute id="OBJECT_TYPE"/>
+      <viewAttribute id="ARCHIVING_FLAG"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Contract">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT" source="CONTRACT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEMPLATE_TYPE" source="TEMPLATE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_TYPE" source="OBJECT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ARCHIVING_FLAG" source="ARCHIVING_FLAG"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+    </input>
+    <input node="Not_Deleted_Closed">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+    </input>
+    <joinAttribute name="CONTRACT_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:MinusView" id="Not_Deleted_Closed">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Released">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+    </input>
+    <input node="Deleted_Closed">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Released" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="STAT"/>
+      <viewAttribute id="INACT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sltsrmhc::CRM_JEST">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="OBJNR"/>
+    </input>
+    <filter>&quot;STAT&quot; = 'I1141' and &quot;INACT&quot; = ''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Deleted_Closed" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="STAT"/>
+      <viewAttribute id="INACT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Deleted_Closed$$$$sltsrmhc::CRM_JEST$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="OBJNR"/>
+    </input>
+    <filter>(    &quot;STAT&quot; = 'I1040'
+  or &quot;STAT&quot; = 'I1185' )
+and &quot;INACT&quot; = ''
+</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Contract_Supplier" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="CONTRACT"/>
+      <viewAttribute id="DESCRIPTION"/>
+    
+      <viewAttribute id="CONTRACT_VALID_FROM"/>
+      <viewAttribute id="CONTRACT_VALID_TO"/>
+      <viewAttribute id="PROC_ORG"/>
+      <viewAttribute id="SUPPLIER"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Contract_Org">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT" source="CONTRACT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROC_ORG" source="PROC_ORG"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_VALID_FROM" source="CONTRACT_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_VALID_TO" source="CONTRACT_VALID_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+    </input>
+    <input node="Head_to_Supplier">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPPLIER" source="SUPPLIER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+    </input>
+    <joinAttribute name="CONTRACT_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Contract_Org" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="CONTRACT"/>
+      <viewAttribute id="PROC_ORG"/>
+    
+      <viewAttribute id="CONTRACT_VALID_FROM"/>
+      <viewAttribute id="CONTRACT_VALID_TO"/>
+      <viewAttribute id="DESCRIPTION"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Contract_Ext">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT" source="CONTRACT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_VALID_FROM" source="CONTRACT_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_VALID_TO" source="CONTRACT_VALID_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+    </input>
+    <input node="Head_to_Org">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROC_ORG" source="PROC_ORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+    </input>
+    <joinAttribute name="CONTRACT_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Head_to_Supplier" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SUPPLIER"/>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute hidden="true" id="JOIN$PARTNER_GUID$PARTNER_GUID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Head_to_Partner_Link">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARTNER_GUID$PARTNER_GUID" source="PARTNER_GUID"/>
+    </input>
+    <input node="Supplier_BP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPPLIER" source="SUPPLIER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARTNER_GUID$PARTNER_GUID" source="PARTNER_GUID"/>
+    </input>
+    <joinAttribute name="JOIN$PARTNER_GUID$PARTNER_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Head_to_Org" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PROC_ORG"/>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute hidden="true" id="JOIN$ORG_GUID$ORG_GUID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Head_to_Org_Link">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="CONTRACT_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ORG_GUID$ORG_GUID" source="ORG_GUID"/>
+    </input>
+    <input node="Org">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROC_ORG" source="PROC_ORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ORG_GUID$ORG_GUID" source="ORG_GUID"/>
+    </input>
+    <joinAttribute name="JOIN$ORG_GUID$ORG_GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Head_to_Partner_Link" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="PARTNER_GUID"/>
+      <viewAttribute id="OBJTYPE_HI"/>
+      <viewAttribute id="OBJTYPE_SET"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sltsrmhc::CRMD_LINK">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="GUID_HI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_GUID" source="GUID_SET"/>
+    </input>
+    <filter>&quot;OBJTYPE_HI&quot; = '05' and
+&quot;OBJTYPE_SET&quot; = '07'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Supplier_BP" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="SUPPLIER"/>
+      <viewAttribute id="PARTNER_GUID"/>
+      <viewAttribute hidden="true" id="JOIN$SUPPLIER_GUID$SUPPLIER_GUID_C"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Supplier_Partner">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_GUID" source="PARTNER_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SUPPLIER_GUID$SUPPLIER_GUID_C" source="SUPPLIER_GUID"/>
+    </input>
+    <input node="BP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPPLIER" source="SUPPLIER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SUPPLIER_GUID$SUPPLIER_GUID_C" source="SUPPLIER_GUID_C"/>
+    </input>
+    <joinAttribute name="JOIN$SUPPLIER_GUID$SUPPLIER_GUID_C"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Head_to_Org_Link" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_GUID"/>
+      <viewAttribute id="ORG_GUID"/>
+      <viewAttribute id="OBJTYPE_HI"/>
+      <viewAttribute id="OBJTYPE_SET"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Head_to_Org_Link$$$$sltsrmhc::CRMD_LINK$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_GUID" source="GUID_HI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_GUID" source="GUID_SET"/>
+    </input>
+    <filter>&quot;OBJTYPE_HI&quot; = '05' and
+&quot;OBJTYPE_SET&quot; = '21'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Org" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="PROC_ORG"/>
+      <viewAttribute id="ORG_GUID"/>
+      <viewAttribute id="DEL_IND"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sltsrmhc::BBP_PDORG">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_GUID" source="SET_GUID"/>
+    </input>
+    <filter>&quot;DEL_IND&quot; = ''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Supplier_Partner" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="PARTNER_GUID"/>
+      <viewAttribute id="SUPPLIER_GUID"/>
+      <viewAttribute id="PARTNER_FCT"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sltsrmhc::CRMD_PARTNER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_GUID" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPPLIER_GUID" source="PARTNER_NO"/>
+    </input>
+    <filter>&quot;PARTNER_FCT&quot; = '00000019'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="BP">
+    <viewAttributes>
+      <viewAttribute id="SUPPLIER"/>
+      <viewAttribute id="SUPPLIER_GUID"/></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="SUPPLIER_GUID_C" datatype="NVARCHAR" length="32" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(&quot;SUPPLIER_GUID&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="sltsrmhc::BUT000">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPPLIER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPPLIER_GUID" source="PARTNER_GUID"/>
+    </input>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Contract_Supplier">
+  <attributes>
+    <attribute id="CONTRACT_GUID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract GUID"/>
+      <keyMapping columnObjectName="Contract_Supplier" columnName="CONTRACT_GUID"/>
+    </attribute>
+    <attribute id="CONTRACT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract"/>
+      <keyMapping columnObjectName="Contract_Supplier" columnName="CONTRACT"/>
+    </attribute>
+    <attribute id="DESCRIPTION" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description"/>
+      <keyMapping columnObjectName="Contract_Supplier" columnName="DESCRIPTION"/>
+    </attribute>
+    <attribute id="CONTRACT_VALID_FROM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract Valid From"/>
+      <keyMapping columnObjectName="Contract_Supplier" columnName="CONTRACT_VALID_FROM"/>
+    </attribute>
+    <attribute id="CONTRACT_VALID_TO" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract Valid To"/>
+      <keyMapping columnObjectName="Contract_Supplier" columnName="CONTRACT_VALID_TO"/>
+    </attribute>
+    <attribute id="PROC_ORG" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Responsible Purchasing Organization"/>
+      <keyMapping columnObjectName="Contract_Supplier" columnName="PROC_ORG"/>
+    </attribute>
+    <attribute id="SUPPLIER" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Partner Number"/>
+      <keyMapping columnObjectName="Contract_Supplier" columnName="SUPPLIER"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="911" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Contract" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="517" y="876"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Extension" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="753" y="716"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Contract_Ext" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="647" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Released_Contract" modelObjectNameSpace="Contract_Ext" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="211"/>
+    </shape>
+    <shape modelObjectName="Extension" modelObjectNameSpace="Contract_Ext" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="243"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Released_Contract" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="543" y="716"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Contract" modelObjectNameSpace="Released_Contract" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Not_Deleted_Closed" modelObjectNameSpace="Released_Contract" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="180"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Not_Deleted_Closed" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="839" y="880"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Released" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="866" y="1021"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Deleted_Closed" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="656" y="1021"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Contract_Supplier" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="911" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Contract_Org" modelObjectNameSpace="Contract_Supplier" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Head_to_Supplier" modelObjectNameSpace="Contract_Supplier" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="130"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Contract_Org" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="620" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Contract_Ext" modelObjectNameSpace="Contract_Org" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Head_to_Org" modelObjectNameSpace="Contract_Org" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="185"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Head_to_Supplier" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="951" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Head_to_Partner_Link" modelObjectNameSpace="Head_to_Supplier" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="163"/>
+    </shape>
+    <shape modelObjectName="Supplier_BP" modelObjectNameSpace="Head_to_Supplier" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="197"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Head_to_Org" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="275" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Head_to_Org_Link" modelObjectNameSpace="Head_to_Org" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="163"/>
+    </shape>
+    <shape modelObjectName="Org" modelObjectNameSpace="Head_to_Org" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="185"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Head_to_Partner_Link" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1134" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Supplier_BP" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="924" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Supplier_Partner" modelObjectNameSpace="Supplier_BP" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="79" y="1312"/>
+      <rectangleSize width="197"/>
+    </shape>
+    <shape modelObjectName="BP" modelObjectNameSpace="Supplier_BP" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="205"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Head_to_Org_Link" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="716"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Org" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="716"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Supplier_Partner" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1173" y="716"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="BP" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="963" y="716"/>
+      <rectangleSize height="30" width="160"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>

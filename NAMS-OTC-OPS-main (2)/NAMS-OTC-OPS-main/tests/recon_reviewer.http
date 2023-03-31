@@ -1,0 +1,9 @@
+### S4 refresh
+GET http://localhost:4004/recon-reviewer/OPSRecon?$top=10
+Content-Type: application/json;IEEE754Compatible=true
+
+###
+POST http://localhost:4004/recon-reviewer/OPSRecon(DIVISION='KW',CHASSIS='103522',DTPO_NUMBER='83799084',S4_SALES_ORDER='0000000292',S4_SALES_ORDER_ITEM='000010')/refreshS4
+Content-Type: application/json;IEEE754Compatible=true
+
+{}

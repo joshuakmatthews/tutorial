@@ -1,0 +1,100 @@
+###
+GET http://localhost:4004/manage/$metadata
+Content-Type: application/json;IEEE754Compatible=true
+
+###
+DELETE http://localhost:4004/manage/ReconFiles(divisionCd='K',chassisNo='582904',orderAddDt=2021-08-02,DTPONumber='10053217')
+
+### CSV Step 1: Create the entry
+POST http://localhost:4004/manage/ReconFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd":"K",
+    "chassisNo":"582904",
+    "orderAddDt":"2021-08-02",
+    "DTPONumber":"10053217",
+    "startingChassis":"582904",
+    "endingChassis":"582905",
+    "netSalePrice":304052,
+    "exchangeRateAmt":100,
+    "FETInd":"Y",
+    "changeOrderNo":7,
+    "FETGSTCd":"G",
+    "taxAmt":15203,
+    "procesingStatusCd":"APPH",
+    "plantCd":"F"
+}
+
+###
+GET http://localhost:4004/manage/ReconFiles?$top=1&$filter=FETGSTCd eq 'G' and exchangeRateAmt eq 100
+Content-Type: application/json;IEEE754Compatible=true
+
+### CSV Step 1: Create the entry
+POST http://localhost:4004/manage/ReconFilesCSV
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "filename": "OPSOTCRECONK1_2022-08-17 203655.187-1944397.csv",
+    "contentType": "text/csv"
+}
+
+### CSV Step 2: Post the csv contents
+PUT http://localhost:4004/manage/ReconFilesCSV('OPSOTCRECONK1_2022-08-17 203655.187-1944397.csv')/csv
+Content-Type: text/csv
+
+K,103522  ,04/02/2015,83799084,        ,        ,00146274,   0.00 ,N,050,F,00000   ,APPH,C,
+K,103677  ,04/03/2015,01499247,        ,        ,00148720,   0.00 ,N,039,F,00000   ,APPH,C,
+K,104366  ,04/09/2015,24799575,        ,        ,00181491,   0.00 ,N,021,F,00000   ,APPH,C,
+K,104747  ,04/14/2015,83899077,        ,        ,00174256,   0.00 ,N,032,F,00000   ,APPH,C,
+K,104862  ,04/15/2015,80399058,        ,        ,00188790,   0.00 ,N,046,F,00000   ,APPH,C,
+K,111641  ,05/27/2015,50999105,        ,        ,00149958,   0.00 ,N,013,F,00000   ,APPH,C,
+K,116091  ,06/30/2015,14999526,        ,        ,00135889,   0.00 ,N,035,F,00000   ,APPH,C,
+K,116298  ,07/01/2015,44799361,        ,        ,00127171,   0.00 ,N,043,F,00000   ,APPH,C,
+K,117038  ,07/08/2015,45499014,        ,        ,00183274,   0.00 ,N,036,F,00000   ,APPH,C,
+K,117400  ,07/14/2015,73399570,        ,        ,00183350,   0.00 ,N,020,F,00000   ,APPH,C,
+K,117702  ,07/16/2015,54142244,117702  ,117703  ,00131367,   0.00 ,N,065,F,00000   ,APPH,C,
+K,117703  ,07/16/2015,54142244,117702  ,117703  ,00131367,   0.00 ,N,065,F,00000   ,APPH,C,
+
+### CSV Step 3: Process the CSV
+POST http://localhost:4004/manage/ReconFilesCSV('CERTOPSOTCRECONP1_2023-01-16 190408.42-58914.csv')/process
+Content-Type: application/json;IEEE754Compatible=true
+
+{}
+
+### Remote snapshot
+GET http://localhost:4004/recon/RemoteSnapshot?$filter=DIVISION eq 'PB'
+
+### Snapshot S4 orders
+POST http://localhost:4004/jobs/takeSnapshot
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "division": "PB"
+}
+
+###
+POST http://localhost:4004/manage/ReconFiles
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "chassisNo": "983512",
+    "divisionCd": "P",
+    "DTPONumber": "11223344",
+    "orderAddDt": "2021-09-24",
+    "exchangeRateAmt": "128.20"
+}
+
+###
+DELETE http://localhost:4004/manage/ReconFiles(chassisNo='983512',divisionCd='P',DTPONumber='11223344',orderAddDt=2021-09-24)
+Content-Type: application/json;IEEE754Compatible=true
+
+{}
+
+###
+POST http://localhost:4004/manage/truncateRecon
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "divisionCd": "P"
+}
