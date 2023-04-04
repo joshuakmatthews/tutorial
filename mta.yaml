@@ -146,7 +146,7 @@ resources:
       config:
         xsappname: 'CapitalExpenditures-${space}'
         role-collections: []
-  - type: org.cloudfoundry.managed-service
+  - type: com.sap.xs.hdi-container
     name: CapitalExpenditures-service-db
     parameters:
       service: hana

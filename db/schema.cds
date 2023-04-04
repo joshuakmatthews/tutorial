@@ -19,7 +19,7 @@ entity Capex
         @Core.Computed;
     description : String;
     total_cost : Integer;
-    contractors : Association to one Contractors;
+    contractor : Association to one Contractors;
 }
 
 entity Contractors
